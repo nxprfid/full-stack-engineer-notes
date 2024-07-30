@@ -73,6 +73,7 @@ taa 选择下拉的最后一个
 ![alt text](image-14.png)
 
 空白处点一下，按q切换mil和mm
+或者是快捷键`ctrl q`
 
 快捷键m移动，选择xy移动
 
@@ -119,11 +120,25 @@ ut Layer 防焊层
 ![alt text](image-19.png)
 
 多个元素重叠，可以选择具体哪一个
-![alt text](image-20.png)
 
-绘制3D模型，所在层是在机械1层
+![alt text](image-20.png)
+### 绘制3D模型
+选择放置3D元件体
+
+注意所在层是在机械1层
 
 ![alt text](image-21.png)
 
-
 切换3D视图快捷键`ctrl d`
+
+查看3D预览`shift +鼠标右键`
+
+绘制完3D模型，进行更新
+![alt text](image-22.png)
+![alt text](image-23.png)
+#### 导入3D模型
+
+选择放置3D体，选择.STEP文件
+![alt text](image-24.png)
+原理图导入PCB的几种错误
+![alt text](image-26.png)
