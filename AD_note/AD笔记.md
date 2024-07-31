@@ -142,3 +142,44 @@ ut Layer 防焊层
 ![alt text](image-24.png)
 原理图导入PCB的几种错误
 ![alt text](image-26.png)
+### PCB设计
+
+交叉选择
+
+![alt text](image-27.png)
+![alt text](image-28.png)
+
+元器件按照模块放到一块
+
+![alt text](image-29.png)
+
+对准需要的菜单选项进行`ctrl +鼠标左键`进行快捷键设置
+
+快捷键`sl`进行线选
+进行上下移动时，立创eda可以直接方向键。AD需要按`ctrl`
+
+拖动状态下，按`L`进行元器件换层
+快捷键`n`进行隐藏飞线
+
+![alt text](image-30.png)
+
+复制PCB快捷键`ea`
+快捷键`dsd`将板框进行重新定义到闭合的机械层
+
+![alt text](image-31.png)
+
+
+
+快捷键`dc`进入类的创建
+![alt text](image-32.png)
+
+进行差分走线
+1. 建立差分类
+2. 定义差分
+![alt text](image-33.png)
+![alt text](image-34.png)
+
+
+PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
+
+![alt text](image-35.png)
