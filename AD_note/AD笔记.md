@@ -106,14 +106,16 @@ ut Layer 防焊层
 
 >丝印绘制一般为5mil
 
-`shift+空格` 切换走线形式
+`shift+空格` 切换走线形式  
+
 ![alt text](image-17.png)
 
 `ctrl m`测量距离
 
 如果设计L形状的封装，焊盘可以进行叠加。序号要保持一致
 
-通孔的一些属性
+通孔的一些属性  
+
 ![alt text](image-18.png)
 
 ### 调用PCB库
@@ -138,19 +140,24 @@ ut Layer 防焊层
 查看3D预览`shift +鼠标右键`
 
 绘制完3D模型，进行更新
+
 ![alt text](image-22.png)
 ![alt text](image-23.png)
 #### 导入3D模型
 
 选择放置3D体，选择.STEP文件
+
 ![alt text](image-24.png)
+
 原理图导入PCB的几种错误
+
 ![alt text](image-26.png)
 ## 绘制PCB
 
 ### 交叉选择
 
 ![alt text](image-27.png)
+
 设置中设置
 
 ![alt text](image-28.png)
@@ -184,12 +191,15 @@ ut Layer 防焊层
 ### 差分走线
 1. 建立差分类
 2. 定义差分
+
 ![alt text](image-33.png)
 3. 选差分对布线
+
 ![alt text](image-34.png)
 
 ### 多线布线
 快捷键`sl`进行线选
 
 PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
+
 ![alt text](image-35.png)
