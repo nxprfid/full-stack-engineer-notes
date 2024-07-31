@@ -3,10 +3,11 @@
 ### 元器件符号属性设置
 ![alt text](image-1.png)
 
-    vgs快捷键，调整栅格大小
+`vgs`快捷键，调整栅格大小
 
 > 管脚放置格点：100mil
 > 图形元素格点：10mil
+> 
 > 注意移动也要调整vgs
 
 ### 添加封装
@@ -36,13 +37,16 @@
 ### 放置元器件
 格点选择100mil
 
-![alt text](image-8.png)
-![alt text](image-7.png)
 ### 添加原理图库
 ![alt text](image-9.png)
+调库使用过程
+![alt text](image-8.png)
+
+![alt text](image-7.png)
+
     
-    元器件对齐快捷键a
-    电气连线 CTRL+W
+元器件对齐快捷键`a`
+电气连线 `CTRL+W`
 
 对后面PCB设计做粗细标识
 ![alt text](image-10.png)
@@ -51,9 +55,9 @@
 ### 切换走线形式shift+空格
 >信号一般是采用网络标签，电源一般采用端口
 
-    选中导线，按alt键可以高亮同一网络
+选中导线，按`alt`键可以高亮同一网络
 ### 分配元器件位号
-    快捷键taa
+快捷键`taa`
 
 ![alt text](image-11.png)
 ![alt text](image-12.png)
@@ -64,15 +68,15 @@ taa 选择下拉的最后一个
 
 ![alt text](image-13.png)
 
-    查找文字是CTRL+F
-### 查找元器件快捷键是JC
+查找文字是`CTRL+F`
+### 查找元器件快捷键是`JC`
 
-## 封装
+## 绘制PCB库
 修改助焊层形状及其大小
 
 ![alt text](image-14.png)
 
-空白处点一下，按q切换mil和mm
+空白处点一下，按`q`切换mil和mm
 或者是快捷键`ctrl q`
 
 快捷键m移动，选择xy移动
@@ -97,15 +101,15 @@ ut Layer 防焊层
 钻孔层
 13. Multi-Layer 多层
 
-    快捷键efc设置原点为中间  
+快捷键`efc`设置原点为中间  
 ![alt text](image-16.png)
 
 >丝印绘制一般为5mil
 
-    shift+空格 切换走线形式
+`shift+空格` 切换走线形式
 ![alt text](image-17.png)
 
-    ctrl m测量距离
+`ctrl m`测量距离
 
 如果设计L形状的封装，焊盘可以进行叠加。序号要保持一致
 
@@ -142,21 +146,24 @@ ut Layer 防焊层
 ![alt text](image-24.png)
 原理图导入PCB的几种错误
 ![alt text](image-26.png)
-### PCB设计
+## 绘制PCB
 
-交叉选择
+### 交叉选择
 
 ![alt text](image-27.png)
+设置中设置
+
 ![alt text](image-28.png)
 
-元器件按照模块放到一块
+### 元器件按照模块放到一块
 
 ![alt text](image-29.png)
 
-对准需要的菜单选项进行`ctrl +鼠标左键`进行快捷键设置
+> 对准需要的菜单选项进行`ctrl +鼠标左键`进行 快捷键设置
+> 这里我设置快捷键为`
 
-快捷键`sl`进行线选
-进行上下移动时，立创eda可以直接方向键。AD需要按`ctrl`
+
+进行上下移动时，立创eda可以直接方向键。AD需要按`ctrl`+方向键
 
 拖动状态下，按`L`进行元器件换层
 快捷键`n`进行隐藏飞线
@@ -164,22 +171,25 @@ ut Layer 防焊层
 ![alt text](image-30.png)
 
 复制PCB快捷键`ea`
-快捷键`dsd`将板框进行重新定义到闭合的机械层
+快捷键`dsd`将板框进行重新定义到闭合的机械层走线
 
 ![alt text](image-31.png)
 
-
+### 创建类并定义布线规则
 
 快捷键`dc`进入类的创建
+
 ![alt text](image-32.png)
 
-进行差分走线
+### 差分走线
 1. 建立差分类
 2. 定义差分
 ![alt text](image-33.png)
+3. 选差分对布线
 ![alt text](image-34.png)
 
+### 多线布线
+快捷键`sl`进行线选
 
 PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
-
 ![alt text](image-35.png)
