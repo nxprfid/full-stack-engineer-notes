@@ -203,3 +203,5 @@ ut Layer 防焊层
 PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 
 ![alt text](image-35.png)
+
+`ctrl+m`量尺寸 
