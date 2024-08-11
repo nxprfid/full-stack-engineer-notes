@@ -204,4 +204,37 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 
 ![alt text](image-35.png)
 
-`ctrl+m`量尺寸 
+`ctrl+m`量尺寸  
+
+### 如何设置开窗
+
+1. 选择助焊层Top Solder
+2. 放置**填充**或者**实心填充**  
+### 独给焊盘设置不同的连接方式
+![alt text](image-38.png)
+
+### 如何把丝印位号放在器件中间
+1. 全选丝印
+2. 高度10mil，宽度2mil
+3. 框选所有元器件，快捷键`a p`  
+
+![alt text](image-39.png)  
+
+### 添加缝合地过孔  
+
+![alt text](image-36.png)  
+![alt text](image-37.png)  
+ 
+### 实现板挖空
+1. TOP层放置圆弧或者闭合线条后
+2. 选中
+3. 快捷键`tvb`
+![alt text](image-40.png)  
+
+
+
+
+### PCB板框尺寸标注
+机械二层  
+快捷键`pdl`  
+![alt text](image-41.png)
