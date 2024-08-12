@@ -237,4 +237,6 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 ### PCB板框尺寸标注
 机械二层  
 快捷键`pdl`  
-![alt text](image-41.png)
+![alt text](image-41.png)  
+
+选中层后`shift s`只看此层
