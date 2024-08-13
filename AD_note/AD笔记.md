@@ -231,8 +231,8 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 3. 快捷键`tvb`
 ![alt text](image-40.png)  
 
-
-
+### 编译原理图
+![alt text](image-42.png)
 
 ### PCB板框尺寸标注
 机械二层  
