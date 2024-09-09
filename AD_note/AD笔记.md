@@ -38,7 +38,7 @@
 格点选择100mil
 
 ### 添加原理图库
-![alt text](image-9.png)
+![alt text](image-9.png)  
 调库使用过程
 ![alt text](image-8.png)
 
@@ -70,7 +70,13 @@ taa 选择下拉的最后一个
 
 查找文字是`CTRL+F`
 ### 查找元器件快捷键是`JC`
-
+### 编译原理图
+位号重复
+![alt text](image-46.png)  
+网络悬浮
+![alt text](image-48.png)  
+单端网络
+![alt text](image-49.png)
 ## 绘制PCB库
 修改助焊层形状及其大小
 
@@ -240,3 +246,8 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 ![alt text](image-41.png)  
 
 选中层后`shift s`只看此层
+### 生产注意细节
+波峰焊
+![alt text](image-43.png)
+![alt text](image-44.png)
+![alt text](image-45.png)
