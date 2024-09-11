@@ -39,18 +39,19 @@
 
 ### 添加原理图库
 ![alt text](image-9.png)  
-调库使用过程
+
+调库使用过程  
 ![alt text](image-8.png)
 
 ![alt text](image-7.png)
 
     
-元器件对齐快捷键`a`
-电气连线 `CTRL+W`
+元器件对齐快捷键`a`  
+电气连线 `CTRL+W`  
 
-对后面PCB设计做粗细标识
+对后面PCB设计做粗细标识  
+
 ![alt text](image-10.png)
-
 
 ### 切换走线形式shift+空格
 >信号一般是采用网络标签，电源一般采用端口
@@ -74,8 +75,8 @@ taa 选择下拉的最后一个
 位号重复
 ![alt text](image-46.png)  
 网络悬浮
-![alt text](image-48.png)  
-单端网络
+![alt text](image-48.png)    
+单端网络  
 ![alt text](image-49.png)
 ## 绘制PCB库
 修改助焊层形状及其大小
@@ -198,7 +199,7 @@ ut Layer 防焊层
 1. 建立差分类
 2. 定义差分
 
-![alt text](image-33.png)
+![alt text](image-33.png)  
 3. 选差分对布线
 
 ![alt text](image-34.png)
