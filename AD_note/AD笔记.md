@@ -252,3 +252,6 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 ![alt text](image-43.png)
 ![alt text](image-44.png)
 ![alt text](image-45.png)
+
+到板框层`pdl`标注尺寸
+按空格键切换横竖标注
