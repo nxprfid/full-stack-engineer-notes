@@ -73,7 +73,8 @@ UDP启动Agent服务
 ![alt text](image-17.png)  
 ![alt text](image-18.png)
 ## 使用FishBotROS2OS随身系统  
-开机时按下F8键（F11）进入启动设备选择界面  
+开机时按下F8键（F11）进入BootMenu启动设备选择界面  
+选择ubuntu开头的ROS2GO盘回车即可进入系统
 密码fish进入  
 等待脚本完成输入fishinstall  
 即可使用ros2命令  

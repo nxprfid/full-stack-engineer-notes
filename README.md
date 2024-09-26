@@ -6,3 +6,9 @@
 学习一些物联网通信，平台以及协议的笔记。
 # Linux_note
 学习系统编译，驱动开发，内核开发，Linux系统的一些笔记。
+# Node-RED_note
+Homeassistant，Node-RED以及ThingsBoard的一些笔记。
+# ROS2_note
+学习ROS2的一些笔记。包括MicroROS的运行，ROS2的一些基础概念。
+# RTOS_note
+FreeRTOS，RT-Thread，uCOS-III，lwIP，μITRON，等RTOS的一些笔记。
