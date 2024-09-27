@@ -247,6 +247,13 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 ![alt text](image-41.png)  
 
 选中层后`shift s`只看此层
+
+### 导出BOM表
+![alt text](image-51.png)  
+![alt text](image-52.png)
+### 导出原理图
+
+
 ### 生产注意细节
 波峰焊
 ![alt text](image-43.png)
