@@ -60,7 +60,66 @@ ble从设备因为也在计算好的时间里进行了侦听，因此能收到�
 
 开发板触发这个事件的动作在 LL_SLAVE_FEATURE_REQ 发送后，得到对方的 LL_FEATURE_RSP 的时候。
 
+## 蓝牙的工作模式：
+ 1. 主机模式/从机模式
+    主机模式下，蓝牙模块具备扫描从机广播以及主动建立连接的能力，能够与一个或者多个从设备实现连接通信。
+  从机模式则是蓝牙模块先进入广播状态，等待被主机扫描。一旦主机扫描到从设备并建立连接之后，便能与主机设备进行数据的收发。在此模式下，从机无法主动建立连接，只能被动等待主机扫描并建立连接。
+  2. 主从一体工作模式
+    主从一体模式是指蓝牙模块既可以作为主设备，也可以作为从设备。这种模式允许蓝牙模块在两种角色之间自由切换。在从模式下，蓝牙模块会等待其他主设备前来连接，必要时再转换为主模式，向其他设备发起连接请求。
+  3. 广播/观察模式
+    广播模式：蓝牙模块会定期且持续地向周围发送一定长度的广播数据包，这些数据包可以被扫描到。在低功耗模式下，蓝牙模块可以持续进行广播操作，适用于极低功耗、小数据量以及单向传输的应用场景。
+    观察模式：该模式下，蓝牙模块是非连接状态的。与广播模式的一对多发送广播相比，观察者可以一对多地接收数据。在该模式下，设备只能够监听和读取空中的广播数据，却无法发起连接，只能持续扫描从机。
+  4. iBeacon模式
+    苹果公司推出的一款基于低功耗蓝牙技术的新型通信协议，称之为iBeacon，实现持续不断地广播蓝牙设备的MAC地址、UUID等固定字节的字符串信息。是近些年来开始流行起来的蓝牙通讯技术应用，在精确营销方面有着广泛的应用，例如博物馆、展览馆等场所提供信息推送服务，或是在购物中心为商家提供向消费者发放优惠券和积分的功能。在室内高精度定位方面的应用也越来越多。
 
+## GATT简单介绍：
+  1.什么是GATT？
+   GATT（Generic Attribute Profile）是BLE中用来定义通信数据结构的协议。GATT定义了如何在BLE设备之间传输数据，并规定了服务（Services）、特征（Characteristics）和描述符（Descriptors）的使用方式。通过这些概念，GATT实现了设备间的标准化通信。
+
+  2. GATT服务
+   GATT服务是用于组织特征的集合。每个服务通常代表一个设备或应用的特定功能模块。。
+  3. GATT特征
+   GATT特征是包含实际数据的基本单元。每个 GATT 服务都有一个唯一的 UUID（Universally Unique Identifier），用于唯一标识该服务。UUID 可以是 16 位、32 位或 128 位的标识符，其中 16 位和 32 位 UUID 通常是由蓝牙 SIG 定义的标准服务，128 位 UUID 通常用于自定义服务。特征可以用于读取、写入和订阅通知。标准的GATT特征值，可以从国际蓝牙联盟（BT-SIG）官方渠道了解：https://www.bluetooth.com/
+
+     当一个BLE设备的特征接收GATT通知时，它意味着它订阅了一个特征的通知，并且当该特征的值发生变化时，它会接收到通知。这种通知机制可以用于实时监测特征值的变化，例如温度传感器的实时温度数据。
+
+     GATT服务、特征、属性的关系大致如下：
+![alt text](image-20.png)
+### 安信可SDK
+  apps_ble_start：入口函数，开启BLE使能
+  ble_slave_init：开启从机初始化
+  ble_server_init：注册gatt服务
+  ble_uuid1_notify_data：处理通知数据
+  ble_uuid1_write_val：读取经GATT发送过来的数据
+  BT_GATT_PRIMARY_SERVICE：定义GATT服务UUID
+  BT_GATT_CHARACTERISTIC：定义收发的特征值
+  BT_GATT_CCC：定义配置改变时的监听
+
+## 蓝牙广播
+![alt text](image-21.png)
+频率范围从2402Mhz到2480Mhz  
+每2Mhz一个信道
+37 38 39是广播信道，剩余的是数据信道
+![alt text](image-22.png)  
+![alt text](image-23.png)  
+![alt text](image-25.png)  
+## 扫描响应
+![alt text](image-26.png)  
+![alt text](image-27.png)  
+![alt text](image-29.png)
+![alt text](image-28.png)
+
+## 状态切换
+![alt text](image-30.png)
+
+## 服务与特征  
+![alt text](image-31.png)  
+![alt text](image-32.png)
+## 数据收发
+![alt text](image-33.png)
+## SPP协议
+![alt text](image-34.png)  
+![alt text](image-35.png)
 ## 蓝牙配网
 https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/bluetooth/ble_boarding_demo.html  
 https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/api-reference/bluetooth/ble.html
