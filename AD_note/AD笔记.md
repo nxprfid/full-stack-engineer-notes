@@ -242,16 +242,32 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 ![alt text](image-42.png)
 
 ### PCB板框尺寸标注
+快捷键`ctrl m`
 机械二层  
 快捷键`pdl`  
 ![alt text](image-41.png)  
 
 选中层后`shift s`只看此层
 
-### 导出BOM表
+`eos`设置快捷键
+# 拼版
+新建一个PcbDoc，然后选择放置-拼版阵列`pm`
+
+# 导出
+## 导出Gerber文件
+![alt text](image-57.png)
+
+## 导出钻孔层
+![alt text](image-54.png)
+![alt text](image-53.png)
+## 导出网表
+![alt text](image-55.png)
+## 坐标输出
+![alt text](image-56.png)
+## 导出BOM表
 ![alt text](image-51.png)  
 ![alt text](image-52.png)
-### 导出原理图
+## 导出原理图
 
 
 ### 生产注意细节
