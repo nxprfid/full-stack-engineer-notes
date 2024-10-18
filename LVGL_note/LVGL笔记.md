@@ -13,8 +13,16 @@ git checkout v8.3.10
 ```
 ## 添加路径
 ![alt text](image.png)
-真正移植LVGL的源代码
+真正移植LVGL的源代码  
 ![alt text](image-1.png)
+
+ESP-IDF中menuconfig设置
+![alt text](image-2.png)
+![alt text](image-3.png)  
+![alt text](image-4.png)  
+![alt text](image-5.png)  
+启用第一个demo
+![alt text](image-6.png)
 ## 移植流程
 五个步骤
 1. 初始化和注册LVGL显示驱动
