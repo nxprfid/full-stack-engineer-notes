@@ -19,6 +19,9 @@ wifi名称为PUMPU，所以填写PUMPU，接着点击一键配置即可，配置
 ![alt text](image-26.png)    
 1. 按下复位键，屏幕显示设备IP，此时说明已经连接成功   
 ![alt text](image-27.png)  
+>确保安装了ROS以及Docker,下面是一键安装指令
+>wget http://fishros.com/install -O fishros && . fishros
+
 1. 启动MicroROS服务,终端输入以下命令  
     
         docker run -it --rm -v /dev:/dev -v /dev/shm:/dev/shm --privileged --net=host microros/micro-ros-agent:$ROS_DISTRO udp4 --port 8888 -v6  
