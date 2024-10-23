@@ -108,7 +108,7 @@ ut Layer 防焊层
 钻孔层
 13. Multi-Layer 多层
 
-快捷键`efc`设置原点为中间  
+快捷键`eos`设置原点为中间  
 ![alt text](image-16.png)
 
 >丝印绘制一般为5mil
