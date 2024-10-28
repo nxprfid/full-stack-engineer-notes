@@ -255,8 +255,13 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 ### 探针
 查看网络图
 # 拼版
+## 使用拼版阵列
 新建一个PcbDoc，然后选择放置-拼版阵列`pm`
-
+![alt text](image-59.png)  
+## 复制拼版
+快捷键`ea`  
+![alt text](image-60.png)  
+![alt text](image-61.png)
 # 导出
 ## 导出Gerber文件
 ![alt text](image-57.png)
@@ -272,7 +277,8 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 ![alt text](image-51.png)  
 ![alt text](image-52.png)
 ## 导出原理图
-
+drc快捷键
+tm
 
 ### 生产注意细节
 波峰焊
