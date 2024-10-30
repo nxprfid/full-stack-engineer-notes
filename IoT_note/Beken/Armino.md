@@ -120,7 +120,16 @@ ble从设备因为也在计算好的时间里进行了侦听，因此能收到�
 ## SPP协议
 ![alt text](image-34.png)  
 ![alt text](image-35.png)
-## 蓝牙配网
+
+# ArduinoBLE
+   1. 创建一个 BLE Server
+   2. 创建一个 BLE Service
+   3. 创建一个 BLE Characteristic
+   4. 创建一个 BLE Descriptor
+   5. 开始服务
+   6. 开始广播
+## 生成UUID网址：https://www.uuidgenerator.net/
+# BK蓝牙配网
 https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/bluetooth/ble_boarding_demo.html  
 https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/api-reference/bluetooth/ble.html
 https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/cli/bluetooth/ble.html  
