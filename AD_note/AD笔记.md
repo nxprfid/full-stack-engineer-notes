@@ -108,7 +108,7 @@ ut Layer 防焊层
 钻孔层
 13. Multi-Layer 多层
 
-快捷键`efc`设置原点为中间  
+快捷键`eos`设置原点为中间  
 ![alt text](image-16.png)
 
 >丝印绘制一般为5mil
@@ -240,7 +240,8 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 
 ### 编译原理图
 ![alt text](image-42.png)
-
+### 隐藏覆铜
+![alt text](image-58.png)
 ### PCB板框尺寸标注
 快捷键`ctrl m`
 机械二层  
@@ -250,9 +251,17 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 选中层后`shift s`只看此层
 
 `eos`设置快捷键
-# 拼版
-新建一个PcbDoc，然后选择放置-拼版阵列`pm`
 
+### 探针
+查看网络图
+# 拼版
+## 使用拼版阵列
+新建一个PcbDoc，然后选择放置-拼版阵列`pm`
+![alt text](image-59.png)  
+## 复制拼版
+快捷键`ea`  
+![alt text](image-60.png)  
+![alt text](image-61.png)
 # 导出
 ## 导出Gerber文件
 ![alt text](image-57.png)
@@ -267,8 +276,11 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 ## 导出BOM表
 ![alt text](image-51.png)  
 ![alt text](image-52.png)
-## 导出原理图
+Comment	Description	Designator	Footprint	LibRef	Quantity
 
+## 导出原理图
+drc快捷键
+tm
 
 ### 生产注意细节
 波峰焊
