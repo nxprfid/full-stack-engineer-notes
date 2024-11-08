@@ -72,14 +72,14 @@ taa 选择下拉的最后一个
 查找文字是`CTRL+F`
 ### 查找元器件快捷键是`JC`
 ### 编译原理图
-位号重复
+位号重复  
 ![alt text](image-46.png)  
-网络悬浮
+网络悬浮  
 ![alt text](image-48.png)    
 单端网络  
 ![alt text](image-49.png)
 ## 绘制PCB库
-修改助焊层形状及其大小
+修改助焊层形状及其大小  
 
 ![alt text](image-14.png)
 
