@@ -197,3 +197,11 @@ source bin/activate
 6. 运行 Home Assistant Core
 `hass`
 7. 在浏览器中输入【开发板的 IP 地址:8123】就能看到 Home Assistant 的界面
+
+
+# Home Assistant使用
+![alt text](image-5.png)
+![alt text](image-6.png)
+![alt text](image-7.png)
+![alt text](image-8.png)
+![alt text](image-9.png)
