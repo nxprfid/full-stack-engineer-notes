@@ -5,8 +5,8 @@
 
 # 开发板管理器地址
 合宙Air001：https://arduino.luatos.com/package_air_cn_index.json  
-博通BK7238：https://dl2.bekencorp.com/arduino/package_bk7238_index.json
-
+博通BK7238：https://dl2.bekencorp.com/arduino/package_bk7238_index.json  
+乐鑫ESP32：https://espressif.github.io/arduino-esp32/package_esp32_index.json
 # 合宙的RP2040 树莓派 Pico
 将开发板的 USB 连接移除，按住开发板上的按键，再重新插入 USB 接口。
 
