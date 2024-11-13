@@ -5,24 +5,24 @@
 3. 打开烧录工具MicroROSCar ConfigTool.v1.0.0.alpha.win.exe，刷新端口并粘贴到固件地址栏，点击烧录  
 ![alt text](image-5.png)  
 出现烧录成功提示后配置设备,点击重新扫描配置  
-1. 配置网络，我们需要配置wifi_ssid和wifi_pswd ，即wifi的名字和密码。  
+4. 配置网络，我们需要配置wifi_ssid和wifi_pswd ，即wifi的名字和密码。  
 ![alt text](image-23.png)  
 wifi名称为PUMPU，所以填写PUMPU，接着点击一键配置即可，配置成功下方会有提示。  
 ![alt text](image-24.png)  
 ![alt text](image-25.png)  
-1. 打开配套的虚拟机Ubuntu_22.04_LTS(ROS2)，密码：123456  
+5. 打开配套的虚拟机Ubuntu_22.04_LTS(ROS2)，密码：123456  
 ![alt text](image.png)  
-1. 打开终端，输入`ip -4 a | grep inet`  
+6. 打开终端，输入`ip -4 a | grep inet`  
 ![alt text](image-22.png)
    >一般可以看到多个网卡的，此时可以忽略172(docker)和127(本地)开头的ip地址，剩下的一般就是我们要的ip地址，比如这里的就是192.168.2.105    
-1. 接着配置主机IP，选择udpserver_ip，填写刚刚获取到的ip地址，点击一键配置即可，配置成功下方会有提示。  
+7. 接着配置主机IP，选择udpserver_ip，填写刚刚获取到的ip地址，点击一键配置即可，配置成功下方会有提示。  
 ![alt text](image-26.png)    
-1. 按下复位键，屏幕显示设备IP，此时说明已经连接成功   
+8. 按下复位键，屏幕显示设备IP，此时说明已经连接成功   
 ![alt text](image-27.png)  
 >确保安装了ROS以及Docker,下面是一键安装指令  
 >wget http://fishros.com/install -O fishros && . fishros
 
-1. 启动MicroROS服务,终端输入以下命令  
+9. 启动MicroROS服务,终端输入以下命令  
     
         docker run -it --rm -v /dev:/dev -v /dev/shm:/dev/shm --privileged --net=host microros/micro-ros-agent:$ROS_DISTRO udp4 --port 8888 -v6  
 
@@ -31,7 +31,7 @@ wifi名称为PUMPU，所以填写PUMPU，接着点击一键配置即可，配置
         docker run -it --rm -v /dev:/dev -v /dev/shm:/dev/shm --privileged --net=host fishros.org/microros/micro-ros-agent:$ROS_DISTRO udp4 --port 8888 -v6  
     ![alt text](image-28.png)  
     正常你将看到终端不断有数据提示，表示正常通信上了
-1. 测试键盘控制,前面终端不要关闭，再打开一个终端，输入以下命令  
+10. 测试键盘控制,前面终端不要关闭，再打开一个终端，输入以下命令  
 `ros2 run teleop_twist_keyboard teleop_twist_keyboard`  
 
     接着按x按键调节下线速度，降低到0.1左右，防止一下子太快飞出去。  
@@ -41,7 +41,7 @@ wifi名称为PUMPU，所以填写PUMPU，接着点击一键配置即可，配置
     根据键盘提示，你可以尝试前进后退，左转右转等命令。  
 ![alt text](image-29.png)  
 ![alt text](2cfd5acf577e3ee9c1fc5c656f132a8.jpg)  
-1. 我们的小车是带编码器的，可以实时输出里程计数据，使用指令  
+11. 我们的小车是带编码器的，可以实时输出里程计数据，使用指令  
    `ros2 topic echo /odom`就可以看到实时的机器人位置信息。  
 ![alt text](image-30.png)
 
