@@ -258,6 +258,23 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 ## 使用拼版阵列
 新建一个PcbDoc，然后选择放置-拼版阵列`pm`
 ![alt text](image-59.png)  
+## VCut
+5mm宽的VCut
+3mm的非金属挖孔
+![alt text](image-83.png)
+
+
+## 绘制Mark点
+
+宽度要大于5mm
+放置一个焊盘
+![alt text](image-79.png)
+![alt text](image-80.png)
+
+![alt text](image-80.png)
+![alt text](image-81.png)
+快捷键`tve`
+![alt text](image-82.png)
 ## 复制拼版
 快捷键`ea`  
 ![alt text](image-60.png)  
