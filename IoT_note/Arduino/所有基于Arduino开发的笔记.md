@@ -722,3 +722,150 @@ GAP层（通用访问配置文件层）：
 ![alt text](image-31.png)
 ![alt text](image-32.png)
 ![alt text](image-33.png)
+
+# Arduino小型化与TinyML应用课程
+
+软件：Edge Impulse(边缘人工智能开发平台)
+
+参考链接：  
+● 课程主页（含书籍和产品购买链接）：https://tinkergen.cn/book_xiao  
+● Arduino IDE 下载链接：https://www.arduino.cc/en/software  
+● XIAO SAMD21 的中文文档：https://wiki.seeedstudio.com/cn/Seeeduino-XIAO/  
+● 《焊接是容易的——告诉你怎么做》https://mightyohm.com/files/soldercomic/translations/FullSolderComicChinese.pdf  
+● Arduino 数据类型和常量文档：https://www.arduino.cc/reference/en/#variables  
+● Arduino 语言的文档：https://www.arduino.cc/reference/en/  
+● XIAO 扩展板的中文文档：https://wiki.seeedstudio.com/cn/Seeeduino-XIAO-Expansion-Board/  
+
+## 前言
+![alt text](2e31c4707e1958165df4a51b0f54a9e.jpg)
+![Grove接口](12c51081ff0f7bafd66367df2b4f52a.jpg)
+## Blink
+
+
+## 用按钮开关 LED 
+![三种程序结构](ee380c2f80843aa335a4c6b04a79821.jpg)  
+●  XIAO 扩展板按钮控制 LED 亮灭程序：https://create.arduino.cc/editor/mouseart/533ddffc-b61f-43c9-8941-acd55144b348/preview   
+●  XIAO 扩展板按钮控制 XIAO ESP32C3 外接 LED 程序：https://create.arduino.cc/editor/mouseart/fcf8cdb0-15ce-454e-a848-27ad3686bec9/preview  
+
+## XIAO 摩尔斯电码发报机
+![alt text](1edb15ea8e5d49ffb2cd9f2e79f2330.jpg)
+![alt text](1bc99333836d8300bf3edd7f9401f7e.jpg)
+● 摩尔斯电码自动 SOS 发报程序： https://create.arduino.cc/editor/mouseart/8b76db9b-63c4-4f02-8b6c-8c748c2b1cb2/preview  
+● 摩尔斯电码按钮手动发报程序： https://create.arduino.cc/editor/mouseart/1f5e1e90-83ec-4975-8419-b85af587f8dc/preview  
+● 蜂鸣器播放生日歌：https://create.arduino.cc/editor/mouseart/35afd569-ba7a-4c2d-b9c6-cde39421b2e9/preview  
+● Arduino 文档：使用tone()函数播放旋律
+https://docs.arduino.cc/built-in-examples/digital/toneMelody/  
+
+## 用串口监视器监测旋钮
+![串口绘图仪](image-34.png)
+● 按钮状态串口监视器程序： https://create.arduino.cc/editor/mouseart/71492389-b76c-4c94-b42c-f7c9b41e7c84/preview   
+● 旋钮数值串口监视器程序： https://create.arduino.cc/editor/mouseart/e593a0fa-be3f-40aa-b769-fbb0581e4b44/preview  
+
+## 用旋钮控制舵机
+● 任务1“使用旋钮控制 XIAO 板载 LED 的亮度”程序链接：https://create.arduino.cc/editor/mouseart/2e074d55-6506-48e7-a561-299f1f46f4de/preview  
+● 任务2“使用旋钮控制舵机”程序链接：https://create.arduino.cc/editor/mouseart/d2562eb2-dd4d-4673-8df7-ce3723e0afd3/preview  
+● 拓展练习程序链接：https://create.arduino.cc/editor/mouseart/5e26edcb-d328-4646-9448-f0dd14e35406/preview  
+
+## OLED 显示屏上手
+![alt text](bb6ce64839f0919937c8fd76be8e98f.jpg)  
+![alt text](image-35.png)  
+![alt text](db98f4371a4fffe56b5a6ce8356b0df.jpg)
+
+
+1. OLED 显示屏文档：https://wiki.seeedstudio.com/CN/XIAO_RP2040_OLED_Display/  
+2. U8g2库 Github 主页：https://github.com/olikraus/u8g2_arduino   
+4. 示例程序：在 XIAO 扩展板的 OLED 显示屏上显示 Hello World！：https://create.arduino.cc/editor/mouseart/862c08a7-ed41-40ed-abcb-6c64d180f328/preview  
+5. 示例程序：在 XIAO 扩展板的 OLED 显示屏上画圆：https://app.arduino.cc/sketches/24884c4f-d944-4764-8efb-edd0691d2156?view-mode=preview  
+6. 示例程序：在 XIAO 扩展板的 OLED 显示屏上显示太阳图案：https://app.arduino.cc/sketches/18616357-84a8-40e4-9a43-949bbef1ec9c?view-mode=preview  
+7. 在转换 PNG 到 XBM 格式的在线工具 https://cn.cloud-converter.com/png-to-xbm  
+
+## 产品原型设计
+![alt text](image-36.png)  
+![alt text](image-37.png)  
+![alt text](image-38.png)  
+![alt text](image-39.png)  
+## 智能温湿度仪
+![alt text](image-40.png)
+![alt text](image-41.png)  
+
+## 基于光传感器的惊喜礼盒
+![alt text](image-42.png)  
+![alt text](image-45.png)  
+光照强度增加，电阻值减小
+![光电传感器或光电探测器](image-43.png)
+收到光线会产生电流，光照越强，产生的电流越大。（响应特别快）  
+![alt text](image-44.png)
+与光电二极管相比，晶体管具有灵敏度更高和增益，但响应速度相对较慢。  
+● Grove 光传感器的 Wiki 文档：https://wiki.seeedstudio.com/Grove-Light_Sensor/  
+● Adafruit_NeoPixel库: https://github.com/adafruit/Adafruit_NeoPixel  
+● RGB LED灯带示例程序: https://create.arduino.cc/editor/mouseart/  10ae303f-d2eb-48c5-9cb1-390c4ea46018/preview  
+● 彩虹灯效果程序: https://create.arduino.cc/editor/mouseart/cf254f36-9921-4c98-9ddc-c4e6bfa827c8/preview  
+● 完整的惊喜礼盒程序: https://create.arduino.cc/editor/mouseart/58e1bf39-d9d5-498d-8995-bd12c8afe17a/preview  
+
+## 三轴加速度计的律动炫舞
+![alt text](image-46.png)
+
+Adafruit_NeoPixel库: https://github.com/adafruit/Adafruit_NeoPixel
+Seeed_Arduino_LIS3DHTR 库文件地址： https://github.com/Seeed-Studio/Seeed_Arduino_LIS3DHTR
+Grove - 三轴加速度计 (LIS3DHTR) 的 Wiki 文档（英文）：https://wiki.seeedstudio.com/Grove-3-Axis-Digital-Accelerometer-LIS3DHTR/
+读取 Grove 三轴加速度计 X、Y、Z 轴的数值的中文注释示例程序：
+https://create.arduino.cc/editor/mouseart/fe8abdf3-00a2-492b-b574-13611f2ff13f/preview
+完整的律动炫舞程序: https://create.arduino.cc/editor/mouseart/ec8a7502-1006-4b72-9206-312293f12792/preview
+
+## 红外智能遥控门
+ 
+● IRremote库: https://github.com/Arduino-IRremote/Arduino-IRremote
+● 读取红外遥控器按键编码示例程序: https://create.arduino.cc/editor/mouseart/b90a52b6-aaa7-4d2b-8e79-5c5854f79906/preview
+● 完整的智能遥控门程序: https://create.arduino.cc/editor/mouseart/18da9ac8-2c08-4446-9406-ceef24b26244/preview
+● 激光切割图纸文件: https://files.seeedstudio.com/wiki/XIAO-Kit/XIAO_ADR.dxf
+
+## 基于RTC的智能手表
+
+PCF8563-Arduino-Library: 
+
+## 超声波空气琴
+● Seeed_Arduino_UltrasonicRanger库: https://github.com/Seeed-Studio/Seeed_Arduino_UltrasonicRanger
+● 超声波测距传感器示例程序: https://create.arduino.cc/editor/mouseart/ae22e220-a07b-416e-bc56-2e6e88dd98fa/preview
+● 超声波空气琴完整程序: https://create.arduino.cc/editor/mouseart/28407c8c-96b3-49e4-83ed-2e519028c011/preview
+● 超声波空气琴外壳设计图纸: https://files.seeedstudio.com/wiki/XIAO-Kit/XIAO_Air_Piano.dxf
+
+## 用 XIAO ESP32C3 实现 Wi-Fi 连接和应用
+![alt text](image-47.png)
+Ping工作在网络层，使用ICMP协议，可以用于检测网络连接状态和发现问题。并不传输数据，只是帮忙确认
+GET请求：获取数据
+![alt text](image-49.png)
+![alt text](image-50.png)
+![alt text](image-48.png)
+![alt text](image-51.png)
+POST请求：发送数据
+![alt text](image-52.png)
+
+## XIAO ESP32C3 用 MQTT 实现遥测与命令
+![alt text](image-53.png)
+test.mosquitto.org 
+public.cloud.shiftr.io
+broker.hivemq.com
+
+● arduino-mqtt库: https://github.com/256dpi/arduino-mqtt  
+● PubSubClient库: https://github.com/knolleary/pubsubclient  
+● MQTT X客户端: https://mqttx.app/  
+● 从 XIAO 向 MQTT 代理发送遥测信息的示例程序：https://create.arduino.cc/editor/mouseart/4bae344b-d983-46c4-b38b-6a009d5d6a0e/preview  
+● 通过 MQTT 代理向 XIAO 发送命令的示例程序：
+https://create.arduino.cc/editor/mouseart/751bfd5e-24d8-4ba0-856e-7f9e1e0e8d49/preview  
+
+断网后最新数据或者按顺序执行所有命令
+存储最后一个有效的命令或状态，需要精确控制的设备
+需要实现一个简单的命令队列，待网络恢复后按顺序执行未完成的命令
+
+## 认识边缘人工智能
+![alt text](image-54.png)
+![alt text](image-55.png)
+
+## 用 XIAO 实现异常检测和运动分类
+![alt text](image-56.png)
+![alt text](image-57.png)
+![alt text](image-58.png)
+![alt text](image-59.png)
+## 
+
+
