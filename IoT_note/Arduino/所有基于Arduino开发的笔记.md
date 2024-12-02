@@ -729,6 +729,7 @@ GAP层（通用访问配置文件层）：
 
 参考链接：  
 ● 课程主页（含书籍和产品购买链接）：https://tinkergen.cn/book_xiao  
+● 电子书PDF：https://files.seeedstudio.com/wiki/XIAO_Big_Power-Board-ebook-photo/XIAO_Big_Power_Small_Board_v20240307.pdf
 ● Arduino IDE 下载链接：https://www.arduino.cc/en/software  
 ● XIAO SAMD21 的中文文档：https://wiki.seeedstudio.com/cn/Seeeduino-XIAO/  
 ● 《焊接是容易的——告诉你怎么做》https://mightyohm.com/files/soldercomic/translations/FullSolderComicChinese.pdf  
@@ -757,7 +758,7 @@ GAP层（通用访问配置文件层）：
 https://docs.arduino.cc/built-in-examples/digital/toneMelody/  
 
 ## 用串口监视器监测旋钮
-![串口绘图仪](image-34.png)
+![串口绘图仪](image-34.png)  
 ● 按钮状态串口监视器程序： https://create.arduino.cc/editor/mouseart/71492389-b76c-4c94-b42c-f7c9b41e7c84/preview   
 ● 旋钮数值串口监视器程序： https://create.arduino.cc/editor/mouseart/e593a0fa-be3f-40aa-b769-fbb0581e4b44/preview  
 
@@ -798,40 +799,40 @@ https://docs.arduino.cc/built-in-examples/digital/toneMelody/
 与光电二极管相比，晶体管具有灵敏度更高和增益，但响应速度相对较慢。  
 ● Grove 光传感器的 Wiki 文档：https://wiki.seeedstudio.com/Grove-Light_Sensor/  
 ● Adafruit_NeoPixel库: https://github.com/adafruit/Adafruit_NeoPixel  
-● RGB LED灯带示例程序: https://create.arduino.cc/editor/mouseart/  10ae303f-d2eb-48c5-9cb1-390c4ea46018/preview  
+● RGB LED灯带示例程序: https://create.arduino.cc/editor/mouseart/10ae303f-d2eb-48c5-9cb1-390c4ea46018/preview  
 ● 彩虹灯效果程序: https://create.arduino.cc/editor/mouseart/cf254f36-9921-4c98-9ddc-c4e6bfa827c8/preview  
 ● 完整的惊喜礼盒程序: https://create.arduino.cc/editor/mouseart/58e1bf39-d9d5-498d-8995-bd12c8afe17a/preview  
 
 ## 三轴加速度计的律动炫舞
 ![alt text](image-46.png)
 
-Adafruit_NeoPixel库: https://github.com/adafruit/Adafruit_NeoPixel
-Seeed_Arduino_LIS3DHTR 库文件地址： https://github.com/Seeed-Studio/Seeed_Arduino_LIS3DHTR
-Grove - 三轴加速度计 (LIS3DHTR) 的 Wiki 文档（英文）：https://wiki.seeedstudio.com/Grove-3-Axis-Digital-Accelerometer-LIS3DHTR/
-读取 Grove 三轴加速度计 X、Y、Z 轴的数值的中文注释示例程序：
-https://create.arduino.cc/editor/mouseart/fe8abdf3-00a2-492b-b574-13611f2ff13f/preview
-完整的律动炫舞程序: https://create.arduino.cc/editor/mouseart/ec8a7502-1006-4b72-9206-312293f12792/preview
+Adafruit_NeoPixel库: https://github.com/adafruit/Adafruit_NeoPixel  
+Seeed_Arduino_LIS3DHTR 库文件地址： https://github.com/Seeed-Studio/Seeed_Arduino_LIS3DHTR  
+Grove - 三轴加速度计 (LIS3DHTR) 的 Wiki 文档（英文）：https://wiki.seeedstudio.com/Grove-3-Axis-Digital-Accelerometer-LIS3DHTR/  
+读取 Grove 三轴加速度计 X、Y、Z 轴的数值的中文注释示例程序：  
+https://create.arduino.cc/editor/mouseart/fe8abdf3-00a2-492b-b574-13611f2ff13f/preview  
+完整的律动炫舞程序: https://create.arduino.cc/editor/mouseart/ec8a7502-1006-4b72-9206-312293f12792/preview  
 
 ## 红外智能遥控门
  
-● IRremote库: https://github.com/Arduino-IRremote/Arduino-IRremote
-● 读取红外遥控器按键编码示例程序: https://create.arduino.cc/editor/mouseart/b90a52b6-aaa7-4d2b-8e79-5c5854f79906/preview
-● 完整的智能遥控门程序: https://create.arduino.cc/editor/mouseart/18da9ac8-2c08-4446-9406-ceef24b26244/preview
-● 激光切割图纸文件: https://files.seeedstudio.com/wiki/XIAO-Kit/XIAO_ADR.dxf
+● IRremote库: https://github.com/Arduino-IRremote/Arduino-IRremote  
+● 读取红外遥控器按键编码示例程序: https://create.arduino.cc/editor/mouseart/b90a52b6-aaa7-4d2b-8e79-5c5854f79906/preview  
+● 完整的智能遥控门程序: https://create.arduino.cc/editor/mouseart/18da9ac8-2c08-4446-9406-ceef24b26244/preview  
+● 激光切割图纸文件: https://files.seeedstudio.com/wiki/XIAO-Kit/XIAO_ADR.dxf  
 
 ## 基于RTC的智能手表
 
 PCF8563-Arduino-Library: 
 
 ## 超声波空气琴
-● Seeed_Arduino_UltrasonicRanger库: https://github.com/Seeed-Studio/Seeed_Arduino_UltrasonicRanger
-● 超声波测距传感器示例程序: https://create.arduino.cc/editor/mouseart/ae22e220-a07b-416e-bc56-2e6e88dd98fa/preview
-● 超声波空气琴完整程序: https://create.arduino.cc/editor/mouseart/28407c8c-96b3-49e4-83ed-2e519028c011/preview
-● 超声波空气琴外壳设计图纸: https://files.seeedstudio.com/wiki/XIAO-Kit/XIAO_Air_Piano.dxf
+● Seeed_Arduino_UltrasonicRanger库: https://github.com/Seeed-Studio/Seeed_Arduino_UltrasonicRanger  
+● 超声波测距传感器示例程序: https://create.arduino.cc/editor/mouseart/ae22e220-a07b-416e-bc56-2e6e88dd98fa/preview  
+● 超声波空气琴完整程序: https://create.arduino.cc/editor/mouseart/28407c8c-96b3-49e4-83ed-2e519028c011/preview  
+● 超声波空气琴外壳设计图纸: https://files.seeedstudio.com/wiki/XIAO-Kit/XIAO_Air_Piano.dxf  
 
 ## 用 XIAO ESP32C3 实现 Wi-Fi 连接和应用
 ![alt text](image-47.png)
-Ping工作在网络层，使用ICMP协议，可以用于检测网络连接状态和发现问题。并不传输数据，只是帮忙确认
+Ping工作在网络层，使用ICMP协议，可以用于检测网络连接状态和发现问题。并不传输数据，只是帮忙确认  
 GET请求：获取数据
 ![alt text](image-49.png)
 ![alt text](image-50.png)
@@ -841,31 +842,36 @@ POST请求：发送数据
 ![alt text](image-52.png)
 
 ## XIAO ESP32C3 用 MQTT 实现遥测与命令
-![alt text](image-53.png)
-test.mosquitto.org 
-public.cloud.shiftr.io
-broker.hivemq.com
-
+![alt text](image-53.png)  
+公共MQTT服务器：
+```
+test.mosquitto.org  
+public.cloud.shiftr.io  
+broker.hivemq.com  
+```
 ● arduino-mqtt库: https://github.com/256dpi/arduino-mqtt  
 ● PubSubClient库: https://github.com/knolleary/pubsubclient  
 ● MQTT X客户端: https://mqttx.app/  
 ● 从 XIAO 向 MQTT 代理发送遥测信息的示例程序：https://create.arduino.cc/editor/mouseart/4bae344b-d983-46c4-b38b-6a009d5d6a0e/preview  
-● 通过 MQTT 代理向 XIAO 发送命令的示例程序：
+● 通过 MQTT 代理向 XIAO 发送命令的示例程序：  
 https://create.arduino.cc/editor/mouseart/751bfd5e-24d8-4ba0-856e-7f9e1e0e8d49/preview  
 
-断网后最新数据或者按顺序执行所有命令
-存储最后一个有效的命令或状态，需要精确控制的设备
-需要实现一个简单的命令队列，待网络恢复后按顺序执行未完成的命令
+断网后
+获取最新数据，存储最后一个有效的命令或状态，
+需要精确控制的设备，需要实现一个简单的命令队列，待网络恢复后按顺序执行未完成的命令  
 
 ## 认识边缘人工智能
-![alt text](image-54.png)
-![alt text](image-55.png)
+![alt text](image-54.png)  
+![alt text](image-55.png)  
 
 ## 用 XIAO 实现异常检测和运动分类
-![alt text](image-56.png)
-![alt text](image-57.png)
-![alt text](image-58.png)
-![alt text](image-59.png)
-## 
+![alt text](image-56.png)  
+![alt text](image-57.png)  
+![alt text](image-58.png)  
+![alt text](image-59.png)  
 
-
+B站U主无限理论派的如何快速理解离散傅立叶变换和FFT
+## 用 XIAO 实现语音关键词识别
+![alt text](image-60.png)
+自动划分数据集
+选择Data explorer,如果不同类别的数据点明显分开，意味着模型能够有效的区分这些类别
