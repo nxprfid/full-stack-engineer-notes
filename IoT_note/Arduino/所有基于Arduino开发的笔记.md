@@ -875,3 +875,9 @@ B站U主无限理论派的如何快速理解离散傅立叶变换和FFT
 ![alt text](image-60.png)
 自动划分数据集
 选择Data explorer,如果不同类别的数据点明显分开，意味着模型能够有效的区分这些类别
+
+# 在Arduino中快速开始使用FreeRTOS
+https://github.com/Seeed-Studio/Seeed_Arduino_FreeRTOS  
+
+现在，可以将Seeed_Arduino_FreeRTOS库安装到Arduino IDE中。打开Arduino IDE，点击 sketch -> Include Library -> Add .ZIP Library, 选择刚刚下载的 Seeed_Arduino_FreeRTOS 文件。  
+![alt text](image-61.png)  
