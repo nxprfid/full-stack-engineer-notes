@@ -28,5 +28,17 @@ Python 中input()函数用于从用户输入中获取数据，并将其返回为
 总结：
 ![alt text](image-13.png)  
 
-AI提问话语  
+break用于提前结束整个循环
+continue用于跳过当前循环的剩余部分，直接进入下一次循环
+
+流程图  
+![alt text](image-15.png)  
+矩形表示处理步骤  
+菱形表示判断条件
+箭头表示执行流程  
+
+## AI提问话语  
 ![alt text](image-14.png)  
+![alt text](image-16.png)
+
+课程 Github 仓库：https://github.com/Seeed-Studio/Seeed_Studio_Courses/tree/Edge-AI-101-with-Nvidia-Jetson-Course/docs/cn
