@@ -97,16 +97,12 @@ taa 选择下拉的最后一个
 5. Bottom Overlay 底层丝印层
 6. Top Paste 顶层锡膏层
 7. Bottom Paste 底层锡膏层
-8. Top Solder 
-顶层阻焊层
+8. Top Solder 顶层阻焊层  
 9. Bottom Solder 底层阻焊层
-10. Drill Guide
-钻孔层
-11.  Keep-O
-ut Layer 防焊层
-12. Drill Drawing
-钻孔层
-13. Multi-Layer 多层
+10. Drill Guide 钻孔引导层  
+11. Keep-Out Layer 禁止布线层（电气）
+12. Drill Drawing 钻孔描述层  
+13. Multi-Layer 多层  
 
 快捷键`eos`设置原点为中间  
 ![alt text](image-16.png)
