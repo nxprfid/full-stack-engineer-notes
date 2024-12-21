@@ -37,6 +37,19 @@ continue用于跳过当前循环的剩余部分，直接进入下一次循环
 菱形表示判断条件
 箭头表示执行流程  
 
+glabal关键字可以在函数内部声明全局变量，使函数内部可以修改全局变量的值
+
+# 两个函数设计原则
+单一职责原则
+![alt text](image-17.png)  
+参数验证
+![alt text](image-18.png)
+
+
+![alt text](image-19.png)
+Python搜索路径：  
+
+当前目录->环境变量中指定的路径->Python标准库->第三方包
 ## AI提问话语  
 ![alt text](image-14.png)  
 ![alt text](image-16.png)
