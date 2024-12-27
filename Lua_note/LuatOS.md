@@ -1,12 +1,12 @@
 
-[LuatOS在线模拟器](https://wiki.luatos.com/_static/luatos-emulator/lua.html)  
-[Lua在线REPL工具](https://wiki.luatos.com/_static/repl/index.html)  
+[LuatOS在线模拟器](https://wiki.luatos.com/_static/luatos-emulator/lua.html)
+[Lua在线REPL工具](https://wiki.luatos.com/_static/repl/index.html)
 # 基础语法
-字符串连接符号：`..`  
-字符串前面加`#`，可以获取长度  
+字符串连接符号：`..`
+字符串前面加`#`，可以获取长度
 
-用`--`开头，来写一段单行注释  
-也可以用`--[[`开头，`]]`结尾，写一段多行注释。  
+用`--`开头，来写一段单行注释
+也可以用`--[[`开头，`]]`结尾，写一段多行注释。
 # 字符串string
 Lua 语言中字符串可以使用以下三种方式来表示：
 
@@ -25,13 +25,14 @@ string.byte(0x30)
 
 lua字符串是可以存0的，不是C中遇到0就停止的
 ![alt text](image-7.png)
+![alt text](image-8.png)
 # 循环
 while后面加的是do，for也是do，判断if才是then。
 
 判断变量可以使用这个，相当于C语言中的三目运算符
 ```lua
 a = nil
-b = 0  
+b = 0
 print(b > 10 and "yes" or "no")
 ```
 结果为no
@@ -43,25 +44,25 @@ print(b > 10 and "yes" or "no")
 ![alt text](image-1.png)
 ![alt text](image-2.png)
 
-table数组
+# table数组
 可以存数字，字符串，table，function
 数组下标从1开始
 
 table默认以数字作为下标，下标也可以是字符串
 
-特殊的table
+## 特殊的table
 `_G`
 Lua里面所有的全局变量都在`_G`这个table里面
 
 table删减
-table.insert (table, [pos ,] value)
+`table.insert (table, [pos ,] value)`
 
 在（数组型）表 table 的 pos 索引位置插入 value，其它元素向后移动到空的地方。pos 的默认值是表的长度加一，即默认是插在表的最后。
 
-table.remove (table [, pos])
+`table.remove (table [, pos])`
 
 在表 table 中删除索引为 pos（pos 只能是 number 型）的元素，并返回这个被删除的元素，它后面所有元素的索引值都会减一。pos 的默认值是表的长度，即默认是删除表的最后一个元素。
-
+# require多文件调用
 ![alt text](image-3.png)
 require只是用来引入外部库的。不需要多次调用。如果需要多次调用，可以在被调用的文件里创建table，再往这table中添加函数，在调用文件中使用该函数即可。
 
