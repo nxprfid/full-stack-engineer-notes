@@ -50,6 +50,30 @@ glabal关键字可以在函数内部声明全局变量，使函数内部可以�
 Python搜索路径：  
 
 当前目录->环境变量中指定的路径->Python标准库->第三方包
+
+
+# 列表
+![alt text](image-26.png)  
+
+![alt text](image-27.png)  
+
+![alt text](image-28.png)  
+![alt text](image-29.png)  
+
+![alt text](image-30.png)  
+![alt text](image-31.png)  
+![alt text](image-32.png)  
+
+# 元组
+一经创建，不可修改
+![alt text](image-33.png)  
+元组有三个关键特点
+不可变性、有序性和内存效率
+![alt text](image-34.png)
+![alt text](image-35.png)
+如果元组中包含列表等可变对象，对象的内容可以改变的。如果确实需要修改元组，正确是创建一个新的元组。  
+元组解包可用于处理函数返回多个值的场景
+![alt text](image-36.png)
 ## AI提问话语  
 ![alt text](image-14.png)  
 ![alt text](image-16.png)
