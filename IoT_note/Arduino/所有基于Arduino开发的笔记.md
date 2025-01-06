@@ -6,7 +6,7 @@
 # 开发板管理器地址
 合宙Air001：https://arduino.luatos.com/package_air_cn_index.json  
 博通BK7238：https://dl2.bekencorp.com/arduino/package_bk7238_index.json  
-乐鑫ESP32：https://espressif.github.io/arduino-esp32/package_esp32_index.json
+乐鑫ESP32：https://espressif.github.io/arduino-esp32/package_esp32_index.json  
 乐鑫ESP32：https://dl.espressif.com/dl/package_esp32_index.json
 # 合宙的RP2040 树莓派 Pico
 将开发板的 USB 连接移除，按住开发板上的按键，再重新插入 USB 接口。
@@ -95,10 +95,11 @@ ulValue：占空比
 
 ## I2C
 ### I2C 主模式
-    #include <Wire.h>
+```c
+#include <Wire.h>
     Wire.begin();
     Wire.begin(uint32_t sda, uint32_t scl);
-
+```
 调用 begin 后，我们可以通过调用 beginTransmission 并传递 I2C 从机地址来开始传输：
 
     Wire.beginTransmission(address);
@@ -140,10 +141,10 @@ sendStop：如果为 true ，则发送停止位。
 此函数将调用 requestFrom ，并将 iaddress 和 isize 设置为 0 ，并将 sendStop 设置为 true 。
 ### I2C 从模式
 调用 begin 之前，我们必须创建两个回调函数来处理与主设备的通信。
-
-    Wire.onReceive(requestEvent);//onReceive 函数用于定义从主机接收到的数据的回调。
-    Wire.onRequest(receiveEvent);//onRequest 函数用于定义要发送到主机的数据的回调。
-
+```c
+Wire.onReceive(requestEvent);//onReceive 函数用于定义从主机接收到的数据的回调。
+Wire.onRequest(receiveEvent);//onRequest 函数用于定义要发送到主机的数据的回调。
+```
 onReceive 将根据从属设备读取请求处理来自主设备的请求， onRequest 将处理对主设备的应答。
 现在，我们可以通过使用设备地址调用 begin 函数来开始外设配置。
 
@@ -155,18 +156,21 @@ onReceive 将根据从属设备读取请求处理来自主设备的请求， onR
     TwoWire Wire2(SDA_PIN, SCL_PIN);
 
 ## SPI
-
-    #include <SPI.h>
-    //            MOSI  MISO  SCLK
-    SPIClass SPI_3(PC12, PC11, PC10);
-    void setup() {
-    SPI_3.begin(2); //Enables the SPI_3 instance with default settings and attaches the CS pin  
-    SPI_3.beginTransaction(1, settings); //Attaches another CS pin and configure the SPI_3 instance with other settings  
-    SPI_3.transfer(2, 0x52); //Transfers data to the first device
-    SPI_3.transfer(1, 0xA4); //Transfers data to the second device. The SPI_3 instance is configured with the right settings  
-    SPI_3.end() //SPI_3 instance is disabled
-    }
-
+```c
+#include <SPI.h>
+//            MOSI  MISO  SCLK
+SPIClass SPI_3(PC12, PC11, PC10);
+void setup() {
+  SPI_3.begin(2); // Enables the SPI_3 instance with default settings and
+                  // attaches the CS pin
+  SPI_3.beginTransaction(1, settings); // Attaches another CS pin and configure
+                                       // the SPI_3 instance with other settings
+  SPI_3.transfer(2, 0x52);             // Transfers data to the first device
+  SPI_3.transfer(1, 0xA4); // Transfers data to the second device. The SPI_3
+                           // instance is configured with the right settings
+  SPI_3.end()              // SPI_3 instance is disabled
+}
+```
 ## void beginTransaction(uint8_t pin, SPISettings settings)
 允许使用其他参数配置SPI。这些新参数保存在关联的 CS 引脚上。  
 pin：CS 引脚号，由 SPI 库管理。  
@@ -230,7 +234,7 @@ DC连接VCC则I²C从机地址为0x3d
 DC连接GND则I²C从机地址为0x3c
 
 安装Adafruit GFX Library库与Adafruit SSD1306库。
-```
+```c
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -269,7 +273,7 @@ void loop() {}
 
 安装Adafruit ST7735 and ST7789 Library库
 
-```
+```c
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h>
 #include <SPI.h>
@@ -356,7 +360,7 @@ void displayUpTime() {
 ## 数码管 TM1637
 安装Grove_4Digital_Display库
 
-```
+```c
 #include "TM1637.h"
 #define CLK PA_14
 #define DIO PA_13
@@ -390,7 +394,7 @@ void loop()
 安装DallasTemperature库
 为了保证单总线的时序保持正常，我们需要将芯片主频设置为最高的 48M。
 
-```
+```c
 // 引用必要的库
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -436,7 +440,7 @@ void loop() {
 >BMP180 使用I²C通信接口，是专为测量大气压力而设计的基本传感器， BMP180可以测量300至1100 hPa（海拔9000m至-500m）的大气压，以及-40°C至85°C的温度。
 
 安装Adafruit BMP085 Library库  
-```
+```c
 #include <Adafruit_BMP085.h>
 Adafruit_BMP085 bmp;
 
@@ -475,7 +479,7 @@ void loop() {
 由于 WS2812 的时序要求相对严格，我们将使用 SPI 的 MOSI 引脚（PA_7）对其进行驱动。
 ![alt text](image.png)
 首先，为了保证 SPI 频率在 8MHz，我们需要将芯片的主频设置为 16M，这样只要设置 SPI 二分频即可实现输出为 8MHz。
-```
+```c
 #include<SPI.h>
 //LED灯的个数
 #define LED_N   64
@@ -548,7 +552,7 @@ SPI.setBitOrder和SPI.setDataMode的配置，也保证了后续模拟时序的�
 所以WS2812_refresh刷新函数就像下面这样，依次发送颜色数据
 ## 温湿度计 SHT30
 SHT30是一款使用I²C通信接口的温湿度传感器。
-```
+```c
 #include <Wire.h>
 //SHT30 I²C通信从机地址为0x44
 #define Addr_SHT30 0x44
@@ -607,7 +611,7 @@ MPU6050使用I²C通信接口，内部整合了三轴MEMS陀螺仪、三轴MEMS�
 连接I2C和电源，剩余的XDA,XCL,ADO,INT引脚不用连接。
 ![alt text](image-2.png)
 对于陀螺仪：令芯片表面(有文字的一面)朝上，将其表面文字转至正向自己，以芯片内部中心为原点，水平向右的为X轴正方向，水平指向外侧的为Y轴正方向，竖直向上的为Z轴正方向。
-```
+```c
 #include<Wire.h>
 //定义数组用于存放测量的三轴角度、三轴加速度和温度
 int16_t data[7];
