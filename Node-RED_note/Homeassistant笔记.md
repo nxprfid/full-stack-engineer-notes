@@ -170,18 +170,28 @@ homeassistant/home-assistant:latest
 
 # 通过 python 安装HA
 1. 首先安装依赖包
-```
+```bash
 sudo apt-get update
 
 sudo apt-get install -y python3 python3-dev python3-venv \
 python3-pip libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential \
 libopenjp2-7 libtiff5 libturbojpeg0-dev tzdata
 ```
-2. 编译安装 Python3.9
+如果是debian12或Ubuntu24.04 请使用下面的命令：  
+```bash
+sudo apt-get update
+
+sudo apt-get install -y python3 python3-dev python3-venv \
+ python3-pip libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential \
+ libopenjp2-7 libturbojpeg0-dev tzdata
+```
+2. 编译安装 Python3.9  
 Debian Bullseye 默认的 Python 版本就是 Python3.9，所以无需编译安装。
 Ubuntu Jammy 默认的 Python 版本就是 Python3.10，所以也无需编译安装。
 
-3. 创建 Python 虚拟环境
+3. 创建 Python 虚拟环境  
+UbuntuNoble中是python3.12，因此下面命令中标红的python版本号请修改
+为“3.12”，其他的不同linux版本请根据实际情况更改对应的命令。
 ```
 sudo mkdir /srv/homeassistant
 sudo chown orangepi:orangepi /srv/homeassistant
@@ -189,14 +199,13 @@ cd /srv/homeassistant
 python3.9 -m venv .
 source bin/activate
 ```
-4. 安装需要的 Python 包
+4. 安装需要的 Python 包  
 `python3 -m pip install wheel`
-5. 安装 Home Assistant Core
+5. 安装 Home Assistant Core  
 `pip3 install homeassistant`
-
-6. 运行 Home Assistant Core
+6. 运行 Home Assistant Core  
 `hass`
-7. 在浏览器中输入【开发板的 IP 地址:8123】就能看到 Home Assistant 的界面
+1. 在浏览器中输入【开发板的 IP 地址:8123】就能看到 Home Assistant 的界面
 
 
 # Home Assistant使用
