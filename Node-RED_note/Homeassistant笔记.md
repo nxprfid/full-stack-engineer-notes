@@ -71,7 +71,7 @@ Supervised需要Debian12
 https://www.ysjf.com/gate
 2.Kocard
 http://www.kocard.net/
-# 香橙派派安装 Docker
+# 安装 Docker
 Docker 官方的提供的安装文档链接如下所示：  
 Debian 系统: https://docs.docker.com/engine/install/debian/  
 Ubuntu 系统: https://docs.docker.com/engine/install/ubuntu/  
@@ -136,7 +136,14 @@ sudo systemctl restart docker
 ```
 7. 重启下 docker 服务
 `sudo systemctl restart docker`
-
+## Orange Pi 安装 Docker
+Orange Pi 提供的linux镜像已经预装了Docker，只是Docker服务默认没有打开。  
+使用enable_docker.sh 脚本可以使能docker 服务，然后就可以开始使用docker命令了，并且在下次启动系统时也会自动启动docker服务。  
+`enable_docker.sh`  
+`docker run hello-world`  
+使用docker命令时，如果提示permissiondenied，请将当前用户加入到docker
+用户组，这样不需要sudo就能运行docker命令了。  
+orangepi@orangepi:~$ `sudo usermod-aG docker $USER`  
 
 # 香橙派派安装HA
 ## 通过 docker 安装HA
@@ -168,7 +175,7 @@ homeassistant/home-assistant:latest
          删除
          docker rm homeassistant
 
-# 通过 python 安装HA
+## 通过 python 安装HA
 1. 首先安装依赖包
 ```bash
 sudo apt-get update
@@ -207,10 +214,37 @@ source bin/activate
 `hass`
 1. 在浏览器中输入【开发板的 IP 地址:8123】就能看到 Home Assistant 的界面
 
+## Windows 安装HA
+![alt text](image-10.png)
+![alt text](image-11.png)
+「苹果控制米家设备-home assistant」
+链接：https://pan.quark.cn/s/0c3046ddb3e6Home assistant 稳定版
 
+拉取镜像命令：
+docker pull homeassistant/home-assistant:stable
+
+运行镜像命令：
+docker run -d -p 8123:8123 homeassistant/home-assistant:stable
+
+docker官网：
+https://docs.docker.com/
+
+home assistant官网：
+https://www.home-assistant.io/
 # Home Assistant使用
 ![alt text](image-5.png)
 ![alt text](image-6.png)
 ![alt text](image-7.png)
 ![alt text](image-8.png)
 ![alt text](image-9.png)
+![alt text](image-12.png)
+基本上插件、主题都是frontend；设备、卡片、APl基本上都是intergation
+# 米家官方集成
+https://pan.quark.cn/s/206adbaa7d2e
+
+github项目地址：https://github.com/XiaoMi/ha_xiaomi_home/blob/main/doc/README_zh.md
+
+补充：
+1、其他NAS系统下使用docker container的官方详细文档：https://www.home-assistant.io/installation/alternative#install-home-assistant-container
+2、Linux下使用docker container的官方详细文档：https://www.home-assistant.io/installation/linux#install-home-assistant-container
+3、MacOS和Windows系统下目前没有关于docker container的官方详细文档。
