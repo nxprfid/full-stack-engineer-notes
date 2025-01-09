@@ -1,3 +1,5 @@
+# 前言
+简单来说HA，就是一个低功耗的电脑（路由器或者NAS或者Linux单板机）上面专门运行一个Python3的程序。这个程序通过网络连接各个设备云平台，时时刻刻接受云平台传来的数据并可以控制。直接支持小爱同学语音控制比如美的的空调。（小米云端-本地（HA）-美的云端）定制部分：可以创建一系列规则。达到“互联互通”。还可以将所有设备通过桥接连接到HomeKit（云端-本地（HA）-本地（苹果中枢）），使用Siri控制。
 # NAS
 NAS（Network Attached Storage）网络附加存储，主要用于存储大量数据，如照片、视频、音乐、文档等。NAS通常安装在服务器上，通过网络访问，可以实现文件共享、远程备份、远程访问等功能。NAS的优点是安全、便捷、经济，缺点是成本高、可靠性差、易捷性差。
 
@@ -15,9 +17,8 @@ NAS（Network Attached Storage）网络附加存储，主要用于存储大量�
 
 第七步，同样设置端口转发，之前的外部端口就是现在的内部端口，转出去，在外网访问的端口就是外部端口，建议设置5位。
 
-所以我们需要智能家居，传感器，NAS等等都在这个二级网络当中，所有的交互都交给Home Assistant，我们只需要把Home assistant的端口转出去就行了（这块在Home Assistant安装教程中会讲）
-或者桥接模式
-Docker安装和基础设置 
+所以我们需要智能家居，传感器，NAS等等都在这个二级网络当中，所有的交互都交给Home Assistant，我们只需要把Home assistant的端口转出去就行了（这块在Home Assistant安装教程中会讲）或者桥接模式
+# Docker安装和基础设置 
 
 ## 拿到KEY、IP、Token
 
@@ -33,8 +34,6 @@ HomemeKit Bridge插件连接到苹果生态
 
 2、Linux下使用docker container的官方详细文档：https://www.home-assistant.io/installation/linux#install-home-assistant-container
 
-「苹果控制米家设备-home assistant」
-链接：https://pan.quark.cn/s/0c3046ddb3e6Home assistant 稳定版
 
 拉取镜像命令：
 docker pull homeassistant/home-assistant:stable
@@ -51,26 +50,7 @@ https://www.home-assistant.io/
 ![alt text](image-4.png)
 HA版本
 Supervised需要Debian12
-## 目录结构
 
-![alt text](image.png)
-
-
-1. 文件夹的管理和命名:日期和项目内容来命名，
-例如：2024-06-20_五月天演唱会
-![alt text](image-2.png)
-1. 每个文件夹前加上数字，分类成9项，工程文件，原始素材，素材，特效，字幕，导出，通用素材，封面，归档）
-2. 文件命名:交代素材信息，时间+机型+机位，
-   ![alt text](image-1.png)
-3. 导出成片命名:时间_片名_分辨率_编码格式_导出人_备注_版本
-数据备份：
-三备、二介、异地
-烤卡软件推荐
-推荐软件:Gate或者Kocard（都是免费的）Silverstack（收费，专业）
-1.Gate
-https://www.ysjf.com/gate
-2.Kocard
-http://www.kocard.net/
 # 安装 Docker
 Docker 官方的提供的安装文档链接如下所示：  
 Debian 系统: https://docs.docker.com/engine/install/debian/  
@@ -227,24 +207,200 @@ docker pull homeassistant/home-assistant:stable
 docker run -d -p 8123:8123 homeassistant/home-assistant:stable
 
 docker官网：
-https://docs.docker.com/
+https://docs.docker.com/  
 
 home assistant官网：
-https://www.home-assistant.io/
+https://www.home-assistant.io/  
 # Home Assistant使用
+http://homeassistant.local:8123/
+或者 IP地址:8123  
+
+登录命令端口 IP地址:7681  
+
+# Home Assistant插件
 ![alt text](image-5.png)
 ![alt text](image-6.png)
 ![alt text](image-7.png)
 ![alt text](image-8.png)
 ![alt text](image-9.png)
 ![alt text](image-12.png)
-基本上插件、主题都是frontend；设备、卡片、APl基本上都是intergation
-# 米家官方集成
-https://pan.quark.cn/s/206adbaa7d2e
+基本上插件、主题都是frontend；设备、卡片、APl基本上都是intergation  
 
-github项目地址：https://github.com/XiaoMi/ha_xiaomi_home/blob/main/doc/README_zh.md
+
+## 米家官方集成
+https://pan.quark.cn/s/206adbaa7d2e  
+
+github项目地址：https://github.com/XiaoMi/ha_xiaomi_home/blob/main/doc/README_zh.md  
 
 补充：
-1、其他NAS系统下使用docker container的官方详细文档：https://www.home-assistant.io/installation/alternative#install-home-assistant-container
-2、Linux下使用docker container的官方详细文档：https://www.home-assistant.io/installation/linux#install-home-assistant-container
-3、MacOS和Windows系统下目前没有关于docker container的官方详细文档。
+1、其他NAS系统下使用docker container的官方详细文档：https://www.home-assistant.io/installation/alternative#install-home-assistant-container  
+2、Linux下使用docker container的官方详细文档：https://www.home-assistant.io/installation/linux#install-home-assistant-container  
+3、MacOS和Windows系统下目前没有关于docker container的官方详细文档。  
+## ⽶家设备接⼊---Xiaomi Gateway3
+1. 进⼊HA界⾯中，找到“配置 – 设备与服务”  
+2. 点击“添加集成”在搜索栏中输⼊“xiaomi”并找到“Xiaomi Gateway 3”。  
+3. 在新对话框中选择“Add Mi Cloud Account”并点击“提交”.  
+4. 输⼊⼩⽶id或邮箱（不是⼿机号）及密码。  
+5. 点击添加集成，选择接⼊的⽹关，我这⾥是⼩⽶多模⽹关2，然后提交。  
+6. 提交后可⾃动获取token,直接点击提交就可以。  
+
+## ⽶家设备接⼊---Xiaomi Miot Auto
+1. 进⼊HA界⾯中，找到“配置 – 设备与服务”  
+2. 点击“添加集成”在搜索栏中输⼊“xiaomi”并找到“Xiaomi Miot Auto”。  
+3. 在新对话框中选择“Add devices using Mi Account”账号集成并点击“提交”。  
+4. 依次输⼊⼩⽶的账户，密码。注意账户是⼩⽶的ID或者邮箱，不是⼿机号。设备连接模式默认⾃动模式就可以，填好后，点击提交。  
+5. 默认直接提交就⾏。  
+简单解释下：如果选择”Exclude(排除)”的话，下⾯的设备列表中，勾选的设备，
+不会出现在homeassistant中。如果选择include(包含)，设备列表中选中的会加⼊
+homeassistant。选择后，点提交。  
+（不知道怎么选择的话，都⽤默认即可。因为默认的是最通⽤的⽅案）  
+![alt text](image-17.png)  
+6. 点提交后，等⼀会，⼩⽶的设备会陆陆续续的出现，点击完成后，⼩⽶的设备会出现左侧【概览】⾥⾯。⾄此⼩⽶的设备添加就完成了。  
+
+## HA平台设备转接到homekit中
+HA 平台的设备转接到homekit，需要按照实体来转接，并不是由⼀个设备来转接，这与我们平时的认知，可能有点差别，这个需要⼤家注意⼀下。  
+⼀、与HomeKit配对  
+1. 配置--设备与服务--右下⻆的添加集成--搜索apple  
+2. 点击右下⻆添加集成----搜索apple--选择HomeKit Bridge  
+3. 选择要包含的域  
+4. 点击【提交】,完成  
+5. 点击左侧【通知】，会有⼆维码，，然后打开苹果家庭，扫码添加。  
+![alt text](image-18.png)  
+
+### 添加实体时如何知道设备所属的域
+配置---设备服务---实体---找到想要的实体  
+单击--选择右上⻆的⻮轮--单击，即可看到所属的域  
+![alt text](image-19.png)  
+![alt text](image-20.png)  
+### 如何排除Homekit ⾥⾯的homeassistant 设备
+1. 依次点击配置--设备与服务  
+2. 找到之前添加过的homekit 集成。点击选项。  
+3. 点击提交  
+![alt text](image-21.png)  
+4. 下拉框，选择想要删除的设备  
+⽐如选择删除灯带，选择提交  
+![alt text](image-22.png)  
+5. 提交，等⼀会，这个灯带在homekit便不显示了  
+
+### 家居中枢
+
+
+
+
+# 美的设备接⼊
+HACS搜索 `midea_ac_lan`  
+项目地址：https://github.com/georgezhao2010/midea_ac_lan   
+需要⼿动安装可在浏览器输⼊：  
+
+      https://my.home-assistant.io/redirect/hacs_repository/?owner=georgezhao2010&repository=midea_ac_lan&category=integration
+
+重启后打开设置 - 设备与服务 - 添加集成   
+输⼊ midea  
+![alt text](image-13.png)   
+点击 - 提交 - 提交（默认 auto 即可）  
+正常情况下会发现新设备  
+输⼊ 美的 账号密码，切换对应使⽤的 APP，这⾥是“美的美居”  
+修改 设备名称一路提交即可  
+# HomeAssistant对接蓝⽛⾳箱
+将USB蓝⽛适配器接到HA盒⼦的usb⼝  
+IP地址:7681  
+```bash
+login
+bluetuith
+```
+⽅向键上下可以选择想要连接的蓝⽛  
+t 信任设备
+P 配对设备
+c 连接设备
+q 退出
+
+重新加载家庭助理⾳频更新信息  
+`ha audio reload`  
+查看有关家庭助理⾳频设备的信息  
+`ha audio info`    
+![alt text](image-14.png)    
+家庭助⼿⻚⾯安装VLC  
+配置----加载项---加载项商店—VLC  
+安装成功后配置  
+![alt text](image-15.png)  
+将VLC设置为某个区域的播放器   
+配置—设备与集成---core-vlc—配置---如果全域⽆需选择区域完成即可  
+媒体----右下⻆可以选择vlc播放了  
+![alt text](image-16.png)  
+
+# 需要使用小爱同学等其他音响
+请看：https://github.com/larry-wong/bemfa  
+
+# ZigBee设备接⼊
+注意Zigbee Home Automation（简称ZHA）与Zibee2mqtt不能同时使⽤，只能开启⼀个！！！  
+注意如果您只有⼀个协调器，Zigbee Home Automation（简称ZHA）与Zibee2mqtt不能同时使⽤⼀个设备，只能开启⼀个！！！  
+## zigbee2mqtt配置
+### 安装Zigbee2MQTT
+仓库需要添加Zigbee2MQTT  
+配置--加载项--加载项商店  
+找到仓库  
+![alt text](image-23.png)  
+添加插件地址，将下⾯的地址复制即可(冬⽠仓库)  
+https://gitcode.com/waxgourd/addons  
+也可以使⽤官⽅仓库：  
+https://github.com/zigbee2mqtt/hassio-zigbee2mqtt  
+刷新⼀下浏览器，然后就可在加载商店搜索安装了（我这⾥使⽤的是冬⽠仓库）  
+![alt text](image-24.png)  
+
+### 配置Mosquitto broker
+安装后，不要启动，先进⾏配置
+配置--加载项--Mosquitto broker
+```
+username: user
+password: passwd
+```
+复制上⾯语句，⽤户名和密码根据⾃⼰情况更改，粘贴后保存
+![alt text](image-25.png)
+配置Zigbee2MQTT
+![alt text](image-26.png)  
+port: /dev/ttyUSB0  
+
+### 启动Zigbee2MQTT
+将协调器接⼊盒⼦，查看是否成功接⼊：配置--系统--硬件--全部硬件---搜索usb0  
+![alt text](image-27.png)  
+如果没有查到，说明设备没有接⼊，检查设备接情况，重新插⼊  
+![alt text](image-28.png)  
+打开webUI即可  
+点击允许添加新设备（所有）  
+此时可以将要添加的设备调到配对状态，然后就可以搜索到  
+![alt text](image-29.png)  
+## Zigbee Home Automation配置
+1. 将协调器接⼊盒⼦，查看是否成功接⼊：配置--系统--硬件--全部硬件---搜索usb0  
+![alt text](image-30.png)  
+如果没有查到，说明设备没有接⼊，检查设备接情况，重新插⼊  
+2. 集成安装  
+配置--设备与服务--添加集成-输⼊zha进⾏搜索  
+![alt text](image-31.png)  
+ ⽹络构成，⼀般选择删除⽹络设置并创建新⽹络（根据⾃⼰实际情况选择） 
+![alt text](image-32.png)  
+3. 添加设备  
+进⼊集成
+![alt text](image-33.png)  
+![alt text](image-34.png)  
+设置要添加的设备处于配对状态，即可被发现  
+![alt text](image-35.png)  
+
+
+# 文件管理目录结构
+![alt text](image.png)
+
+1. 文件夹的管理和命名:日期和项目内容来命名，
+例如：2024-06-20_五月天演唱会
+![alt text](image-2.png)
+1. 每个文件夹前加上数字，分类成9项，工程文件，原始素材，素材，特效，字幕，导出，通用素材，封面，归档）
+2. 文件命名:交代素材信息，时间+机型+机位，
+   ![alt text](image-1.png)
+3. 导出成片命名:时间_片名_分辨率_编码格式_导出人_备注_版本
+数据备份：
+三备、二介、异地
+烤卡软件推荐
+推荐软件:Gate或者Kocard（都是免费的）Silverstack（收费，专业）
+1.Gate
+https://www.ysjf.com/gate
+2.Kocard
+http://www.kocard.net/
