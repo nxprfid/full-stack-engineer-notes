@@ -1,5 +1,7 @@
 # 前言
 简单来说HA，就是一个低功耗的电脑（路由器或者NAS或者Linux单板机）上面专门运行一个Python3的程序。这个程序通过网络连接各个设备云平台，时时刻刻接受云平台传来的数据并可以控制。直接支持小爱同学语音控制比如美的的空调。（小米云端-本地（HA）-美的云端）定制部分：可以创建一系列规则。达到“互联互通”。还可以将所有设备通过桥接连接到HomeKit（云端-本地（HA）-本地（苹果中枢）），使用Siri控制。
+
+教程连接：https://www.bilibili.com/opus/440062456525682264  
 # NAS
 NAS（Network Attached Storage）网络附加存储，主要用于存储大量数据，如照片、视频、音乐、文档等。NAS通常安装在服务器上，通过网络访问，可以实现文件共享、远程备份、远程访问等功能。NAS的优点是安全、便捷、经济，缺点是成本高、可靠性差、易捷性差。
 
@@ -224,9 +226,10 @@ http://homeassistant.local:8123/
 ![alt text](image-8.png)
 ![alt text](image-9.png)
 ![alt text](image-12.png)
-基本上插件、主题都是frontend；设备、卡片、APl基本上都是intergation  
+基本上插件、主题都是frontend；设备、卡片、API基本上都是intergation  
 
-
+intergation对应的目录是custom_components
+frontend对应的目录是www里面的community
 ## 米家官方集成
 https://pan.quark.cn/s/206adbaa7d2e  
 
@@ -385,6 +388,44 @@ port: /dev/ttyUSB0
 设置要添加的设备处于配对状态，即可被发现  
 ![alt text](image-35.png)  
 
+# Home Assistant的UI设计
+在HomeAssistant文件中新建themes文件夹，这是用来存放主题的。然后在www文件夹下新建images文件夹，用来存放图片资源。
+
+在根文件夹下有三个yaml，分别是：configuration.yaml、customize.yaml、ui-lovelace.yaml。
+
+编码修改为UTF-8
+需要加载customize就需要添加这两行代码，缩进是两个空格。
+![alt text](image-36.png)
+如果需要加载ui-lovelace，就需要添加这两行代码，使用主题要修改对应的mode
+![alt text](image-37.png)
+
+![alt text](image-38.png)
+
+输入/local/community/你新建文件夹的名字
+
+![alt text](image-39.png)
+![alt text](image-40.png)
+![alt text](image-41.png)
+![alt text](image-42.png)
+![alt text](image-43.png)
+![alt text](image-44.png)
+![alt text](image-45.png)
+![alt text](image-46.png)
+![alt text](image-47.png)
+
+frontpage这个文件夹内就是首页展示的内容
+
+# Home Assistant备份和升级&导入DIY主题
+![备份](image-48.png)
+![alt text](image-49.png)
+![alt text](image-50.png)
+![alt text](image-51.png)
+
+www下不要全部复制，
+![alt text](image-52.png)
+![alt text](image-53.png)
+![alt text](image-54.png)
+
 
 # 文件管理目录结构
 ![alt text](image.png)
@@ -404,3 +445,4 @@ port: /dev/ttyUSB0
 https://www.ysjf.com/gate
 2.Kocard
 http://www.kocard.net/
+
