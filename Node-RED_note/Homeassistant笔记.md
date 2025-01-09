@@ -15,9 +15,8 @@ NAS（Network Attached Storage）网络附加存储，主要用于存储大量�
 
 第七步，同样设置端口转发，之前的外部端口就是现在的内部端口，转出去，在外网访问的端口就是外部端口，建议设置5位。
 
-所以我们需要智能家居，传感器，NAS等等都在这个二级网络当中，所有的交互都交给Home Assistant，我们只需要把Home assistant的端口转出去就行了（这块在Home Assistant安装教程中会讲）
-或者桥接模式
-Docker安装和基础设置 
+所以我们需要智能家居，传感器，NAS等等都在这个二级网络当中，所有的交互都交给Home Assistant，我们只需要把Home assistant的端口转出去就行了（这块在Home Assistant安装教程中会讲）或者桥接模式
+# Docker安装和基础设置 
 
 ## 拿到KEY、IP、Token
 
