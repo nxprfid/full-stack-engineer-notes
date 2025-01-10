@@ -213,6 +213,77 @@ https://docs.docker.com/
 
 home assistant官网：
 https://www.home-assistant.io/  
+
+## 香橙派Zero3安装Home Assistant Supervised
+
+supervised-installer：https://github.com/home-assistant/supervised-installer  
+教程：https://www.leetoutou.xyz/Orange-Pi-Zero3-Home-Assistant-Supervised-a4b404b8d17444f7b190e585b61299ed
+```bash
+ssh root@192.168..
+sudo apt-get update
+```
+1. 使用此命令安装以下依赖项：
+```bash
+apt install \
+apparmor \
+bluez \
+cifs-utils \
+curl \
+dbus \
+jq \
+libglib2.0-bin \
+lsb-release \
+network-manager \
+nfs-common \
+systemd-journal-remote \
+systemd-resolved \
+udisks2 \
+wget -y
+#然后重启
+reboot
+ssh root@192.168..
+```
+2. 使用以下命令安装 Docker-CE：
+`curl -fsSL get.docker.com | sh`
+3. 安装 OS-Agent：
+https://github.com/home-assistant/os-agent/releases/latest
+![alt text](image-55.png)
+复制链接地址：https://github.com/home-assistant/os-agent/releases/download/1.6.0/os-agent_1.6.0_linux_aarch64.deb
+
+使用`wget`+网址下载  
+`sudo dpkg -i os-agent_1.6.0_linux_aarch64.deb`
+> 对AppArmor做一个设置（应用盔甲）
+> 根据每一个应用做一些权限上的管理
+> 将启动配置的参数加到我们香橙派的一个启动参数里面
+`sudo vim /boot/cmd/cmdline.txt`
+```
+apparmor=1 security=apparmor
+```
+对CGroup做一个设置
+`sudo vim /etc/default/grub`
+```
+systemd.unified_cgroup_hierarchy=false
+
+```
+reboot
+
+4. 安装 Home Assistant Supervised Debian 软件包：  
+`wget -O homeassistant-supervised.deb https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb`
+
+修改主机的一个名称，名称不对是无法安装的。
+`sudo vim /etc/os-release`
+![alt text](image-56.png)
+如果最后没有弹出那个选择架构就会有问题，需要自己手动操作一下/etc/hassio.json 的 arm64 示例
+```
+{
+“supervisor”： “ghcr.io/home-assistant/aarch64-hassio-supervisor”，
+“machine”： “qemuarm-64”，
+“data”： “/usr/share/hassio”
+}
+```
+
+`apt install ./homeassistant-supervised.deb`
+![alt text](image-57.png)
 # Home Assistant使用
 http://homeassistant.local:8123/
 或者 IP地址:8123  
