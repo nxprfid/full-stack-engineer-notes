@@ -19,8 +19,32 @@ NAS（Network Attached Storage）网络附加存储，主要用于存储大量�
 
 第七步，同样设置端口转发，之前的外部端口就是现在的内部端口，转出去，在外网访问的端口就是外部端口，建议设置5位。
 
-所以我们需要智能家居，传感器，NAS等等都在这个二级网络当中，所有的交互都交给Home Assistant，我们只需要把Home assistant的端口转出去就行了（这块在Home Assistant安装教程中会讲）或者桥接模式
-# Docker安装和基础设置 
+所以我们需要智能家居，传感器，NAS等等都在这个二级网络当中，所有的交互都交给Home Assistant，我们只需要把Home assistant的端口转出去就行了（这块在Home Assistant安装教程中会讲）或者桥接模式。
+# Home Assistant安装和基础设置 
+## Windows 安装HA
+![alt text](image-10.png)
+![alt text](image-11.png)
+1、其他NAS系统下使用docker container的官方详细文档：https://www.home-assistant.io/installation/alternative#install-home-assistant-container
+
+2、Linux下使用docker container的官方详细文档：https://www.home-assistant.io/installation/linux#install-home-assistant-container  
+
+拉取镜像命令：
+docker pull homeassistant/home-assistant:stable
+
+运行镜像命令：
+docker run -d -p 8123:8123 homeassistant/home-assistant:stable
+
+docker官网：
+https://docs.docker.com/  
+
+home assistant官网：
+https://www.home-assistant.io/  
+
+
+
+![alt text](image-4.png)  
+HA版本
+Supervised需要Debian12
 
 ## 拿到KEY、IP、Token
 
@@ -30,28 +54,6 @@ HACS（Home Assistant Community Store）这就是Home assistant 的应用插件�
 基本上插件、主题都是frontend；设备、卡片、API基本上都是intergation。 
 
 HomemeKit Bridge插件连接到苹果生态
-## 安装
-![alt text](image-3.png)
- 1、其他NAS系统下使用docker container的官方详细文档：https://www.home-assistant.io/installation/alternative#install-home-assistant-container
-
-2、Linux下使用docker container的官方详细文档：https://www.home-assistant.io/installation/linux#install-home-assistant-container
-
-
-拉取镜像命令：
-docker pull homeassistant/home-assistant:stable
-
-运行镜像命令：
-docker run -d -p 8123:8123 homeassistant/home-assistant:stable
-
-docker官网：
-https://docs.docker.com/
-
-home assistant官网：
-https://www.home-assistant.io/
-
-![alt text](image-4.png)
-HA版本
-Supervised需要Debian12
 
 # 安装 Docker
 Docker 官方的提供的安装文档链接如下所示：  
@@ -63,52 +65,52 @@ Ubuntu 系统: https://docs.docker.com/engine/install/ubuntu/
 2. 添加 docker 官方的软件仓库
    
    Debian 系统使用的命令如下所示
-```
-sudo apt update  
-sudo apt-get install -y ca-certificates curl gnupg lsb-release
+   ```
+   sudo apt update  
+   sudo apt-get install -y ca-certificates curl gnupg lsb-release
 
-curl -fsSL https://download.docker.com/linux/debian/gpg | \
-sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+   curl -fsSL https://download.docker.com/linux/debian/gpg | \
+   sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-echo "deb [arch=$(dpkg --print-architecture) \
-signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
-https://download.docker.com/linux/debian \
-$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   echo "deb [arch=$(dpkg --print-architecture) \
+   signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
+   https://download.docker.com/linux/debian \
+   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-```
-Ubuntu 系统使用的命令如下所示
-```
-sudo apt update
-sudo apt-get install -y ca-certificates curl gnupg lsb-release
+   ```
+   Ubuntu 系统使用的命令如下所示
+   ```
+   sudo apt update
+   sudo apt-get install -y ca-certificates curl gnupg lsb-release
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
-sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+   sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-echo "deb [arch=$(dpkg --print-architecture) \
-signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
-https://download.docker.com/linux/ubuntu \
-$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-3. 安装 Docker Engine
-`sudo apt update`
+   echo "deb [arch=$(dpkg --print-architecture) \
+   signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
+   https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   ```
+3. 安装 Docker Engine  
+`sudo apt update`  
 `sudo apt install -y docker-ce docker-ce-cli containerd.io`
->Debian Buster 安装完后如果报错请输入下面的命令来解决：  
-echo 1 | update-alternatives --config iptables > /dev/null  
-sudo systemctl restart docker
+   >Debian Buster 安装完后如果报错请输入下面的命令来解决：  
+   echo 1 | update-alternatives --config iptables > /dev/null  
+   sudo systemctl restart docker
 
 4. 将当前用户加入到 docker 用户组，这样不需要 sudo 就能运行 docker 命
-令
-`sudo usermod -aG docker $USER`
-重启系统
+令  
+`sudo usermod -aG docker $USER`  
+重启系统  
 
-5. 验证 docker 的状态
-`systemctl status docker`
-可以使用下面的命令测试下 docker，如果能运行 hello-world 说明 docker 能正常
-使用  `docker run hello-world`
+5. 验证 docker 的状态  
+`systemctl status docker`  
+可以使用下面的命令测试下 docker，如果能运行 hello-world 说明 docker 能正常  
+使用  `docker run hello-world`  
 
-6. 设置 docker 仓库为国内源的方法
-创建 /etc/docker/daemon.json 文件，在其中加入下面的配置  
-`sudo vim /etc/docker/daemon.json`
+6. 设置 docker 仓库为国内源的方法  
+创建 /etc/docker/daemon.json 文件，在其中加入下面的配置    
+`sudo vim /etc/docker/daemon.json`  
 ```
 {
 "registry-mirrors": [ 
@@ -123,12 +125,11 @@ Orange Pi 提供的linux镜像已经预装了Docker，只是Docker服务默认�
 使用enable_docker.sh 脚本可以使能docker 服务，然后就可以开始使用docker命令了，并且在下次启动系统时也会自动启动docker服务。  
 `enable_docker.sh`  
 `docker run hello-world`  
-使用docker命令时，如果提示permissiondenied，请将当前用户加入到docker
-用户组，这样不需要sudo就能运行docker命令了。  
+使用docker命令时，如果提示permissiondenied，请将当前用户加入到docker用户组，这样不需要sudo就能运行docker命令了。  
 orangepi@orangepi:~$ `sudo usermod-aG docker $USER`  
 
-# 香橙派派安装HA
-## 通过 docker 安装HA
+# 香橙派安装HA
+## 通过 docker 安装HA（Container）
 Ubuntu 或者 Debian 系统中安装 Home Assistant 的方法:
 1. 搜索下 Home Assistant 的 docker 镜像
 `docker search homeassistant`
@@ -138,16 +139,16 @@ Ubuntu 或者 Debian 系统中安装 Home Assistant 的方法:
 3. 然后可以使用下面的命令查看下刚下载的 Home Assistant 的 docker 镜像
 `docker images homeassistant/home-assistant`
 4. 运行 Home Assistant 的 docker 容器了
-```
-docker run -d \ 
---name homeassistant \ 
---privileged \ 
---restart=unless-stopped \ 
--e TZ=Asia/Shanghai \ 
--v /home/orangepi/home-assistant:/config \
---network=host \
-homeassistant/home-assistant:latest
-```
+   ```
+   docker run -d \ 
+   --name homeassistant \ 
+   --privileged \ 
+   --restart=unless-stopped \ 
+   -e TZ=Asia/Shanghai \ 
+   -v /home/orangepi/home-assistant:/config \
+   --network=host \
+   homeassistant/home-assistant:latest
+   ```
 5. 在浏览器中输入【开发板的 IP 地址:8123】就能看到 Home Assistant 的界面
 6. 停止 Home Assistant 容器的方法
    
@@ -157,37 +158,37 @@ homeassistant/home-assistant:latest
          删除
          docker rm homeassistant
 
-## 通过 python 安装HA
+## 通过 Python 安装HA（Core）
 1. 首先安装依赖包
-```bash
-sudo apt-get update
+   ```bash
+   sudo apt-get update
 
-sudo apt-get install -y python3 python3-dev python3-venv \
-python3-pip libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential \
-libopenjp2-7 libtiff5 libturbojpeg0-dev tzdata
-```
-如果是debian12或Ubuntu24.04 请使用下面的命令：  
-```bash
-sudo apt-get update
+   sudo apt-get install -y python3 python3-dev python3-venv \
+   python3-pip libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential \
+   libopenjp2-7 libtiff5 libturbojpeg0-dev tzdata
+   ```
+   如果是debian12或Ubuntu24.04 请使用下面的命令：  
+   ```bash
+   sudo apt-get update
 
-sudo apt-get install -y python3 python3-dev python3-venv \
- python3-pip libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential \
- libopenjp2-7 libturbojpeg0-dev tzdata
-```
+   sudo apt-get install -y python3 python3-dev python3-venv \
+   python3-pip libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential \
+   libopenjp2-7 libturbojpeg0-dev tzdata
+   ```
 2. 编译安装 Python3.9  
 Debian Bullseye 默认的 Python 版本就是 Python3.9，所以无需编译安装。
 Ubuntu Jammy 默认的 Python 版本就是 Python3.10，所以也无需编译安装。
 
 3. 创建 Python 虚拟环境  
-UbuntuNoble中是python3.12，因此下面命令中标红的python版本号请修改
+UbuntuNoble中是python3.12，因此下面命令中的python版本号请修改
 为“3.12”，其他的不同linux版本请根据实际情况更改对应的命令。
-```
-sudo mkdir /srv/homeassistant
-sudo chown orangepi:orangepi /srv/homeassistant
-cd /srv/homeassistant
-python3.9 -m venv .
-source bin/activate
-```
+   ```
+   sudo mkdir /srv/homeassistant
+   sudo chown orangepi:orangepi /srv/homeassistant
+   cd /srv/homeassistant
+   python3.9 -m venv .
+   source bin/activate
+   ```
 4. 安装需要的 Python 包  
 `python3 -m pip install wheel`
 5. 安装 Home Assistant Core  
@@ -196,35 +197,19 @@ source bin/activate
 `hass`
 1. 在浏览器中输入【开发板的 IP 地址:8123】就能看到 Home Assistant 的界面
 
-## Windows 安装HA
-![alt text](image-10.png)
-![alt text](image-11.png)
-「苹果控制米家设备-home assistant」
-链接：https://pan.quark.cn/s/0c3046ddb3e6Home assistant 稳定版
-
-拉取镜像命令：
-docker pull homeassistant/home-assistant:stable
-
-运行镜像命令：
-docker run -d -p 8123:8123 homeassistant/home-assistant:stable
-
-docker官网：
-https://docs.docker.com/  
-
-home assistant官网：
-https://www.home-assistant.io/  
 
 ## 香橙派Zero3安装Home Assistant Supervised
 
 supervised-installer：https://github.com/home-assistant/supervised-installer  
-教程：https://www.leetoutou.xyz/Orange-Pi-Zero3-Home-Assistant-Supervised-a4b404b8d17444f7b190e585b61299ed
+教程：https://www.leetoutou.xyz/Orange-Pi-Zero3-Home-Assistant-Supervised-a4b404b8d17444f7b190e585b61299ed  
+https://golden-objective-bb6.notion.site/OrangePi-Zero3-eb773d84888e4c85bc2a0d69300f5eb3?pvs=4
 ```bash
 ssh root@192.168..
 sudo apt-get update
 ```
 1. 使用此命令安装以下依赖项：
 ```bash
-apt install \
+sudo apt install \
 apparmor \
 bluez \
 cifs-utils \
@@ -251,39 +236,71 @@ https://github.com/home-assistant/os-agent/releases/latest
 复制链接地址：https://github.com/home-assistant/os-agent/releases/download/1.6.0/os-agent_1.6.0_linux_aarch64.deb
 
 使用`wget`+网址下载  
+`wget https://github.com/home-assistant/os-agent/releases/download/1.6.0/os-agent_1.6.0_linux_aarch64.deb`  
+
 `sudo dpkg -i os-agent_1.6.0_linux_aarch64.deb`
 > 对AppArmor做一个设置（应用盔甲）
 > 根据每一个应用做一些权限上的管理
 > 将启动配置的参数加到我们香橙派的一个启动参数里面
-`sudo vim /boot/cmd/cmdline.txt`
+
+`sudo vim /boot/cmdline.txt`
 ```
 apparmor=1 security=apparmor
 ```
+按键盘上的ESC键，输入英文的冒号，再输入wq后回车
+
+编辑/etc/default/grub文件
+
 对CGroup做一个设置
 `sudo vim /etc/default/grub`
 ```
 systemd.unified_cgroup_hierarchy=false
-
 ```
-reboot
+按键盘上的ESC键，输入英文的冒号”:“，再输入”wq”后回车
+
+重启reboot
 
 4. 安装 Home Assistant Supervised Debian 软件包：  
 `wget -O homeassistant-supervised.deb https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb`
 
 修改主机的一个名称，名称不对是无法安装的。
 `sudo vim /etc/os-release`
+
+PRETTY_NAME="Orange Pi 1.0.4 Bookworm"改为
+`PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"`
 ![alt text](image-56.png)
-如果最后没有弹出那个选择架构就会有问题，需要自己手动操作一下/etc/hassio.json 的 arm64 示例
-```
+
+
+`apt install ./homeassistant-supervised.deb`
+![alt text](image-57.png)
+>如果最后没有弹出那个选择架构就会有问题，需要自己手动操作一下/etc/hassio.json 的 arm64 示例
+```yaml
 {
 “supervisor”： “ghcr.io/home-assistant/aarch64-hassio-supervisor”，
 “machine”： “qemuarm-64”，
 “data”： “/usr/share/hassio”
 }
 ```
-
-`apt install ./homeassistant-supervised.deb`
-![alt text](image-57.png)
+Supervisor的版本如果加载项商店空白，多半是github拉取失败了，重新clone一份即可。
+```bash
+docker exec -it hassio_supervisor /bin/bash
+cd ./data/addons/core
+不行就是
+cd ./data/addons
+git clone https://github.com/home-assistant/addons
+reboot重启
+```
+### 以下内容为Home Assistant加载项中Terminal&SSH输入
+安装HACS加载项
+![alt text](image-58.png)
+```bash
+wget -q -O - https://install.hacs.xyz | bash -
+reboot
+#安装Xiaomi_miot加载项
+wget -O - https://get.hacs.vip | DOMAIN=xiaomi_miot bash -
+#重启
+reboot
+```
 # Home Assistant使用
 http://homeassistant.local:8123/
 或者 IP地址:8123  
@@ -422,15 +439,15 @@ https://github.com/zigbee2mqtt/hassio-zigbee2mqtt
 ![alt text](image-24.png)  
 
 ### 配置Mosquitto broker
-安装后，不要启动，先进⾏配置
-配置--加载项--Mosquitto broker
+安装后，不要启动，先进⾏配置  
+配置--加载项--Mosquitto broker  
 ```
 username: user
 password: passwd
 ```
-复制上⾯语句，⽤户名和密码根据⾃⼰情况更改，粘贴后保存
-![alt text](image-25.png)
-配置Zigbee2MQTT
+复制上⾯语句，⽤户名和密码根据⾃⼰情况更改，粘贴后保存  
+![alt text](image-25.png)  
+配置Zigbee2MQTT  
 ![alt text](image-26.png)  
 port: /dev/ttyUSB0  
 
@@ -450,62 +467,62 @@ port: /dev/ttyUSB0
 2. 集成安装  
 配置--设备与服务--添加集成-输⼊zha进⾏搜索  
 ![alt text](image-31.png)  
- ⽹络构成，⼀般选择删除⽹络设置并创建新⽹络（根据⾃⼰实际情况选择） 
+ ⽹络构成，⼀般选择删除⽹络设置并创建新⽹络（根据⾃⼰实际情况选择）  
 ![alt text](image-32.png)  
 3. 添加设备  
-进⼊集成
+进⼊集成  
 ![alt text](image-33.png)  
 ![alt text](image-34.png)  
 设置要添加的设备处于配对状态，即可被发现  
 ![alt text](image-35.png)  
 
 # Home Assistant的UI设计
-在HomeAssistant文件中新建themes文件夹，这是用来存放主题的。然后在www文件夹下新建images文件夹，用来存放图片资源。
+在HomeAssistant文件中新建themes文件夹，这是用来存放主题的。然后在www文件夹下新建images文件夹，用来存放图片资源。  
 
-在根文件夹下有三个yaml，分别是：configuration.yaml、customize.yaml、ui-lovelace.yaml。
+在根文件夹下有三个yaml，分别是：configuration.yaml、customize.yaml、ui-lovelace.yaml。  
 
-编码修改为UTF-8
-需要加载customize就需要添加这两行代码，缩进是两个空格。
-![alt text](image-36.png)
-如果需要加载ui-lovelace，就需要添加这两行代码，使用主题要修改对应的mode
-![alt text](image-37.png)
+编码修改为UTF-8  
+需要加载customize就需要添加这两行代码，缩进是两个空格。  
+![alt text](image-36.png)  
+如果需要加载ui-lovelace，就需要添加这两行代码，使用主题要修改对应的mode    
+![alt text](image-37.png)  
 
-![alt text](image-38.png)
+![alt text](image-38.png)  
 
-输入/local/community/你新建文件夹的名字
+输入/local/community/你新建文件夹的名字  
 
-![alt text](image-39.png)
-![alt text](image-40.png)
-![alt text](image-41.png)
-![alt text](image-42.png)
-![alt text](image-43.png)
-![alt text](image-44.png)
-![alt text](image-45.png)
-![alt text](image-46.png)
-![alt text](image-47.png)
+![alt text](image-39.png)  
+![alt text](image-40.png)  
+![alt text](image-41.png)  
+![alt text](image-42.png)  
+![alt text](image-43.png)  
+![alt text](image-44.png)  
+![alt text](image-45.png)  
+![alt text](image-46.png)  
+![alt text](image-47.png)  
 
-frontpage这个文件夹内就是首页展示的内容
+frontpage这个文件夹内就是首页展示的内容  
 
 # Home Assistant备份和升级&导入DIY主题
-![备份](image-48.png)
-![alt text](image-49.png)
-![alt text](image-50.png)
-![alt text](image-51.png)
+![备份](image-48.png)  
+![alt text](image-49.png)  
+![alt text](image-50.png)  
+![alt text](image-51.png)  
 
-www下不要全部复制，
-![alt text](image-52.png)
-![alt text](image-53.png)
-![alt text](image-54.png)
+www下不要全部复制  
+![alt text](image-52.png)  
+![alt text](image-53.png)  
+![alt text](image-54.png)  
 
 
 # 文件管理目录结构
-![alt text](image.png)
+![alt text](image.png)  
 
 1. 文件夹的管理和命名:日期和项目内容来命名，
 例如：2024-06-20_五月天演唱会
 ![alt text](image-2.png)
 1. 每个文件夹前加上数字，分类成9项，工程文件，原始素材，素材，特效，字幕，导出，通用素材，封面，归档）
-2. 文件命名:交代素材信息，时间+机型+机位，
+2. 文件命名:交代素材信息，时间+机型+机位，  
    ![alt text](image-1.png)
 3. 导出成片命名:时间_片名_分辨率_编码格式_导出人_备注_版本
 数据备份：
