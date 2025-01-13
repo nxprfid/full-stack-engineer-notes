@@ -1,6 +1,6 @@
 # 前言
-简单来说HA，就是一个低功耗的电脑（路由器或者NAS或者Linux单板机）上面专门运行一个Python3的程序。这个程序通过网络连接各个设备云平台，时时刻刻接受云平台传来的数据并可以控制。直接支持小爱同学语音控制比如美的的空调。（小米云端-本地（HA）-美的云端）定制部分：可以创建一系列规则。达到“互联互通”。还可以将所有设备通过桥接连接到HomeKit（云端-本地（HA）-本地（苹果中枢）），使用Siri控制。
-
+简单来说HA，就是一个低功耗的电脑（路由器或者NAS或者Linux单板机）上面专门运行一个Python3的程序。开源自动化控制管理平台。用户可以绑定各个品牌的物联网设备。编写自动化规则和脚本。根据设备状态、时间、传感器数据等触发特定动作。这个程序通过网络连接各个设备云平台，时时刻刻接受云平台传来的数据并可以控制。直接支持小爱同学语音控制比如美的的空调。（小米云端-本地（HA）-美的云端）定制部分：可以创建一系列规则。达到“互联互通”。还可以将所有设备通过桥接连接到HomeKit（云端-本地（HA）-本地（苹果中枢）），使用Siri控制。
+![alt text](image-3.png)
 教程连接：https://www.bilibili.com/opus/440062456525682264  
 # NAS
 NAS（Network Attached Storage）网络附加存储，主要用于存储大量数据，如照片、视频、音乐、文档等。NAS通常安装在服务器上，通过网络访问，可以实现文件共享、远程备份、远程访问等功能。NAS的优点是安全、便捷、经济，缺点是成本高、可靠性差、易捷性差。
@@ -290,29 +290,70 @@ cd ./data/addons
 git clone https://github.com/home-assistant/addons
 reboot重启
 ```
-### 以下内容为Home Assistant加载项中Terminal&SSH输入
-安装HACS加载项
+### 安装HACS
+以下内容为Home Assistant加载项中Terminal&SSH输入
+
 ![alt text](image-58.png)
 ```bash
 wget -q -O - https://install.hacs.xyz | bash -
+#下载失败换HACS极速版
+wget -O - https://hacs.vip/get | bash -
 reboot
 #安装Xiaomi_miot加载项
 wget -O - https://get.hacs.vip | DOMAIN=xiaomi_miot bash -
 #重启
 reboot
 ```
+以此左下角【配置】-【设备与服务】-【添加集成】，搜索HACS，选择安装
+安装过程需要在github中进行设备激活，按照引导授权激活即可
+安装完成后再Home Assistant侧边栏菜单看到HACS了
+
 # Home Assistant使用
+如果无法使用以太网线将树莓派与电脑连接到同一局域网下，可以在 Home Assistant 启动前配置 Wi-Fi（不推荐，建议使用以太网线）。在 SD 卡创建文件夹和文件： CONFG -> network -> my-network。在 my-network 中配置 SSID 和 密码：
+```
+[connection] 
+id=my-network 
+uuid=72111c67-4a5d-4d5c-925e-f8ee26efb3c3 
+type=802-11-wireless 
+
+[802-11-wireless] 
+mode=infrastructure 
+ssid="SSID" 
+# Uncomment below if your SSID is not broadcasted 
+#hidden=true 
+
+[802-11-wireless-security] 
+auth-alg=open 
+key-mgmt=wpa-psk 
+psk=密码
+
+[ipv4] 
+method=auto 
+
+[ipv6] 
+addr-gen-mode=stable-privacy 
+method=auto 
+```
+注意：如果 Home Assistant 已经完成了初始化配置则以上⽅式⽆法⽣效，确保文件内容是 UNIX 格式  
+
 http://homeassistant.local:8123/
 或者 IP地址:8123  
 
 登录命令端口 IP地址:7681  
+## MQTT
+![alt text](image-7.png)
+![alt text](image-8.png)
+![alt text](image-59.png)
+![alt text](image-9.png)
 
+```
+xiaomi_lamp/control
+{"input":"Turn On the Lemp","siteId":"esp32"}
+```
 # Home Assistant插件
 ![alt text](image-5.png)
 ![alt text](image-6.png)
-![alt text](image-7.png)
-![alt text](image-8.png)
-![alt text](image-9.png)
+
 ![alt text](image-12.png)
 基本上插件、主题都是frontend；设备、卡片、API基本上都是intergation  
 
@@ -375,10 +416,11 @@ HA 平台的设备转接到homekit，需要按照实体来转接，并不是由�
 
 ### 家居中枢
 
+## 原生HomeKit设备接⼊HA
+先加入Homekit，然后删除，就能发现添加了。
 
 
-
-# 美的设备接⼊
+## 美的设备接⼊
 HACS搜索 `midea_ac_lan`  
 项目地址：https://github.com/georgezhao2010/midea_ac_lan   
 需要⼿动安装可在浏览器输⼊：  
@@ -514,7 +556,165 @@ www下不要全部复制
 ![alt text](image-53.png)  
 ![alt text](image-54.png)  
 
+# DIY设备ESPHome接入HA  
+ESPHome：
+官方网址：https://esphome.io/
 
+![alt text](image-60.png)  
+确保选中“将Python添加到PATH”，然后一直通过 安装
+安装后重新启动计算机
+```python
+pip3 install wheel
+pip3 install esphome
+```
+安装都完成后，进入你要存放的路径创建esphome_config
+```bash
+启动：
+cd C:\ESPHome\
+执行esphome  dashboard esphome_config/
+http://127.0.0.1:6052/
+
+或者使用批处理脚本：
+
+cd /d "C:\ESPHome"
+esphome dashboard esphome_config/
+pause
+
+名称保存为start_esphome_dashboard.bat
+```
+
+打开网址：http://172.0.0.1:6052/
+创建一个设备  
+![alt text](image-61.png)  
+![alt text](image-62.png)  
+会编译一段默认初始代码  
+![alt text](image-63.png)  
+选择右下角的下载，选择蓝色字样的链接，可以弹出网页进行下载  
+第一次是通过串口进行下载，后续就可以使用网络进行升级  
+![alt text](image-64.png)  
+修改源码   
+ESPHome使用yaml语言来编码  
+![alt text](image-65.png)  
+![alt text](image-66.png)
+![alt text](image-67.png)
+![alt text](image-68.png)
+选择设备所在区域就完成添加了  
+访问ESPHome参考代码
+```yaml
+----------------------------------------------------------------------------------
+共阳极RGB灯yaml程序：
+
+light:
+  - platform: rgb
+    name: "RGB Light"
+    red: output_red
+    green: output_green
+    blue: output_blue
+    restore_mode: ALWAYS_ON  # 设备启动后恢复为上次状态
+
+# Define light with inverted PWM output (for common anode RGB)
+output:
+  - platform: ledc
+    pin: GPIO4           # 红灯的引脚
+    id: output_red
+    inverted: true        # 反转输出
+
+  - platform: ledc
+    pin: GPIO5          # 绿灯的引脚
+    id: output_green
+    inverted: true        # 反转输出
+
+  - platform: ledc
+    pin: GPIO6           # 蓝灯的引脚
+    id: output_blue
+    inverted: true        # 反转输出    
+
+----------------------------------------------------------------------------------
+
+摄像头程序yaml程序：
+
+代码参考：https://esphome.io/components/esp32_camera.html
+安装git：  https://git-scm.com/downloads/win
+组件下载：https://github.com/MichaKersloot/esphome_custom_components
+
+cd C:\ESPHome\esphome_config
+git clone https://github.com/MichaKersloot/esphome_custom_components.git
+
+external_components:
+  - source:
+      type: local
+      path: esphome_custom_components\components
+    components: [ esp32_camera ]
+
+esp32_camera:
+  external_clock:
+    pin: GPIO15
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO4
+    scl: GPIO5
+  data_pins: [GPIO11, GPIO9, GPIO8, GPIO10, GPIO12, GPIO18, GPIO17, GPIO16]
+  vsync_pin: GPIO6
+  href_pin: GPIO7
+  pixel_clock_pin: GPIO13
+
+  # Image settings
+  name: My Camera
+  # ...
+
+----------------------------------------------------------------------------------
+DHT11温湿度传感器yaml程序：
+
+sensor:
+  - platform: dht
+    pin: GPIO23
+    temperature:
+      name: "Living Room Temperature"
+    humidity:
+      name: "Living Room Humidity"
+    update_interval: 60s
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+WS2812彩灯yaml程序：
+
+代码参考：https://esphome.io/components/light/index.html
+
+
+# 定义 FastLED WS2812 灯光组件
+light:
+  - platform: fastled_clockless
+    chipset: WS2812
+    pin: GPIO14  # 替换成你的LED数据线连接的GPIO口
+    num_leds: 16
+    rgb_order: GRB
+    name: "WS2812 Ring"
+
+    effects:
+      #彩虹效果
+      - addressable_rainbow:
+          name: "Rainbow Effect"
+          speed: 10
+          width: 16
+
+      #闪烁效果
+      - flicker:
+          name: Flicker Effect With Custom Values
+          alpha: 95%
+          intensity: 1.5%
+
+      #灯光效果
+      - random:
+          name: "My Slow Random Effect"
+          transition_length: 30s
+          update_interval: 30s
+      - random:
+          name: "My Fast Random Effect"
+          transition_length: 4s
+          update_interval: 5s
+
+
+```
 # 文件管理目录结构
 ![alt text](image.png)  
 
