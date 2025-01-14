@@ -502,7 +502,7 @@ port: /dev/ttyUSB0
 ![alt text](image-47.png)  
 
 frontpage这个文件夹内就是首页展示的内容  
-
+![alt text](image-3.png)
 # Home Assistant备份和升级&导入DIY主题
 ![备份](image-48.png)  
 ![alt text](image-49.png)  
