@@ -21,7 +21,8 @@
 # LVGL_note
 是学习LVGL的一些笔记，包括一些常用操作和技巧，以及一些小工具的介绍。
 # Node-RED_note
-Homeassistant，Node-RED以及ThingsBoard的一些笔记。
+Homeassistant，Node-RED以及ThingsBoard的一些笔记。  
+- [Homeassistant笔记](Node-RED_note/Homeassistant笔记.md)
 # ROS2_note
 学习ROS2的一些笔记。包括MicroROS的运行，ROS2的一些基础概念。
 - [ROS2-MicroROS](ROS2_note/FishBot.md)
