@@ -1,7 +1,8 @@
 
 [零一科技K230教程](https://wiki.01studio.cc/docs/canmv_k230/intro/canmv_k230)  
 [立创庐山派K230教程](https://wiki.lckfb.com/zh-hans/lushan-pi-k230/)
-
+[百问网DshanPI-CanMV K230教程](https://eai.100ask.net/CanaanK230/Userdoc)
+# MicroPython
  [MicroPython 文档（中文）](网址：docs.01studio.cc)
 
  MicroPython固件集成了交互解释器REPL 【读取(Read)-运算(Eval)
