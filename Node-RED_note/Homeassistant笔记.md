@@ -120,7 +120,7 @@ Ubuntu 系统: https://docs.docker.com/engine/install/ubuntu/
 ```
 7. 重启下 docker 服务
 `sudo systemctl restart docker`
-## Orange Pi 安装 Docker
+## Orange Pi SDK编译后镜像 安装 Docker
 Orange Pi 提供的linux镜像已经预装了Docker，只是Docker服务默认没有打开。  
 使用enable_docker.sh 脚本可以使能docker 服务，然后就可以开始使用docker命令了，并且在下次启动系统时也会自动启动docker服务。  
 `enable_docker.sh`  
@@ -128,7 +128,7 @@ Orange Pi 提供的linux镜像已经预装了Docker，只是Docker服务默认�
 使用docker命令时，如果提示permissiondenied，请将当前用户加入到docker用户组，这样不需要sudo就能运行docker命令了。  
 orangepi@orangepi:~$ `sudo usermod-aG docker $USER`  
 
-# 香橙派安装HA
+# Linux派安装HA
 ## 通过 docker 安装HA（Container）
 Ubuntu 或者 Debian 系统中安装 Home Assistant 的方法:
 1. 搜索下 Home Assistant 的 docker 镜像
@@ -198,7 +198,7 @@ UbuntuNoble中是python3.12，因此下面命令中的python版本号请修改
 1. 在浏览器中输入【开发板的 IP 地址:8123】就能看到 Home Assistant 的界面
 
 
-## 香橙派Zero3安装Home Assistant Supervised
+## 安装HA （Supervised）
 
 supervised-installer：https://github.com/home-assistant/supervised-installer  
 教程：https://www.leetoutou.xyz/Orange-Pi-Zero3-Home-Assistant-Supervised-a4b404b8d17444f7b190e585b61299ed  
@@ -290,7 +290,7 @@ cd ./data/addons
 git clone https://github.com/home-assistant/addons
 reboot重启
 ```
-### 安装HACS
+## 安装HACS
 以下内容为Home Assistant加载项中Terminal&SSH输入
 
 ![alt text](image-58.png)
