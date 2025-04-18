@@ -3,6 +3,9 @@
 # AD_note
 是学习Altium Designer 24的笔记，包括一些常用操作和技巧，以及一些小工具的介绍。
 - [AD笔记](AD_note/AD%E7%AC%94%E8%AE%B0.md)  
+# C\C++_note
+
+- [C语言笔记](C_node/C.md)  
 # Circuit_note
 是学习电路设计的一些笔记，包括元器件的特性以及电路设计的小技巧。
 - [电路笔记](circuit_note/%E7%94%B5%E8%B7%AF%E7%AC%94%E8%AE%B0.md)  
