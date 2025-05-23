@@ -281,6 +281,31 @@ PRETTY_NAME="Orange Pi 1.0.4 Bookworm"改为
 “data”： “/usr/share/hassio”
 }
 ```
+如果遇到  
+```bash
+/var/lib/dpkg/info/homeassistant-supervised.postinst: line 181: update-grub: command not found
+dpkg: error processing package homeassistant-supervised (--configure):
+ installed homeassistant-supervised package post-installation script subprocess returned error exit status 127
+Processing triggers for dbus (1.14.10-1~deb12u1) ...
+Processing triggers for man-db (2.11.2-2) ...
+Errors were encountered while processing:
+ homeassistant-supervised
+N: Download is performed unsandboxed as root as file '/home/orangepi/homeassistant-supervised.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+```
+编辑安装包的 post-install 脚本，注释掉调用 update-grub 的行：  
+```bash
+sudo nano /var/lib/dpkg/info/homeassistant-supervised.postinst
+```
+找到第 181 行（包含 update-grub 的行），在该行前添加 # 注释
+```bash
+# update-grub
+```
+保存并退出（按 Ctrl+O 保存，Ctrl+X 退出）。  
+重新配置安装包  
+```bash
+sudo dpkg --configure -a
+```
 Supervisor的版本如果加载项商店空白，多半是github拉取失败了，重新clone一份即可。
 ```bash
 docker exec -it hassio_supervisor /bin/bash
