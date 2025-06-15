@@ -5,7 +5,7 @@
 - [AD笔记](AD_note/AD%E7%AC%94%E8%AE%B0.md)  
 # C\C++_note
 
-- [C语言笔记](C_node/C.md)  
+- [C语言笔记](C_note/C.md)  
 # Circuit_note
 是学习电路设计的一些笔记，包括元器件的特性以及电路设计的小技巧。
 - [电路笔记](circuit_note/%E7%94%B5%E8%B7%AF%E7%AC%94%E8%AE%B0.md)  
@@ -26,6 +26,9 @@
 # Node-RED_note
 Homeassistant，Node-RED以及ThingsBoard的一些笔记。  
 - [Homeassistant笔记](Node-RED_note/Homeassistant笔记.md)
+# Python_note
+学习Python的一些笔记。
+- [Python笔记](Python_note/Python.md)
 # ROS2_note
 学习ROS2的一些笔记。包括MicroROS的运行，ROS2的一些基础概念。
 - [ROS2-MicroROS](ROS2_note/FishBot.md)
