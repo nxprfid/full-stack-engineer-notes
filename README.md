@@ -9,6 +9,7 @@
 # Circuit_note
 是学习电路设计的一些笔记，包括元器件的特性以及电路设计的小技巧。
 - [电路笔记](circuit_note/%E7%94%B5%E8%B7%AF%E7%AC%94%E8%AE%B0.md)  
+- [芯片选型](circuit_note/%E8%8A%AF%E7%89%87%E9%80%89%E5%9E%8B.md)  
 # IoT_note
 学习一些物联网通信，平台以及协议的笔记。  
 - [Arduino](IoT_note/Arduino/%E6%89%80%E6%9C%89%E5%9F%BA%E4%BA%8EArduino%E5%BC%80%E5%8F%91%E7%9A%84%E7%AC%94%E8%AE%B0.md)  
