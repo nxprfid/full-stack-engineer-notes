@@ -1,6 +1,7 @@
 # keysking的STM32教程
 [文档](https://docs.keysking.com/)  
 [串口助手](https://serial.keysking.com)  
+[WS2812上位机](https://ws2812.keysking.com)
 ![alt text](IMG_2254.JPG)
 ## 安装STM32CubeIDE
 ![alt text](IMG_2256.JPG)
@@ -14,7 +15,7 @@
 点击同意助力意法半导体改进产品。  
 ![alt text](IMG_2260.JPG)
 打开关联透视图？  
-![alt text](IMG_2261(1).JPG)
+![启用 “自动构建”，代码改动后，IDE 自动触发编译，不用手动点 “Build”](IMG_2261(1).JPG)
 勾选不在提示的选项会将记忆的选项保存下来，保存在工作空间里面metadate文件夹  
 ![alt text](IMG_2262(2).JPG)
 
@@ -296,3 +297,51 @@ HAL库会处理好最后一位，默认为0就好了
 
 ## OLED
 # 看完10以前的代码
+
+# WS2812
+WS2812芯片会发出三路PWM信号来调节三颗灯珠的亮度，我们要做的就是告诉WS2812每颗小灯的亮度即可。  
+![alt text](image-36.png)  
+![alt text](image-37.png)  
+WS2812采用的通信方式称为归零码，也就是每位数据之间电平必须归为零(低)电平。  
+![alt text](image-38.png)  
+由于是单线通信，没有时钟线辅助，WS2812规定了信号要以大概800kHz的频率进行发送。  
+![alt text](image-39.png)  
+![alt text](image-40.png)  
+可以一颗一颗发Reset信号也可以最后发送Reset信号。  
+## 如何实现呢？
+使用PWM+DMA实现。用DMA快速修改PWM占空比（输出比较寄存器）。  
+提前将数据数组准备好，DMA就可以在每个周期帮我们搬运新的数据到定时器的输出比较寄存器。  
+![alt text](image-41.png)  
+预分频系数设置为0，自动重装载寄存器设置为90-1（周期）。即72MHz的计数速度，每计90个数自动重装载一次。也就是800kHz的频率。  
+![alt text](image-42.png)
+PWM模式1，先高电平后低电平。  
+开漏输出，速度高，新建DMA通道（输出比较事件TRIG），修改为从内存到外设。搬运模式是普通模式，外设地址不自增，内存地址要自增（才能将数组中的数据一个个搬运到寄存器）。输出比较寄存器的大小是16位的，因而每次搬运的数据宽度为半个字（16位）。  
+
+>输入捕获寄存器与输出比较寄存器是同一个寄存器。  
+
+### 代码：
+CodeReset将输出比较寄存器设为0（PWM占空比为0，即为纯低电平）。  
+在`ws2812.h`中引用`#include"tim.h"`
+`ws2812.c`定义一个各个周期占空比的uintl6_t数组data
+通过设置输出比较寄存器的值来控制占空比。
+在`main.c`中引用`#include"ws2812.h"`调用`Ws2812_Update()`函数。
+```c
+#include"ws2812.h"
+#define CodeO 30
+#define Code1 60
+#define CodeReset 0 
+void Ws2812_Update() 
+{
+  static uintl6_t data[] ={
+    Codel, Codel, Codel, Codel, Codel, Codel, Codel, Code1,
+    CodeO， CodeO， CodeO， CodeO， CodeO， CodeO， CodeO， CodeO,
+    CodeO， CodeO， CodeO， CodeO， CodeO， CodeO， CodeO， CodeO,
+    CodeReset
+    };
+    HAL_TIM_PWM_Start_DMA(&htim3, TIM_CHANNEL_l，(uint32_t*)data, sizeof(data)/sizeof(uint16_t));
+}
+```
+如果想在while(1)循环中调用此函数，务必要加一个延时，一是因为DMA函数是非阻塞函数，连续调用的话上一次DMA还没把整个数组搬完，下次调用就将其打断，造成数据混乱。二是因为我们在最后将PWM改了了纯低电平，但是还要等待一会才能构成Reset信号。
+
+![GRB顺序](image-43.png)
+
