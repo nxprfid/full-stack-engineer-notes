@@ -298,7 +298,7 @@ HAL库会处理好最后一位，默认为0就好了
 ## OLED
 # 看完10以前的代码
 
-# WS2812
+# WS2812 PWM+DMA
 WS2812芯片会发出三路PWM信号来调节三颗灯珠的亮度，我们要做的就是告诉WS2812每颗小灯的亮度即可。  
 ![alt text](image-44.png)
 每个颜色的强度一般从弱到强用0~255表示。也就是16进制的FF。一个字节。混出一个颜色可以用3个字节。
@@ -399,3 +399,108 @@ ws2812.c中定义一个二维数组，用于存放每个灯珠的颜色。数组
 ![alt text](image-53.png)
 
 增加一个currentColor变量，用于存放当前小灯的颜色。每次更新了颜色后就将color变量中的数据赋值到currentColor变量中。利用currentColor变量，实现了可以让小灯颜色渐变的函数。在小灯的任务循环函数中，将command设为了static，方便下次循环时还能使用其中的数据。还增加了一个static的type变量。将每次命令的命令类型记录下来，另外还增加了一个static的loopTime变量，loopTime会被获取系统执行毫秒数的HAL_GatTick函数赋值。利用loopTime变量来控制相应逻辑的执行时间，例如闪烁模式下，每500ms将小灯熄灭 或者设为设定的颜色。彩虹模式下，利用loopTime变量计算各小灯的颜色值。而呼吸模式下，利用渐变函数实现小灯的渐亮渐灭。
+# SPI
+SPI（Serial Peripheral Interface）是一种同步串行通信协议，主要用于嵌入式系统中，用于集成电路之间的短距离有线通信。
+
+SPI 通信有四根线：
+
+SCLK：时钟线，由主机产生
+
+MOSI：主机输出从机输入，主机向从机发送数据
+
+MISO：主机输入从机输出，从机向主机发送数据
+
+CS：片选线，用于选择从机
+
+时钟相位和极性（CPOL、CPHA）：
+
+CPOL：时钟极性，决定时钟信号在空闲时是高电平还是低电平
+
+CPOL = 0 时，SCLK 空闲时为低电平
+
+CPOL = 1 时，SCLK 空闲时为高电平
+
+CPHA：时钟相位，决定数据采样时机
+
+CPHA = 0 时，数据在第一个时钟沿采样
+
+CPHA = 1 时，数据在第二个时钟沿采样
+
+例如：
+
+CPOL = 0，CPHA = 0 时，SCLK 空闲时为低电平，数据在第一个时钟沿采样（上升沿采样）
+
+CPOL = 1，CPHA = 0 时，SCLK 空闲时为高电平，数据在第一个时钟沿采样（下降沿采样）
+
+CPOL = 0，CPHA = 1 时，SCLK 空闲时为低电平，数据在第二个时钟沿采样（下降沿采样）
+
+CPOL = 1，CPHA = 1 时，SCLK 空闲时为高电平，数据在第二个时钟沿采样（上升沿采样）
+
+![alt text](image-56.png)
+![alt text](image-57.png)
+![alt text](image-58.png)
+配置 CPOL = 0，CPHA = 0 ，可见 SCLK 空闲时为低电平，数据在第一个时钟沿采样（上升沿采样）
+
+通信波形文件包含在例程zip包中，可以使用【Saleae Logic 2】软件打开查看
+
+![alt text](image-55.png)
+
+## 配置
+开启外部晶振，配置时钟频率，分配引脚：将 PA12、PA15、PB3、PB1 分别设置为 GPIO_Output，并分别设置 User label 为 SPI_SCLK、SPI_MOSI、SPI_MISO、SPI_CS。  
+ SPI_SCLK、SPI_MOSI、SPI_CS 配置为高速输出，SPI_MISO 配置为上拉输入。
+
+## 代码
+拷贝库文件：将 softSPI.c、dwt_stm32_delay.c 文件拷贝到 Core -> Src 目录下，将 softSPI.h、dwt_stm32_delay.h 文件拷贝到 Core -> Inc 目录下。
+添加头文件：在 main.c 中引用头文件#include "softSPI.h"
+
+初始化 SPI 实例结构体： 在 main 函数中初始化 SPI 实例结构体
+
+```c
+// 分配 SCLK 引脚
+SoftSPI1.SCLK_GPIO = SPI_SCLK_GPIO_Port;
+SoftSPI1.SCLK_Pin = SPI_SCLK_Pin;
+// 分配 MOSI 引脚
+SoftSPI1.MOSI_GPIO = SPI_MOSI_GPIO_Port;
+SoftSPI1.MOSI_Pin = SPI_MOSI_Pin;
+// 分配 MISO 引脚
+SoftSPI1.MISO_GPIO = SPI_MISO_GPIO_Port;
+SoftSPI1.MISO_Pin = SPI_MISO_Pin;
+// 分配 CS 引脚
+SoftSPI1.CS_GPIO = SPI_CS_GPIO_Port;
+SoftSPI1.CS_Pin = SPI_CS_Pin;
+// 设置 SPI 时钟频率
+SoftSPI1.Delay_Time = SPI_FREQ_10KHZ;
+// 设置 SPI 时钟极性和相位
+SoftSPI1.CPOL = 0;
+SoftSPI1.CPHA = 0;
+```
+初始化 SPI 实例： 在 main 函数中初始化 SPI 实例
+```c
+// 初始化 SPI 实例
+SoftSPI_Init(&SoftSPI1);
+```
+进行 SPI 通信
+使能片选：使用 SoftSPI_CS_Low 函数使能片选
+```c
+// 使能片选
+SoftSPI_CS_Low(&SoftSPI1);
+```
+收发数据： 使用 SoftSPI_WriteReadBuff 函数发送和接收数据
+```c
+// 读写数据
+SoftSPI_WriteReadBuff(&SoftSPI1, tx_buffer, rx_buffer, 4);
+```
+关闭片选：使用 SoftSPI_CS_High 函数关闭片选
+```c
+// 关闭片选
+SoftSPI_CS_High(&SoftSPI1);
+```
+# WS2812 SPI
+HCLK配置为了12MHz，MOSI接到我们的2812
+![alt text](image-54.png)
+系统采用单总线协议，通过总线上高低电平的时长来区分逻辑0和1。WS2811工作在800kHz频率下，将SPI设置为6.4MHz一即其工作频率的8倍一可以确保每个字节（8位）正好对应一个逻辑位。在这种设置下，‘11111000’（OxF8）代表逻辑1，11000000（0xCO）代表逻辑0。
+
+
+https://blog.csdn.net/qq_24312945/article/details/134151483
+https://blog.csdn.net/qq_24312945/article/details/134152211
+
