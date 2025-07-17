@@ -496,11 +496,14 @@ SoftSPI_WriteReadBuff(&SoftSPI1, tx_buffer, rx_buffer, 4);
 SoftSPI_CS_High(&SoftSPI1);
 ```
 # WS2812 SPI
-HCLK配置为了12MHz，MOSI接到我们的2812
-![alt text](image-54.png)
-系统采用单总线协议，通过总线上高低电平的时长来区分逻辑0和1。WS2811工作在800kHz频率下，将SPI设置为6.4MHz一即其工作频率的8倍一可以确保每个字节（8位）正好对应一个逻辑位。在这种设置下，‘11111000’（OxF8）代表逻辑1，11000000（0xCO）代表逻辑0。
+HCLK配置为了12MHz，MOSI接到我们的2812  
+![alt text](image-54.png)  
+系统采用单总线协议，通过总线上高低电平的时长来区分逻辑0和1。WS2811工作在800kHz频率下，将SPI设置为6.4MHz一即其工作频率的8倍一可以确保每个字节（8位）正好对应一个逻辑位。在这种设置下，‘11111000’（OxF8）代表逻辑1，11000000（0xCO）代表逻辑0。  
 
+>CPHA配置为第二边沿采样；在第一个跳变沿时，MOSI在空闲状态保持高电平，而在第二个跳变沿，它会保持上一次传输的最终电平。由于发送数据的**最后一位总是低电平**，这样配置可以避免WS2812误判。  
+>CPOL设置为高，确保SCK在空闲时保持高电平状态。  
+>驱动 WS2812 的关键永远是MOSI 线上的高低电平持续时间是否精准，而非 SPI 协议本身的配置。CPOL = 1，CPHA = 1要配置SPI的时候可以参考，但没什么用  
 
-https://blog.csdn.net/qq_24312945/article/details/134151483
-https://blog.csdn.net/qq_24312945/article/details/134152211
+https://blog.csdn.net/qq_24312945/article/details/134151483  
+https://blog.csdn.net/qq_24312945/article/details/134152211  
 
