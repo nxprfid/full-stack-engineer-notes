@@ -1,10 +1,14 @@
 # 3D_note
 关于3D打印机以及3D建模的知识。
+- [3D打印](3D_note/3D打印机知识.md)
 # AD_note
 是学习Altium Designer 24的笔记，包括一些常用操作和技巧，以及一些小工具的介绍。
 - [AD笔记](AD_note/AD%E7%AC%94%E8%AE%B0.md)  
+# Arduino_note
+- [Arduino](Arduino/%E6%89%80%E6%9C%89%E5%9F%BA%E4%BA%8EArduino%E5%BC%80%E5%8F%91%E7%9A%84%E7%AC%94%E8%AE%B0.md) 
+# Beken_note
+- [Beken](Beken/Armino.md)  
 # C\C++_note
-
 - [C语言笔记](C_note/C.md)  
 # Circuit_note
 是学习电路设计的一些笔记，包括元器件的特性以及电路设计的小技巧。
@@ -12,21 +16,27 @@
 - [芯片选型](circuit_note/%E8%8A%AF%E7%89%87%E9%80%89%E5%9E%8B.md)  
 # IoT_note
 学习一些物联网通信，平台以及协议的笔记。  
-- [Arduino](IoT_note/Arduino/%E6%89%80%E6%9C%89%E5%9F%BA%E4%BA%8EArduino%E5%BC%80%E5%8F%91%E7%9A%84%E7%AC%94%E8%AE%B0.md)  
+- [BLE](IoT_note/BLE/BLE.md)
+- [Edge AI](IoT_note/Edge%20AI/MicroPython.md)  
 - [ESP-IDF](IoT_note/ESP-IDF/%E4%BB%A3%E7%A0%81.md)  
-- [MicroPython](IoT_note/Edge%20AI/MicroPython.md)  
 - [星闪](IoT_note/NearLink/%E6%98%9F%E9%97%AA%E6%8C%87%E4%BB%A4.md)
 # Linux_note
 学习系统编译，驱动开发，内核开发，Linux系统的一些笔记。 
 - [Linux命令](Linux_note/%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0.md)  
+- [Linux移植](Linux_note/移植系统笔记.md)
 # Lua_note
 使用Lua 5.3作为主要语言，针对资源较少的嵌入式环境进行了优化，极大提升了运行效率。
 - [LuatOS](Lua_note/LuatOS.md)  
 # LVGL_note
 是学习LVGL的一些笔记，包括一些常用操作和技巧，以及一些小工具的介绍。
+- [LVGL笔记](LVGL_note/LVGL%E7%AC%94%E8%AE%B0.md)
 # Node-RED_note
 Homeassistant，Node-RED以及ThingsBoard的一些笔记。  
-- [Homeassistant笔记](Node-RED_note/Homeassistant笔记.md)
+- [Homeassistant笔记](Node-RED_note/Homeassistant笔记.md)  
+- [Node-RED笔记](Node-RED_note/Node-RED笔记.md)
+# PY32_note
+是学习PY32的笔记，包括一些常用操作和技巧，以及一些小工具的介绍。
+- [PY32](PY32/PY32.md)
 # Python_note
 学习Python的一些笔记。
 - [Python笔记](Python_note/Python.md)

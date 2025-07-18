@@ -689,44 +689,8 @@ void loop() {
 加速度计的范围有2g、4g、8g、16g可选。
 陀螺仪的范围有±250、±500、±1000、±2000可选，而对应的精度分别是131LSB/(°/s)、65.5LSB/(°/s)、32.8LSB/(°/s)、16.4 LSB/(°/s)。
 
-
 ## BLE
-http://www.cnblogs.com/iini/p/8972635.html
-GAP层（通用访问配置文件层）：
-定义设备如何被发现和链接，主要用来广播扫描和发起连接等
-数据传输部分都是由GATT这个配置文件规定的
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
-![alt text](image-7.png)
-![alt text](image-8.png)
-![alt text](image-9.png)
-![alt text](image-10.png)
-![alt text](image-11.png)
-![alt text](image-12.png)
-![alt text](image-13.png)
-![alt text](image-14.png)
-![alt text](image-15.png)
-![alt text](image-16.png)
-![alt text](image-17.png)
-![alt text](image-18.png)
-![alt text](image-19.png)
-![alt text](image-20.png)
-![alt text](image-21.png)
-![alt text](image-22.png)
-![alt text](image-23.png)
-![alt text](image-24.png)
-![alt text](image-25.png)
-![alt text](image-26.png)
-![alt text](image-27.png)
-![alt text](image-28.png)
-![alt text](image-29.png)
-![alt text](image-30.png)
-![alt text](image-31.png)
-![alt text](image-32.png)
-![alt text](image-33.png)
-
+XIAO MG24 的蓝牙功能
 # Arduino小型化与TinyML应用课程
 
 软件：Edge Impulse(边缘人工智能开发平台)
