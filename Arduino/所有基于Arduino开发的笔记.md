@@ -690,7 +690,11 @@ void loop() {
 陀螺仪的范围有±250、±500、±1000、±2000可选，而对应的精度分别是131LSB/(°/s)、65.5LSB/(°/s)、32.8LSB/(°/s)、16.4 LSB/(°/s)。
 
 ## BLE
-XIAO MG24 的蓝牙功能
+Seeed Studio XIAO MG24   
+XIAO nRF52840  
+XIAO ESP32C3
+XIAO ESP32C6
+XIAO ESP32S3
 # Arduino小型化与TinyML应用课程
 
 软件：Edge Impulse(边缘人工智能开发平台)

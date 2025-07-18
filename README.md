@@ -34,6 +34,9 @@
 Homeassistant，Node-RED以及ThingsBoard的一些笔记。  
 - [Homeassistant笔记](Node-RED_note/Homeassistant笔记.md)  
 - [Node-RED笔记](Node-RED_note/Node-RED笔记.md)
+# PHY_note
+是学习PHY6252的笔记，包括一些常用操作和技巧，以及一些小工具的介绍。
+- [PHY6252](PHY_note/PHY6252.md)
 # PY32_note
 是学习PY32的笔记，包括一些常用操作和技巧，以及一些小工具的介绍。
 - [PY32](PY32/PY32.md)
@@ -45,6 +48,7 @@ Homeassistant，Node-RED以及ThingsBoard的一些笔记。
 - [ROS2-MicroROS](ROS2_note/FishBot.md)
 # RTOS_note
 FreeRTOS，RT-Thread，uCOS-III，lwIP，μITRON，等RTOS的一些笔记。
+- [RTOS](RTOS_note/freeRTOS.md)
 # STM32_note
 - [STM32WLE5](STM32_note/蓝桥杯物联网.md)
 - [keysking教程](STM32_note/keysking.md)
