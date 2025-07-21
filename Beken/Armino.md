@@ -94,28 +94,40 @@ ble从设备因为也在计算好的时间里进行了侦听，因此能收到�
   BT_GATT_PRIMARY_SERVICE：定义GATT服务UUID
   BT_GATT_CHARACTERISTIC：定义收发的特征值
   BT_GATT_CCC：定义配置改变时的监听
-
+# 鹏老师课程
+https://www.bilibili.com/opus/697239519074713670
 ## 蓝牙广播
 ![alt text](image-21.png)
 频率范围从2402Mhz到2480Mhz  
 每2Mhz一个信道
 37 38 39是广播信道，剩余的是数据信道
 ![alt text](image-22.png)  
+一个广播数据包最长37个字节，6个字节用作蓝牙MAC地址。长度=类型+内容=1+n
 ![alt text](image-23.png)  
 ![alt text](image-25.png)  
+设备名称：1234,；发射功率：8dBm；厂商自定义数据。  
+一个汉字UTF-8编码占用3个字节
 ## 扫描响应
 ![alt text](image-26.png)  
 ![alt text](image-27.png)  
 ![alt text](image-29.png)
+扫描响应的格式和蓝牙广播的数据格式是完全一样的。
 ![alt text](image-28.png)
 
 ## 状态切换
 ![alt text](image-30.png)
-
+如果第一次连接后，并断开连接。回到就绪态，不是广播态所以会扫描不到。要编写程序代码，当设备从连接态进入就绪态后使其再次进入广播态。可以通过中断函数来处理蓝牙状态的变化
 ## 服务与特征  
 ![alt text](image-31.png)  
+UUID是蓝牙组织定义的，用于区分各个服务和特性的标识符。总长度是128bit。蓝牙组织联盟定义了一个UUID的基地址，允许用户使用16bit的UUID和32bit的UUID与该基地址拼接形成128bit的UUID
 ![alt text](image-32.png)
 ## 数据收发
+BLE是基于一个个特性实现的，每一个特性可以被看作一个数据点。数据的收发都要依托于这些数据点。
+![alt text](image-36.png)  
+write With No Response写完之后不需要从设备回应
+write需要回应
+Notify操作是设备里面的数据发生变化之后通知手机来取数据。需要在手机端订阅相应的通知才有效。不需要主设备回应从设备
+Indicate需要回应（回应从设备）
 ![alt text](image-33.png)
 ## SPP协议
 ![alt text](image-34.png)  
