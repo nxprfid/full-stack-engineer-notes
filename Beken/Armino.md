@@ -13,7 +13,7 @@ Service 的目前是方便主机查找从机包含了哪些服务，或者快速
 
 Service 和 Characteristic 使用的数据结构，都是 “Attribute”。看来他们都是一个东西，只是赋予了不同的解释。
 
-一条“Characteristic”不是对应一条“Attribute”，而是多条组成。
+一条“Characteristic”不是对应一条“Attribute”，而是多条组成。  
 ![alt text](image-18.png)  
 当特征有 notify 或者 indicate 功能时，蓝牙规范必须为其添加 CCCD attribute。
 
@@ -119,15 +119,15 @@ https://www.bilibili.com/opus/697239519074713670
 如果第一次连接后，并断开连接。回到就绪态，不是广播态所以会扫描不到。要编写程序代码，当设备从连接态进入就绪态后使其再次进入广播态。可以通过中断函数来处理蓝牙状态的变化
 ## 服务与特征  
 ![alt text](image-31.png)  
-UUID是蓝牙组织定义的，用于区分各个服务和特性的标识符。总长度是128bit。蓝牙组织联盟定义了一个UUID的基地址，允许用户使用16bit的UUID和32bit的UUID与该基地址拼接形成128bit的UUID
+UUID是蓝牙组织定义的，用于区分各个服务和特性的标识符。总长度是128bit。蓝牙组织联盟定义了一个UUID的基地址，允许用户使用16bit的UUID和32bit的UUID与该基地址拼接形成128bit的UUID  
 ![alt text](image-32.png)
 ## 数据收发
 BLE是基于一个个特性实现的，每一个特性可以被看作一个数据点。数据的收发都要依托于这些数据点。
 ![alt text](image-36.png)  
-write With No Response写完之后不需要从设备回应
-write需要回应
-Notify操作是设备里面的数据发生变化之后通知手机来取数据。需要在手机端订阅相应的通知才有效。不需要主设备回应从设备
-Indicate需要回应（回应从设备）
+write With No Response写完之后不需要从设备回应  
+write需要回应  
+Notify操作是设备里面的数据发生变化之后通知手机来取数据。需要在手机端订阅相应的通知才有效。不需要主设备回应从设备  
+Indicate需要回应（回应从设备）  
 ![alt text](image-33.png)
 ## SPP协议
 ![alt text](image-34.png)  
@@ -149,8 +149,8 @@ https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/cli/bluetooth/ble
 http://gitlab.bekencorp.com/wifi/armino/-/tree/main/components/demos/bluetooth/ble_boarding  
 http://gitlab.bekencorp.com/wifi/armino/-/tree/main/include/modules/ble.h  
 
-![alt text](image.png)
-根据SPEC上面的说明
+![alt text](image.png)  
+根据SPEC上面的说明  
 ![alt text](image-1.png)
 
 `bk_ble_init`()函数初始化蓝牙模块，并使能蓝牙功能。  
