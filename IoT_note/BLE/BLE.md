@@ -3,6 +3,7 @@
 由于其特性，BLE 非常适合需要定期交换少量数据并运行在纽扣电池上的应用。这使得它的功耗非常低。根据使用场景，BLE 的功耗约为传统蓝牙的 1/100。    
 [nRF Connect for Desktop下载地址](https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-desktop)  
 [nRF Connect for Desktop详细教程请看](https://wiki.seeedstudio.com/cn/xiao-ble-sidewalk/#%E5%BF%85%E9%9C%80%E8%AE%BE%E5%A4%87)
+[nrf connect_4.10.0 软件使用指南](https://blog.51cto.com/u_16213575/11321104)
 ## 基本概念
 ### 服务端和客户端
 在蓝牙低功耗中，有两种类型的设备：服务端和客户端。  
