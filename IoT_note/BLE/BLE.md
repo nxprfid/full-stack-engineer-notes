@@ -2,8 +2,9 @@
 蓝牙低功耗（简称 BLE）是蓝牙的一种节能变体。BLE 的主要应用是短距离传输少量数据（低带宽）。与始终开启的传统蓝牙不同，BLE 除非建立连接，否则始终处于休眠模式。  
 由于其特性，BLE 非常适合需要定期交换少量数据并运行在纽扣电池上的应用。这使得它的功耗非常低。根据使用场景，BLE 的功耗约为传统蓝牙的 1/100。    
 [nRF Connect for Desktop下载地址](https://www.nordicsemi.com/Products/Development-tools/nrf-connect-for-desktop)  
-[nRF Connect for Desktop详细教程请看](https://wiki.seeedstudio.com/cn/xiao-ble-sidewalk/#%E5%BF%85%E9%9C%80%E8%AE%BE%E5%A4%87)
-[nrf connect_4.10.0 软件使用指南](https://blog.51cto.com/u_16213575/11321104)
+[nRF Connect for Desktop详细教程请看](https://wiki.seeedstudio.com/cn/xiao-ble-sidewalk/#%E5%BF%85%E9%9C%80%E8%AE%BE%E5%A4%87)  
+[nrf connect_4.10.0 软件使用指南](https://blog.51cto.com/u_16213575/11321104)  
+[深入分析蓝牙BLE协议【附代码实例】](https://www.eet-china.com/mp/a285112.html)  
 ## 基本概念
 ### 服务端和客户端
 在蓝牙低功耗中，有两种类型的设备：服务端和客户端。  
@@ -111,7 +112,6 @@ BTHome 是一种功能强大的标准，用于通过 BLE 广播传感器数据�
 
 
 # BLE MESH
-[深入分析蓝牙BLE协议【附代码实例】](https://www.eet-china.com/mp/a285112.html)  
 [tuya mesh](https://www.tuyaos.com/viewtopic.php?t=523)  
 [ESP-BLE-MESH](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-guides/esp-ble-mesh/ble-mesh-index.html)  
 [安信可](https://bbs.ai-thinker.com/forum.php?mod=viewthread&tid=46050&_dsign=81e07e29)  
@@ -133,8 +133,33 @@ Advertising是指蓝牙广播设备在3个广播信道里以特定的时间间�
 ### 管理型网络泛洪
 蓝牙Mesh网络使得设备可以在广阔的区域中安装, 同时每个设备之间保持通信. 消息可以在在无线覆盖范围之内的设备之间直接通信, 也可以通过中继设备和无线覆盖范围之外的设备通信. 消息可以被多次中继, 从而实现非常广阔的消息传输. 蓝牙Mesh采用的是管理型网络泛洪方式来进行网络信息的传输, 即网络中所有具备中继功能的设备都会转发收到的消息. 优点是无需特定的路由设备, 确保消息多路径传输无障碍的到达目的设备 缺点是可能会对网络消息泛滥造成通信延迟. 所以蓝牙Mesh采用以下措施来优化泛洪通信来减少不必要的冗余信息传输  
 - Message cache: 设备都会缓存收到消息的关键信息, 以确定是否已经转发过此消息, 如果是就忽略此消息. Message cache需要至少能缓存两条消息。
-- Time to Live(TTL): 每个消息都会包含一个Time to Live(TTL)的值, 来限制中继的次数, 最大可以中继126次. 消息每转发一次TTL的值就减1, TTL值为1就不再转发。  
+- Time to Live(TTL): TTL 指的是一条广播包可被转发次数，在每条的 mesh 广播包中都会存在，占用 7bit。对于 TTL 的值有以下解释：每个消息都会包含一个TTL的值, 来限制中继的次数, 最大可以中继126次. 消息每转发一次TTL的值就减1, TTL值为1就不再转发。  
+• 0 = has not been relayed and will not be relayed  
+• 1 = may have been relayed, but will not be relayed  
+• 2 to 126 = may have been relayed and can be relayed  
+• 127 = has not been relayed and can be relayed  
+节点间通信为广播通信没有特定的路径，relay 节点收到的广播包只要 TTL 值不为 0 这条广播包就可以被继续转发，同时将广播包中的 TTL 减一。  
+### Mesh数据包
+我们目前常用的 mesh 控制数据包类型为 Access message。  
+Access message 分为 unseq acc / seq acc；  
+unseq acc 即 不分包 access 数据，最大长度为15，减去 MIC(4) 最大可以 11Byte。11Byte 里包括 opcode，即在用 vendor model 发送数据时，opcode 长度为3，即 data 最大为 8.  
 
+seq acc 即分包 access 数据，单包最大长度为12，即总长度为 12\*n，n为分包数。12\*n 中包括 MIC 4Byte)，即用户数据为 12\*n-4，再减掉 opcode 长度才为实际的用户数据长度 即： 12\*n - 4 - opcode_len。如果对于使用 vendor model 则分包数为 n = (data_len + 7)/12，对 n 取整。  
+
+在使用数据包很短的控制命令时，命令的成功率与到达的一致性都很优秀，例如：开关命令、照明的调光命名、传感器的数据上报等。所以建议数据命令长度较长的控制方式时建议不要选择 Mesh 方案，否则不仅无法发挥其优势而且有可能会出现数据延迟与丢包等问题。  
+- SEQ
+SEQ 全称 sequence num，每包的序列号。mesh 的每一包里都有一个长度为 3 个字节的序列号。对于同一个设备在发送 mesh 数据时，这个序列号必须是累加的。
+
+同时每个 mesh 设备内部都有一张 SEQ 缓存表，用来缓存接收到的mesh数据包的源地址（src_addr）和其最新的 SEQ，这张表只存放在 RAM（掉电丢失）中。在每收到一个 mesh 数据包时都要去表里去查询，收到的SEQ是否大于缓存表同一个源地址的 SEQ，如果小于等于则认为次数据包为重传包或者不合法数据包，同时丢弃此数据包。  
+#### Sig mesh网络防重放安全机制
+seq：  
+sequence num，每包的序列号。Mesh 的每一包里都有一个长度为3个字节的序列号。对于同一个设备在发送mesh 数据是，这个序列号是累加的。  
+每个mesh设备内部都有一张 seq cache 表，用来缓存接收到的 mesh 数据包的原地址 src_addr 和最新的 seq。这张表只存放在 ram（掉电丢失） 中。在每收到一个 mesh 数据包时都要去表里去查询，对于同一个 src_addr，收到的 seq 是否大于缓存的 seq，如果小于等于则不做任何处理。  
+
+iv index：  
+iv index 是一个网络内的属性，针对于同一个网络所有设备的 iv index 保持一致。Iv index 的意义在于，seq 只有三个字节，对于 mesh 网络通信，早晚有用完的那一天，如果 seq 用完了没有其他机制的话这个设备就无法与其他设备通信了。所以，iv index 的更新就是来解决 seq 的问题。
+当网络内任意一个设备的 seq 用完了之后，就可以发起 iv index 的更新，在 iv index 更新之后，设备的 seq 重置从 0 开始重新累加。  
+iv index 更新过程分为 normal 状态和 active 状态。因为一个网络内有大量的设备，更新是需要一定时间的。因为技术性很强，此处不多过多解释，感兴趣的可以参考 mesh spec。  
 ### 节点特性
 - 网关（Gateway）：连接 BLE Mesh 网络与其他网络（如 Wi-Fi、以太网）设备。  
 - 节点（Node）：参与 BLE Mesh 网络通信的设备，每个节点就是一个控制器。  
@@ -148,10 +173,11 @@ Advertising是指蓝牙广播设备在3个广播信道里以特定的时间间�
 节点之间的连线表示无线信号覆盖范围内的直接连接, 对无线信号覆盖范围外的节点之间的通信需要经过中继节点. 如图中的Q,R,S进行消息转发到达目的节点. 图中有3个好友节点, 其中节点P和O分别有3个和2个低功耗节点组合, 好友节点N没有低功耗节点组合. 节点T是BLE设备, 通过GATT Bearer方式和代理中继节点S进行通信, 节点S必须转发所有和节点T的消息传输. 比如BLE节点T要发送消息给低功耗节点L. 首先节点T通过GATT Bearer在数据信道发消息给节点S, 然后节点S通过Advertising Bearer方式在广播信道转发消息. 节点H,R,O,N都在其无线信号覆盖范围并接收到消息, 节点O作为低功耗节点L的好友会储存收到的消息, 在节点L从睡眠中醒来后会查询好友节点O来取得这个发送给它的消息并做相应的处理。  
 ## 基础概念和术语
 ### 设备和节点
-一个蓝牙设备(如插座)在没有加网前被称为Unprovisioned Device。帮助 BLE Mesh 设备完成配网操作的设备叫做「启动配置设备」(Provisioner)通过Provisioning蓝牙设备 完成认证, 创建网络密钥, 蓝牙设备成为未配置的蓝牙节点(Node)。
-![alt text](image-46.png)
-未配置好的节点是不能做任何事情的, Provisioner再进行节点配置 绑定应用层和网络层密钥, 设置模型的发布/订阅等. 完成上述动作后蓝牙设备(Device)成为蓝牙Mesh网络里的功能节点(Node)。
-![alt text](image-47.png)
+一个蓝牙设备(如插座)在没有加网前被称为Unprovisioned Device。帮助 BLE Mesh 设备完成配网操作的设备叫做「启动配置设备」(Provisioner)通过Provisioning蓝牙设备 完成认证, 创建网络密钥, 蓝牙设备成为未配置的蓝牙节点(Node)。  
+![alt text](image-46.png)  
+未配置好的节点是不能做任何事情的, Provisioner再进行节点配置 绑定应用层和网络层密钥, 设置模型的发布/订阅等. 完成上述动作后蓝牙设备(Device)成为蓝牙Mesh网络里的功能节点(Node)。  
+![alt text](image-47.png)  
+
 ### Mesh密钥
 Mesh Profile 规范定义了两种类型的密钥：应用程序密钥（AppKey）和网络密钥（NetKey）。
 NetKeys 用于网络层的通信加密，只有 NetKey 保持一致设备所发出的数据才可以被同一个Mesh网络内的节点进行传输。
@@ -195,22 +221,31 @@ AppKeys 用于上层传输层的通信加密，只有AppKey保持一致，节点
 未配网 BLE Mesh 设备经过配网操作后，就成为了 BLE Mesh 网络中的设备节点。设备节点有一个或多个特性：代理节点、低功耗节点、中继节点、朋友节点、普通节点。  
 一个节点可以包含1个或多个元素(Elements), 比如一个双孔插座板, 每个插孔就是一个元素。  
 ![alt text](image-48.png)  
-- 每个元素在加网的过程会被分配唯一的单播地址(Unicast Address), 地址范围是0x0001-0x7FFF.
-- 还有一个组播地址(Group Address)就是前面讲到的发布/订阅机制里的厨房, 花园等. 元素订阅特定的组播地址, 就会收到发布者发送到此地址的消息.分为动态和固定地址，动态的用来做一般的“组播”，固定地址用来做一些协议规定的功能。动态组播地址范围0xC000-0xFEFF.  
+- 每个元素在加网的过程会被分配唯一的单播地址(Unicast Address), 地址范围是0x0001-0x7FFF。  
+- 还有一个组播地址(Group Address)就是前面讲到的发布/订阅机制里的厨房, 花园等。元素订阅特定的组播地址, 就会收到发布者发送到此地址的消息。分为动态和固定地址，动态的用来做一般的“组播”，固定地址用来做一些协议规定的功能。  
+● 动态组播地址范围0xC000-0xFEFF。  
 ● 固定地址  
+![alt text](image-57.png)
   ○ 保留：0xFF00-0xFFFB  
   ○ 发送到启用代理（proxy）功能的所有节点： 0xFFFC  
   ○ 发送到启用friend功能的所有节点：0xFFFD  
   ○ 发送到启用中继（relay）功能的所有节点：0xFFFE  
   ○ 发送到所有节点：0xFFFF  
 - 还有虚拟地址(Virtual Address), 每一个虚拟地址逻辑上对应一个128-bit的Label UUID. 通过对该Label UUID作哈希运算得出虚拟地址的低14位数值. 虚拟地址的范围为0x8000-0xBFFF。  
+
+总结：蓝牙 Mesh 用 16 位二进制 区分地址类型，前 2 位是 “类型标识”：  
+![alt text](image-58.png)  
+00 → 未分配  
+01 → 单播（后 14 位自定义）  
+10 → 虚拟（后 14 位由算法生成）  
+11 → 组播（后 14 位区分不同组）  
 ### 模型
 ![alt text](image-51.png)
 设备节点由多个元素构成，每个元素包含了多个模型，而每个模型定义了节点的基本功能，比如节点所需要的状态、控制状态的消息以及处理消息所产生的动作等。节点功能的实现是基于模型的，模型可分为 SIG 模型和自定义模型，前者由 SIG 定义，而后者由开发者定义。模型也可基于消息的发送 / 接收方分为客户端模型与服务端模型。  
 模型(Models)顾名思义就是定义了基本功能的最小单位模型, 比如设备的开关 灯光亮度调节等 模型包含了三个部分:  
 ![alt text](image-49.png)  
 - 状态(State)表明一个元素的当前状态. 比如灯泡中包含开关和亮度的状态值. 不同状态可以设置为绑定关系(Bound State). 比如灯泡亮度为非零值时, 开关状态应该是开. 而灯泡亮度调整到0的时候, 其开关状态也应该被设置为关闭.  
-- 消息(Message)有SET/GET/STATUS三种类型, 分别用来设置请求发送状态值.  
+- 消息(Message)有SET/GET/STATUS三种类型, 分别用来设置/请求/发送状态值。  
 - 行为(Behavior)定义了模型在接收到消息后所作的动作行为. 比如开关模型定义的行为就是在收到了SET的消息后, On/Off的状态就要变为SET消息里给定的值. 如果收到了GET消息那么就把On/Off的状态通过STATUS消息传给询问方.  
 
 蓝牙Mesh的消息通信是基于服务器/客户端的架构, 对外提供状态访问接口的叫做服务器(server), 而来访问服务器端状态的叫做客户端(client). 模型分为三种:
@@ -221,7 +256,7 @@ AppKeys 用于上层传输层的通信加密，只有AppKey保持一致，节点
 目前SIG定义好的模型包括Generic, Sensors, Time and Scenes, Lighting. 客户产品如果不在列表的话可以定义Vendor Model来实现相应的功能.
 
 为了方便理解, 图中是灯和开关的模型简化示意图  
-![alt text](image-50.png)
+![alt text](image-50.png)  
 左边灯的元素中含有通用开关(Generic OnOff)和灯的亮度(Light Lightness)服务器模型, 分别包含通用开关(Generic OnOff)和灯亮度(Light Lightness Actual)状态. 两个状态是绑定状态关系.  
 
 右边开关设备元素中包含了通用开关(Generic OnOff)和灯亮度(Light Lightness)客户端模型. 通过消息来获知设置服务器端元素的状态. 客户端模型不含有状态.
@@ -230,7 +265,7 @@ AppKeys 用于上层传输层的通信加密，只有AppKey保持一致，节点
 配置模型config_model
 配置模型是一个强制应用的模型，是节点首元素里面的一个模型，专门用来配置节点的各种初始化，绑定等功能！
  通用模型generic_model
-例如onoff这种，sig mesh协议里规定了的通用型模型，各个厂家只的设备之间可以互相通用！
+例如onoff这种，sig mesh协议里规定了的通用型模型，各个厂家设备之间可以互相通用！
 厂家模型vendor_model
 就是自定义模型，用来补充通用模型的功能的，厂家可以通过这个模型，来建立属于自己的通信方式！例如，透传！  
 ![alt text](image-53.png)  
@@ -260,6 +295,130 @@ Mesh 消息是 BLE Mesh 网络中数据传输的基本单位，由操作码（op
 订阅(Subscribe)——"被动"的处理元素接收到的信息！订阅信息前，需要调用API去指定接收"目标地址"。
 ![alt text](image-55.png)  
 上图，节点B的开关模型“订阅”了地址“0xCFFF”的信息响应，当节点A“发布”开关命令到地址“0XCFFF”，节点B即可收到相应的命令，并进行处理。 
+## 配网
+Mesh Spec 规定的标准配网为 mesh 的 Provision 过程，实际设备从未配网到可以正常通信分为两个步骤：  
+1. Mesh Provision阶段  
+配网节点通过扫描到未配网的 mesh 节点设备，然后通过连接（PB-GATT）或者广播（PB-ADV）与设备通信并发起配网，配网过程会先通过 ECDH 协商生成 Public key，然后基于 Public key 将Mesh网络的密钥 Network key 下发给设备，同时协商生成设备密钥 Device key，到此设备 Provision 阶段完成。
+
+2. Config Model阶段   
+接下来还需要通过 Network key 与 Device key 的加密将应用密钥 App key 下发给设备，同时对设备的 Model 绑定对应的应用密钥以及更新 Mesh 设备的 Network transmit 参数，到此设备的完成配网完成。后续所有的业务都可以通过这三个密钥加密完成。  
+
+配网者中有两种承载方式（详细可参考 Mesh Profile 1.0.1 中 5.2 章节）：
+
+1. PB-ADV
+配网者通过广播直接与未配网的 mesh 节点通信进行配网过程。此种方式一般适用于网关类配网者，此类配网者可以保持一致或者周期性 scan 空中的广播数据以及发送广播数据来做到与网络内节点通信。
+
+2. PB-GATT
+配网者通过 GATT 连接的方式与未配网的 mesh 节点进行连接后通过连接通道进行配网。一般应用于手机 App 此类的配网者。手机 App 一般无法保持长时间的 scan 能力，所以无法直接接收Mesh网络的消息，所以需要通过 GATT 连接未配网的设备进行通信。
+
+
+这是蓝牙Mesh网络中**配网（Provisioning）流程**的示意图，描述一个新设备（Un-provisioned Device）如何加入Mesh网络，核心步骤如下：  
+![alt text](image-59.png)  
+ 配网流程步骤分5个阶段，按顺序执行：  
+
+| 步骤（右侧蓝色框）          | 作用与细节                                                                 |  
+|-----------------------------|--------------------------------------------------------------------------|  
+| **Beaconing（广播信标）**   | 未配网设备持续发蓝牙广播（含设备信息、UUID），配网者扫描周围“待配网设备”。       |  
+| **Invitation（邀请）**      | 配网者选中标设备，发`Provisioning Invite`，协商安全等级（如是否需要密码/按键确认）。 |  
+| **Exchanging Public Keys（交换公钥）** | 双方生成并交换公钥，基于椭圆曲线加密（ECC）生成共享密钥，为后续加密做准备。        |  
+| **Authentication（认证）**  | 验证设备合法性，可选方式：<br> - 无认证（简单场景）<br> - 按键（设备按提示按物理键）<br> - 输入OOB码（如二维码、数字）。 |  
+| **Distribution of Provisioning data（分发配网数据）** | 配网者加密发送：<br> - **NetKey**（网络密钥，Mesh网络的“通行证”）<br> - **单播地址**（设备在Mesh里的唯一ID）<br> - 其他参数（如TTL、安全配置）。设备存好数据，正式成为Mesh节点！ |  
+#### nRF Mesh操作步骤
+![扫描](image-60.png)  
+![识别](image-61.png)
+这是蓝牙Mesh配网流程中，**配网者（Provisioner，如手机APP）获取到的待配网设备（ESP32）的关键信息**，用于完成设备入网，逐字段解析：  
+
+| 字段                  | 含义 & 作用                                                                 |  
+|-----------------------|----------------------------------------------------------------------------|  
+| **Name**              | 设备名称（`ESP32`），配网者识别设备的标识                                   |  
+| **Unicast Address**   | 预分配的单播地址（`0x0001`），设备入网后在Mesh网络中的“唯一ID”               |  
+| **App Keys**          | 应用密钥（`AA7EF8628B445E6547343768B551896`），用于加密应用层消息（如控制指令） |  
+
+配网者需要知道设备的“能力”，确保配网流程兼容，关键字段：  
+
+| 字段                  | 含义 & 作用                                                                 |  
+|-----------------------|----------------------------------------------------------------------------|  
+| **Element Count**     | 元素数量（`3`），设备支持的Mesh元素个数（每个元素可对应不同功能，如开关、亮度调节） |  
+| **Supported Algorithms** | 支持的加密算法（`FIPS P-256 Elliptic Curve`），即ECC椭圆曲线加密，用于配网时的密钥交换 |  
+| **Public Key Type**   | 公钥类型（`Public key information unavailable`），可能设备未广播公钥，配网时动态交换 |  
+| **Static OOB Type**   | 静态OOB（带外）类型（截图未完整显示），用于设备认证（如按键、二维码，此处可能无） |  
+
+1. **左图（IDENTIFY）**：  
+   配网者已发现设备，显示基础信息，点击 `IDENTIFY` 可触发设备“标识动作”（如LED闪烁、蜂鸣），确认要配网的设备。  
+
+2. **右图（PROVISION）**：  
+   点击 `IDENTIFY` 后，配网者获取设备详细能力（Capabilities），此时可点击 `PROVISION` 发起正式配网：  
+   - 交换公钥 → 认证 → 分发NetKey、单播地址 → 设备入网。  
+
+这是ESP32设备在蓝牙Mesh配网时，向配网者（手机APP）公开的“入网简历”：  
+- 告诉配网者“我叫ESP32，想加入Mesh网络当`0x0001`号节点，支持ECC加密，有3个功能元素”；  
+- 配网者看完简历，确认没问题就点`PROVISION`，把设备正式拉进Mesh网络！  
+
+核心作用：让配网者掌握设备的“身份、网络ID、加密能力”，为安全入网做准备~
+
+![配网](image-62.png)  
+
+
+#### 一、配网核心流程（Provision阶段） 
+蓝牙Mesh配网分多个子步骤，需双向交互完成，日志里的关键动作：  
+
+| 日志条目                          | 含义 & 作用                                                                 |  
+|-----------------------------------|----------------------------------------------------------------------------|  
+| `Sending provisioning invite...`  | 配网者（手机APP）向设备发“配网邀请”，协商安全等级                           |  
+| `Provisioning capabilities received...` | 设备回复“自身能力”（如元素数量、加密算法），配网者确认兼容性               |  
+| `Sending provisioning start...`   | 配网者发“配网开始”指令，正式启动流程                                       |  
+| `Sending provisioning public key...` | 交换公钥（ECC加密），生成共享密钥，为后续数据加密做准备                     |  
+| `Provisioning public key received...` | 设备收到配网者公钥，完成密钥交换                                           |  
+| `Sending provisioning confirmation...` | 配网者发“确认”消息，验证密钥交换结果                                       |  
+| `Provisioning confirmation received...` | 设备回复“确认”，双方同步配网状态                                           |  
+| `Sending provisioning data...`    | 配网者发“核心配网数据”：<br> - NetKey（网络密钥）<br> - 单播地址（`0x0001`）<br> - 其他配置（如TTL） |  
+| `Provisioning complete received...` | 设备回复“配网完成”，基础入网流程结束                                       |  
+
+
+#### 二、配置流程（Config Model阶段）  
+配网成功后，还需配置设备的Mesh“组合数据”（Composition Data）和网络参数，确保功能可用：  
+
+| 日志条目                          | 含义 & 作用                                                                 |  
+|-----------------------------------|----------------------------------------------------------------------------|  
+| `Sending composition data get...` | 配网者（如手机APP）主动向设备发送请求，索要**组合数据（Composition Data）**，包含设备支持的Mesh元素、模型（如开关模型、亮度调节模型）等功能描述信息，用于识别设备能提供哪些Mesh服务 | 配置阶段 - 功能发现 |
+| `Sending block acknowledgements`  | 配网者发送**块确认消息**，因组合数据可能较长，采用分段传输，此消息用于确认已收到设备发来的部分组合数据，保证数据传输完整性 | 配置阶段 - 数据同步 |
+| `Composition data status received...` | 设备回复**组合数据状态**，将自身支持的Mesh元素、模型等详细功能信息反馈给配网者，配网者据此知晓设备能力，比如设备有几个元素、每个元素关联哪些Mesh模型 | 配置阶段 - 功能反馈 |
+| `Sending block acknowledgements`  | 再次发送块确认消息，确认收到设备完整的组合数据，确保配网者与设备的功能信息同步无误 | 配置阶段 - 数据同步 |
+| `Sending default TTL get...`      | 配网者发送请求，获取设备**默认TTL（Time To Live，生存时间/跳数限制）**值，TTL决定Mesh消息在网络中最多能转发的次数，影响消息传播范围 | 配置阶段 - 网络参数获取 |
+| `Default TTL status received...`  | 设备回复默认TTL状态，把自身默认的TTL数值告知配网者，配网者可基于此判断消息转发规则是否合理 | 配置阶段 - 网络参数反馈 |
+| `Sending network transmit set...` | 配网者发送指令，设置设备的**网络传输参数**，比如调整Mesh消息的重传次数、间隔等，优化网络通信稳定性 | 配置阶段 - 网络参数配置 |
+| `Network transmit status received...` | 设备回复网络传输状态，告知配网者网络传输参数设置是否成功、当前生效的传输参数情况，确认网络通信配置完成 | 配置阶段 - 网络参数确认 | 
+
+
+#### 三、最终结果（`Configuration Complete`）  
+- **日志关键**：`Configuration Complete` + `Mesh node has been successfully configured.`  
+- **含义**：设备已完成**全部配网+配置流程**，正式成为Mesh网络中的节点，可收发Mesh消息（如控制指令、状态上报）。  
+
+这是**PHY-MSHLIGHT设备成功加入蓝牙Mesh网络的完整流程**，从“陌生人”（未配网）到“正式成员”（可通信），经历了：  
+1. 配网邀请→能力交换→密钥协商→数据分发→配网完成；  
+2. 再补充配置组合数据、网络参数；  
+3. 最终“配置完成”，设备可正常在Mesh网络中工作！  
+
+简单说：设备入网成功，现在能听话干活啦（比如接收开关、调光指令）~
+### 配网成功
+当设备配网成功后，开发板上的 RGB 灯会熄灭，此时 App 会执行以下几个步骤：
+
+和该节点（设备配网后成为节点）断开连接
+
+尝试和该节点重新建立连接
+
+连接成功并且发现了相应的 ESP-BLE-MESH GATT 服务
+
+获取节点的 Composition Data (获取设备支持的 Mesh 模型 / 元素)并且给该节点添加 AppKey
+![alt text](image-63.png)
+
+### 配置
+当成功配网和初始配置完成后，用户可以配置节点的其余信息，例如将 AppKey 绑定至每个元素 (element) 的每个模型 (model) 中、设置模型的发布信息等。
+
+下图展示了如何将 AppKey 绑定至 Primary Element 中的 Generic OnOff Server Model 上。
+![alt text](image-64.png)  
+> 用户不需要将 AppKey 绑定至 Configuration Server Model（配置模型），因为该模型使用 DevKey 在 Upper Transport Layer 中对消息进行加密。
+
 ## 蓝牙 Mesh 1.1 
 协议是蓝牙技术领域的重要更新，其新功能亮点包括：引入“定向转发路由”和“远程配网”机制。
 ### 定向转发路由
