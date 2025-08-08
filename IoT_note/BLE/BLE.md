@@ -325,7 +325,7 @@ Mesh Spec 规定的标准配网为 mesh 的 Provision 过程，实际设备从�
 | **Distribution of Provisioning data（分发配网数据）** | 配网者加密发送：<br> - **NetKey**（网络密钥，Mesh网络的“通行证”）<br> - **单播地址**（设备在Mesh里的唯一ID）<br> - 其他参数（如TTL、安全配置）。设备存好数据，正式成为Mesh节点！ |  
 #### nRF Mesh操作步骤
 ![扫描](image-60.png)  
-![识别](image-61.png)
+![识别](image-61.png)  
 这是蓝牙Mesh配网流程中，**配网者（Provisioner，如手机APP）获取到的待配网设备（ESP32）的关键信息**，用于完成设备入网，逐字段解析：  
 
 | 字段                  | 含义 & 作用                                                                 |  
