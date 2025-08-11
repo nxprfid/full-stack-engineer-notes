@@ -147,7 +147,7 @@ unseq acc 即 不分包 access 数据，最大长度为15，减去 MIC(4) 最大
 seq acc 即分包 access 数据，单包最大长度为12，即总长度为 12\*n，n为分包数。12\*n 中包括 MIC 4Byte)，即用户数据为 12\*n-4，再减掉 opcode 长度才为实际的用户数据长度 即： 12\*n - 4 - opcode_len。如果对于使用 vendor model 则分包数为 n = (data_len + 7)/12，对 n 取整。  
 
 在使用数据包很短的控制命令时，命令的成功率与到达的一致性都很优秀，例如：开关命令、照明的调光命名、传感器的数据上报等。所以建议数据命令长度较长的控制方式时建议不要选择 Mesh 方案，否则不仅无法发挥其优势而且有可能会出现数据延迟与丢包等问题。  
-- SEQ
+- SEQ  
 SEQ 全称 sequence num，每包的序列号。mesh 的每一包里都有一个长度为 3 个字节的序列号。对于同一个设备在发送 mesh 数据时，这个序列号必须是累加的。
 
 同时每个 mesh 设备内部都有一张 SEQ 缓存表，用来缓存接收到的mesh数据包的源地址（src_addr）和其最新的 SEQ，这张表只存放在 RAM（掉电丢失）中。在每收到一个 mesh 数据包时都要去表里去查询，收到的SEQ是否大于缓存表同一个源地址的 SEQ，如果小于等于则认为次数据包为重传包或者不合法数据包，同时丢弃此数据包。  
@@ -419,6 +419,695 @@ Mesh Spec 规定的标准配网为 mesh 的 Provision 过程，实际设备从�
 ![alt text](image-64.png)  
 > 用户不需要将 AppKey 绑定至 Configuration Server Model（配置模型），因为该模型使用 DevKey 在 Upper Transport Layer 中对消息进行加密。
 
+## 快速配网
+### 演示功能
+
+本演示展示了 ESP BLE Mesh 网络的快速配网功能，以及如何使用 EspBleMesh 应用程序控制单个已配网节点或所有已配网节点。
+此示例的视频可从[这里](https://dl.espressif.com/BLE/public/ESP32_BLE_Mesh_Fast_Provision.mp4)观看。
+
+### 所需物品
+
+* [安卓版 EspBleMesh 应用](https://github.com/EspressifApp/EspBLEMeshForAndroid/releases/tag/v1.1.0)
+* [esp-idf](https://github.com/espressif/esp-idf)
+* ESP32 开发板
+
+> 注意：
+>
+> 1. 请先将 [`fast_prov_server`](../../) 固件烧录到开发板；
+> 2. 为了更好地了解 BLE Mesh 网络的性能，建议网络中至少添加 3 台设备。
+> 3. 如果您的开发板没有自带指示灯，建议焊接 LED 指示灯。
+> 4. 请通过运行 `idf.py menuconfig` 检查 `Example BLE Mesh Config` 中启用的板型和 LED 引脚定义  
+
+![开发板](image-65.png)  
+
+### 烧录和监控
+
+1. 进入目录：
+examples/bluetooth/esp_ble_mesh/fast_provisioning/fast_prov_server
+2. 确保 `IDF_PATH` 环境变量已根据您当前的 IDF 路径进行设置
+3. 检查工具链版本。应使用 4.1 或更新版本。  
+![检查环境](image-66.png)  
+
+4. 运行 `idf.py -p PORT flash` 编译代码并将代码烧录到设备。  
+![编译代码](image-67.png)  
+
+> 注意：
+>
+> 如果您看到以下窗口，请点击退出按钮。
+
+
+5. 如果您想在电脑上监控该设备的运行情况，请使用正确的序列号建立设备与电脑之间的连接。
+
+### 如何使用应用程序
+
+请启动 `EspBleMesh` 应用程序，并按照以下步骤建立 BLE Mesh 网络并控制任何单个节点或所有节点。  
+
+![应用步骤](image-68.png)  
+1. 点击左上角查看更多选项；
+2. 点击**配网**扫描附近未配网的设备；
+3. 从扫描列表中选择任何未配网的设备；
+4. 输入您想要添加到网格网络中的设备数量；
+> 注意：
+>
+> 如果您只想使用普通配网功能，请勿勾选快速配网选项。
+5. 等待所有设备配网完成；
+6. 点击左上角查看更多选项；
+7. 点击**快速配网**查看所有已配网的设备；
+8. 控制您的设备。
+
+> 注意：
+>
+> 如果遇到任何连接问题，请关闭手机的蓝牙功能，再重新开启并尝试。
+
+
+### 流程
+
+#### 角色
+
+* 手机 - 顶级配网者
+* 已由手机配网的设备 - 主配网者
+* 已配网并转换为配网者角色的设备 - 临时配网者
+* 已配网但未转换为配网者角色的设备 - 节点
+
+#### 交互
+![交互](image-69.png)
+1. 顶级配网者通过 GATT 载体配置第一个设备接入网络。
+2. 顶级配网者发送 `send_config_appkey_add` 消息，为该设备分配 Appkey。
+3. 顶级配网者发送 `send_fast_prov_info_set` 消息，提供必要信息，使该设备能转换为主配网者。
+4. 设备调用 `esp_ble_mesh_set_fast_prov_action` API，将自身转换为主配网者，并与顶级配网者断开连接。
+5. 主配网者发送 `send_config_appkey_add` 消息，为另一台设备分配 Appkey。
+6. 主配网者发送 `send_fast_prov_info_set` 消息，提供必要信息，使该设备能转换为临时配网者。
+7. 设备调用 `esp_ble_mesh_set_fast_prov_action` API，将自身转换为临时配网者，并启动其地址计时器。
+8. 当临时配网者的地址计时器超时（表明临时配网者在 10 秒内未配网任何设备），它会收集自己已配网节点的地址，并将这些地址发送给主配网者。
+9. 当主配网者的地址计时器超时（表明主配网者在 10 秒内未收到任何来自临时配网者的消息），主配网者会重新连接到顶级配网者。
+10. 顶级配网者在与主配网者重新连接后，会自动发送 `node_adress_Get` 消息。
+11. 此时，顶级配网者能够控制 BLE Mesh 网络中的任何节点。
+
+> 注意：
+>
+> BLE Mesh 网络中的节点只有在被顶级配网者至少控制过一次后，才会禁用其配网者功能。
+
+### 服务器代码实现
+#### 1.2 节点组成
+
+本演示只有一个元素，其中实现了以下五个模型：
+
+- **配置服务器**模型用于表示设备的 mesh 网络配置。
+- **配置客户端**模型用于表示可以控制和监控节点配置的元素。
+- **通用开关服务器**模型实现节点的开关状态。
+- **供应商服务器**模型实现节点的`fast_prov_server`状态。
+- **供应商客户端**模型用于控制`fast_prov_server`状态，该状态定义了节点的快速配网行为。
+
+
+#### 2. 代码分析
+
+代码初始化部分参考[初始化蓝牙和 BLE Mesh](../../../wifi_coexist/tutorial/BLE_Mesh_WiFi_Coexist_Example_Walkthrough.md)。
+
+##### 2.1 数据结构
+
+本节介绍本演示的`example_fast_prov_server_t`结构体及其分组变量。
+
+```
+typedef struct {
+    esp_ble_mesh_model_t *model;    /* 快速配网服务器模型指针 */
+    ATOMIC_DEFINE(srv_flags, SRV_MAX_FLAGS);
+
+    bool     primary_role;  /* 指示设备是否为主要配网者 */
+    uint8_t  max_node_num;  /* 配网者可配网的最大设备数量 */
+    uint8_t  prov_node_cnt; /* 自行配网的节点数量 */
+    uint16_t app_idx;       /* 其他配网者添加的应用程序密钥的 AppKey 索引 */
+    uint16_t top_address;   /* 触发快速配网的设备（如手机）的地址 */
+
+    esp_ble_mesh_msg_ctx_t ctx; /* 用于发送快速配网状态消息的存储上下文 */
+    struct fast_prov_info_set *set_info;    /* 用于存储接收到的快速配网信息设置上下文 */
+
+    uint16_t node_addr_cnt;     /* 应接收的节点地址数量 */
+    uint16_t unicast_min;       /* 可发送给其他节点的最小单播地址 */
+    uint16_t unicast_max;       /* 可发送给其他节点的最大单播地址 */
+    uint16_t unicast_cur;       /* 当前可分配的单播地址 */
+    uint16_t unicast_step;      /* 单播地址变更步长 */
+    uint8_t  flags;             /* 标志状态 */
+    uint32_t iv_index;          /* Iv_index 状态 */
+    uint16_t net_idx;           /* Netkey 索引状态 */
+    uint16_t group_addr;        /* 订阅的组地址 */
+    uint16_t prim_prov_addr;    /* 主要配网者的单播地址 */
+    uint8_t  match_val[16];     /* 用于与未配网设备 UUID 比较的匹配值 */
+    uint8_t  match_len;         /* 要比较的匹配值的长度 */
+
+    uint8_t  pend_act;          /* 待执行的挂起操作 */
+    uint8_t  state;             /* 快速配网状态 -> 0：空闲，1：挂起，2：活跃 */
+
+    struct k_delayed_work disable_fast_prov_timer;  /* 用于禁用快速配网 */
+    struct k_delayed_work gatt_proxy_enable_timer;  /* 用于 Mesh GATT 代理功能 */
+} __attribute__((packed)) example_fast_prov_server_t;
+```
+
+
+###### 2.1.1 配网者角色和状态
+
+不同的配网者有不同的行为，了解不同角色的概念有助于更好地理解代码。
+
+在该结构体中，有三个与角色和状态相关的变量，如下表所述：
+
+| 变量名        | 描述               |
+| ---------------------|------------------------- |
+| `primary_role`      | 配网者身份 |
+| `state`      | 快速配网者状态（0：空闲，1：挂起，2：活跃） |
+| `srv_flags`  | 标志（`disable_FAST_PROV_START`、`GATT_PROXY_ENABLE_START`、`RELAY_PROXY_DISABLED`、`SRV_MAX_FLAGS`） |
+
+其中，本演示中有四种角色（`primary_role`）：
+
+* 手机 - 顶级配网者
+* 已由手机配网的设备 - 主要配网者
+* 已配网并已转换为配网者角色的设备 - 临时配网者
+* 已配网但未转换为配网者角色的设备 - 节点
+
+
+###### 2.1.2 配网者地址管理
+
+配网者地址管理用于为每个节点分配单播地址，通过均衡分配地址来防止地址冲突。每个配网者都有自己的地址范围和可配网的最大节点数量。配网者会将其地址范围的一个子集分配给它已配网的节点。
+
+示例：顶级配网者的地址范围是 0 到 100，可配网的最大节点数量是 5。配网者地址管理将为这 5 个节点分配地址范围子集，分别是 1 到 20、21 到 40、41 到 60、61 到 80 和 81 到 100。
+
+与地址管理相关的变量如下表所述：
+
+| 变量名        | 描述               |
+| ----------------------|------------------------- |
+| `unicast_min`      | 可分配给其他节点的最小单播地址 |
+| `unicast_max`      | 可分配给其他节点的最大单播地址 |
+| `unicast_cur`      | 当前单播地址 |
+| `unicast_step`     | 单播地址变更步长偏移量|
+
+###### 2.1.3 配网者缓存数据
+
+缓存数据是必需的，以便节点可以转换角色成为配网者。在此过程中，会调用`esp_ble_mesh_set_fast_prov_info`和`esp_ble_mesh_set_fast_prov_action`API。
+
+节点的缓存数据由配网者发送，如下表所述：
+
+| 变量名        | 描述               |
+| ----------------------|------------------------- |
+| `flags`       | 标志状态|
+| `iv_index`    | Iv_index 状态|
+| `net_idx`     | Netkey 索引状态 |
+| `group_addr`  | 订阅的组地址 |
+| `prim_prov_addr`  | 主要配网者的单播地址 |
+| `match_val[16]`  | 用于与未配网设备 UUID 比较的匹配值 |
+| `match_len`   | 要比较的匹配值的长度 |
+| `max_node_num`   | 配网者可配网的最大设备数量 |
+| `prov_node_cnt`   | 自行配网的节点数量 |
+| `app_idx`   | 其他配网者添加的应用程序密钥的 AppKey 索引 |
+| `top_address`   | 触发快速配网的设备（如手机）的地址 |
+
+
+###### 2.1.4 配网者定时器
+
+本演示中有两个定时器，分别是：
+
+1. `gatt_proxy_enable_timer`用于启用 Mesh GATT 代理功能。
+  * 当临时配网者为未配网设备配网时，定时器启动或重置并启动。
+  * 临时配网者将向主要配网者发送一条消息（地址信息）。
+2. `disable_fast_prov_timer`用于禁用配网功能。
+  * 当节点接收到 EspBleMesh 应用程序发送的**通用开关获取/设置/无确认设置**消息时，启动该定时器。如果要禁用所有节点的配网功能，应使用组地址。
+
+与这两个定时器相关的变量如下所述：
+
+| 变量名        | 描述               |
+| ----------------------|------------------------- |
+| `disable_fast_prov_timer`       | 用于禁用快速配网|
+| `gatt_proxy_enable_timer`       | 用于启用 Mesh GATT 代理功能|
+
+##### 2.2 模型定义
+
+###### 2.2.1 供应商服务器模型
+
+**供应商服务器**模型实现节点的`fast_prov_server`状态，上一节已介绍。
+
+```c
+example_fast_prov_server_t fast_prov_server = {
+    .primary_role  = false,
+    .max_node_num  = 6,
+    .prov_node_cnt = 0x0,
+    .unicast_min   = ESP_BLE_MESH_ADDR_UNASSIGNED,
+    .unicast_max   = ESP_BLE_MESH_ADDR_UNASSIGNED,
+    .unicast_cur   = ESP_BLE_MESH_ADDR_UNASSIGNED,
+    .unicast_step  = 0x0,
+    .flags         = 0x0,
+    .iv_index      = 0x0,
+    .net_idx       = ESP_BLE_MESH_KEY_UNUSED,
+    .app_idx       = ESP_BLE_MESH_KEY_UNUSED,
+    .group_addr    = ESP_BLE_MESH_ADDR_UNASSIGNED,
+    .prim_prov_addr = ESP_BLE_MESH_ADDR_UNASSIGNED,
+    .match_len     = 0x0,
+    .pend_act      = FAST_PROV_ACT_NONE,
+    .state         = STATE_IDLE,
+};
+```
+
+`fast_prov_srv_op`用于注册消息的最小长度。例如，`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET`消息的最小长度注册为 3 个八位字节。
+
+```c
+static esp_ble_mesh_model_op_t fast_prov_srv_op[] = {
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET,      3,  NULL },
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NET_KEY_ADD,   16, NULL },
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR,     2,  NULL },
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_GET, 0,  NULL },
+    ESP_BLE_MESH_MODEL_OP_END,
+};
+
+```
+`example_fast_prov_server_init`函数用于注册定时器超时触发的回调函数，并初始化数据结构体中与模型相关的变量。
+
+```c
+err = example_fast_prov_server_init(&vnd_models[0]);
+if (err != ESP_OK) {
+    ESP_LOGE(TAG, "%s: 初始化快速配网服务器模型失败", __func__);
+    return err;  
+}
+```
+
+`fast_prov_server`结构体表示供应商服务器的状态。常量`CID_ESP`和`ESP_BLE_MESH_VND_MODEL_ID_FAST_PROV_SRV`组成了供应商服务器模型的模型 ID`ESP_BLE_MESH_VND_MODEL_ID_FAST_PROV_SRV`，用于标识供应商服务器模型。
+
+
+```c
+static esp_ble_mesh_model_t vnd_models[] = {
+    ESP_BLE_MESH_VENDOR_MODEL(CID_ESP, ESP_BLE_MESH_VND_MODEL_ID_FAST_PROV_SRV,
+    fast_prov_srv_op, NULL, &fast_prov_server),
+};
+static esp_ble_mesh_elem_t elements[] = {
+    ESP_BLE_MESH_ELEMENT(0, root_models, vnd_models),
+};
+```
+
+
+###### 2.2.2 供应商客户端模型
+
+**供应商客户端**模型用于控制`fast_prov_server`状态，该状态定义了节点的快速配网行为。
+
+`fast_prov_cli_op_pair`结构体用于注册相应的消息确认。
+
+```c
+static const esp_ble_mesh_client_op_pair_t fast_prov_cli_op_pair[] = {
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET,      ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_STATUS      },
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NET_KEY_ADD,   ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NET_KEY_STATUS   },
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR,     ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_ACK    },
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_GET, ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_STATUS },
+};
+```
+
+示例：**供应商客户端**模型发送操作码为`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET`的消息，要求**供应商服务器**模型返回操作码为`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_STATUS`的消息。之后，如果**供应商客户端**模型未收到相应的确认，将会超时。
+
+```c
+static const esp_ble_mesh_client_op_pair_t fast_prov_cli_op_pair[] = {
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET,      ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_STATUS      },
+};
+```
+注意，如果不希望**供应商客户端**模型等待服务器模型的确认，也可以使用以下代码，这意味着客户端模型永远不会超时。
+
+```c
+static const esp_ble_mesh_client_op_pair_t fast_prov_cli_op_pair[] = {
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET,      NULL      },
+};
+```
+
+`esp_ble_mesh_client_model_init`API 用于注册定时器超时触发的回调函数，并初始化数据结构体中与模型相关的变量。
+
+```c
+err = esp_ble_mesh_client_model_init(&vnd_models[1]);
+if (err != ESP_OK) {
+    ESP_LOGE(TAG, "%s: 初始化快速配网客户端模型失败", __func__);
+    return err;
+}
+```
+
+常量`CID_ESP`和`ESP_BLE_MESH_VND_MODEL_ID_FAST_PROV_CLI`组成了供应商客户端模型的模型 ID`ESP_BLE_MESH_VND_MODEL_ID_FAST_PROV_CLI`，用于标识供应商客户端模型。
+
+```c
+
+esp_ble_mesh_client_t fast_prov_client = {
+    .op_pair_size = ARRAY_SIZE(fast_prov_cli_op_pair),
+    .op_pair = fast_prov_cli_op_pair,
+};
+
+static esp_ble_mesh_model_op_t fast_prov_cli_op[] = {
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_STATUS,    1, NULL },
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NET_KEY_STATUS, 2, NULL },
+    { ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_ACK,  0, NULL },
+    ESP_BLE_MESH_MODEL_OP_END,
+};
+
+static esp_ble_mesh_model_t vnd_models[] = {
+    ESP_BLE_MESH_VENDOR_MODEL(CID_ESP, ESP_BLE_MESH_VND_MODEL_ID_FAST_PROV_CLI,
+    fast_prov_cli_op, NULL, &fast_prov_client),
+};
+static esp_ble_mesh_elem_t elements[] = {
+    ESP_BLE_MESH_ELEMENT(0, root_models, vnd_models),
+};
+
+```
+
+#### 2.3 消息操作码
+
+“操作码-发送”表示客户端发送给服务器的消息。
+
+“操作码-确认”表示服务器发送给客户端的消息。
+
+* 信息设置（INFO_SET）
+
+| 含义 | 操作码-发送   | 操作码-确认   |                  
+| -----| ------------- | -------------|
+| 操作码 | `ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET` | `ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_STATUS`    |
+| 功能 | 此消息包含作为配网者的所有信息 | 检查配网者信息的每个字段并设置相应的标志位。返回的状态是可变的。|
+| 参数 | structfast_prov_info_set | status_bit_mask、status_ctx_flag、status_unicast、status_net_idx、status_group、status_pri_prov、status_match、status_action|
+
+
+* 节点地址（NODE_ADDR）
+
+| 含义 | 操作码-发送   | 操作码-确认   |                  
+| -----| ------------- | -------------|
+| 操作码 | `ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR`  | `ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_ACK`  |
+| 功能 | 临时配网者报告其已配网的节点的地址。 | 用于检查消息是否发送成功。 |
+| 参数 | 地址数组    | 无   |
+
+* 地址获取（ADDR_GET）
+
+| 含义 | 操作码-发送   | 操作码-确认   |                  
+| -----| ------------- | -------------|
+| 操作码 | `ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_GET` | `ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_STATUS`  |
+| 功能 | 顶级配网者从主要配网者获取所有节点的地址。 | 返回所有节点的地址，但不包含自身地址。     |
+| 参数 | 无    | 地址数组    |
+
+* 网络密钥添加（NET_KEY_ADD）
+
+| 含义 | 操作码-发送   | 操作码-确认   |                  
+| -----| ------------- | -------------|
+| 操作码 | `ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NET_KEY_ADD`   | `ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NET_KEY_STATUS`    |
+| 功能 | 预留供以后使用   | 预留供以后使用     |
+| 参数 | 无   | 无     |
+
+
+##### 2.4 回调函数
+###### 2.4.1 供应商服务器模型的回调函数
+
+```c
+    esp_ble_mesh_register_custom_model_callback(example_ble_mesh_custom_model_cb);
+    esp_ble_mesh_register_prov_callback(example_ble_mesh_provisioning_cb);
+```
+
+1. 当**供应商服务器**模型出现以下情况时，将触发回调函数：
+  * 接收到指示客户端模型开关状态的消息；或者
+  * 调用任何发送消息的 API。
+
+2. 此回调函数处理的事件：
+
+* 通用开关服务器模型
+
+| 事件名称    | 操作码      | 描述                                 |
+| ------------- | ------------|------------------------------------------- |
+| ESP_BLE_MESH_MODEL_OPERATION_EVT|ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_SET | 当**通用开关服务器**模型接收到`ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_SET`消息时，触发此事件 |
+| ESP_BLE_MESH_MODEL_OPERATION_EVT|ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_SET_UNACK| 当**通用开关服务器**模型接收到`ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_SET_UNACK`消息时，触发此事件。 |
+
+* 供应商服务器模型
+
+| 事件名称    | 操作码      | 描述                                 |
+| ------------- | ------------|------------------------------------------- |
+| ESP_BLE_MESH_MODEL_OPERATION_EVT | ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET  | 当**供应商服务器**模型接收到`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET`消息时，触发此事件。|
+| ESP_BLE_MESH_MODEL_OPERATION_EVT | ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR    | 当**供应商服务器**模型接收到`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR`消息时，触发此事件。|
+| ESP_BLE_MESH_MODEL_OPERATION_EVT | ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_GET    | 当**供应商服务器**模型接收到`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_GET`消息时，触发此事件。|
+
+* **配置客户端**模型
+
+| 事件名称    | 操作码      | 描述                                 |
+| ------------- | ------------|------------------------------------------- |
+|ESP_BLE_MESH_SET_FAST_PROV_INFO_COMP_EVT| 无| 当调用`esp_ble_mesh_set_fast_prov_info`API 时，触发此事件。  |
+|ESP_BLE_MESH_SET_FAST_PROV_ACTION_COMP_EVT| 无| 当调用`esp_ble_mesh_set_fast_prov_action`API 时，触发此事件。 |
+|ESP_BLE_MESH_CFG_CLIENT_SET_STATE_EVT|ESP_BLE_MESH_MODEL_OP_APP_KEY_ADD|当**配置服务器**模型接收到消息并进一步触发 API 调用来发送`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET`消息时，触发此事件。 |
+|ESP_BLE_MESH_CFG_CLIENT_TIMEOUT_EVT|ESP_BLE_MESH_MODEL_OP_APP_KEY_ADD|当`example_send_config_appkey_add`API 超时时，触发此事件。|
+
+###### 2.4.2 供应商客户端模型
+
+```c
+    esp_ble_mesh_register_custom_model_callback(example_ble_mesh_custom_model_cb);
+```
+
+1. 当**供应商客户端**模型出现以下情况时，将触发回调函数：
+  * 接收到供应商服务器模型发送的任何消息；或者
+  * 调用任何发送消息的 API。
+
+2. 此回调函数处理的事件：
+
+| 事件名称    | 操作码      | 描述                                 |
+| ------------- | ------------|------------------------------------------- |
+| ESP_BLE_MESH_MODEL_OPERATION_EVT   | ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_STATUS  | 当**供应商客户端**模型接收到`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_STATUS`消息时，触发此事件。|
+| ESP_BLE_MESH_MODEL_OPERATION_EVT   | ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NET_KEY_STATUS | 当**供应商客户端**模型接收到`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NET_KEY_STATUS`消息时，触发此事件。|
+| ESP_BLE_MESH_MODEL_OPERATION_EVT   | ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_ACK  | 当**供应商客户端**模型接收到`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_ACK`消息时，触发此事件 |
+| ESP_BLE_MESH_CLIENT_MODEL_SEND_TIMEOUT_EVT     | client_send_timeout.opcode    | 当`esp_ble_mesh_client_model_send_msg`API 超时时，触发此事件。|
+
+##### 2.5 消息发送
+###### 2.5.1 供应商客户端发送消息
+
+供应商客户端模型调用`esp_ble_mesh_client_model_send_msg`API 向供应商服务器模型发送消息。
+
+| 参数名称        | 描述               |
+| ----------------------|------------------------- |
+| `model`       | 客户端模型结构体的指针  |
+| `ctx.net_idx` | 发送消息所经过的子网的 NetKey 索引 |
+| `ctx.app_idx` | 用于消息加密的 AppKey 索引 |
+| `ctx.addr`    | 目标节点的地址 |
+| `ctx.send_ttl`| TTL 状态，决定消息可被中继的次数|
+| `opcode`      | 消息操作码  |
+| `msg->len`    | `msg->data`的长度|
+| `msg->data`   | 要发送的数据的指针|
+| `msg_timeout` | 模型等待确认的最长持续时间（默认 4000 毫秒）。  |
+|`true`         | 真：需要确认；假：不需要确认 |
+
+```c
+esp_ble_mesh_msg_ctx_t ctx = {
+    .net_idx  = info->net_idx,
+    .app_idx  = info->app_idx,
+    .addr     = info->dst, 
+    .send_ttl = 0,
+ };
+ err = esp_ble_mesh_client_model_send_msg(model, &ctx,
+        ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET,
+        msg->len, msg->data, info->timeout, true, info->role);
+```
+
+###### 2.5.2 供应商服务器发送消息
+
+**供应商服务器**模型在调用`esp_ble_mesh_server_model_send_msg`API 发送消息之前，必须绑定其 Appkey。
+
+```c
+esp_ble_mesh_server_model_send_msg(model, ctx, ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_STATUS,
+                                   msg->len ,msg->data );
+```
+**供应商服务器**模型调用`esp_ble_mesh_model_publish`API 发布消息。只有已订阅此目标地址的模型才能接收发布的消息。
+
+```c
+esp_err_t esp_ble_mesh_model_publish(esp_ble_mesh_model_t *model, uint32_t opcode,
+                                     uint16_t length, uint8_t *data,
+                                     esp_ble_mesh_dev_role_t device_role);
+```
+### 客户端代码实现
+#### 1.2 节点构成
+
+本演示例仅有一个元素，其中实现了以下四个模型：
+
+- **配置服务器**模型用于表示设备的 mesh 网络配置。
+- **配置客户端**模型用于表示能够控制和监控节点配置的元素。
+- **通用开关客户端**模型通过**通用开关**模型定义的消息来控制通用开关服务器（本演示例中为控制灯的开关）。
+- **供应商客户端**模型用于控制`fast_prov_server`状态，该状态定义了节点的快速配网行为。
+
+**注：有关这些模型的详细信息，请参考其他 BLE Mesh 演示例。**
+
+#### 2. 代码分析
+
+代码初始化部分参考[初始化蓝牙和 BLE Mesh](../../../wifi_coexist/tutorial/BLE_Mesh_WiFi_Coexist_Example_Walkthrough.md)。
+
+##### 2.1 数据结构
+
+`example_prov_info_t`用于定义密钥、节点可分配的地址范围以及 mesh 网络支持的最大节点数。
+
+| 名称 | 描述 |
+| ---------------------- | ------------------------- |
+| `net_idx` | 网络密钥索引值 |
+| `app_idx` | 应用密钥索引值 |
+| `app_key[16]` | 应用密钥，在整个网络中使用 |
+| `node_addr_cnt` |  mesh 网络支持的最大节点数，其作用与 EspBleMesh 应用程序中的“快速配网数量”参数相同 |
+| `unicast_min` | 要分配给 mesh 网络中节点的最小单播地址 |
+| `unicast_max` | 要分配给 mesh 网络中节点的最大单播地址 |
+| `group_addr` | 组地址，用于控制 mesh 网络中所有节点的开关状态，在本演示例中即控制灯的开关 |
+| `match_val[16]` | 快速配网配网器用于筛选待配网设备的值 |
+| `match_len` | `match_val[16]`的最大长度 |
+| `max_node_num` | 客户端可配网的最大节点数 |
+
+##### 2.2 代码流程
+
+本节中的事件和 API 按照代码执行的顺序呈现。
+
+##### 2.2.1 初始化
+
+###### 2.2.1.1 设置 UUID 过滤器
+
+配网器调用`esp_ble_mesh_provisioner_set_dev_uuid_match` API 来设置开始配网前要比较的设备 UUID 的部分内容。
+
+```
+/**
+ * @brief         配网器调用此函数设置开始配网前要比较的设备 UUID 的部分内容。
+ *
+ * @param[in]     match_val: 要与设备 UUID 的部分内容进行比较的值。
+ * @param[in]     match_len: 要比较的匹配值的长度。
+ * @param[in]     offset: 要比较的设备 UUID 的偏移量（基于零）。
+ * @param[in]     prov_after_match: 标志，用于指示如果 UUID 的部分内容匹配，配网器是否应立即开始对设备进行配网。
+ *
+ * @return        成功时返回 ESP_OK，否则返回错误代码。
+ *
+ */
+esp_err_t esp_ble_mesh_provisioner_set_dev_uuid_match(const uint8_t *match_val, uint8_t match_len,
+        uint8_t offset, bool prov_after_match);
+```
+
+```c
+err = esp_ble_mesh_provisioner_set_dev_uuid_match(match, 0x02, 0x00, false);
+if (err != ESP_OK) {
+    ESP_LOGE(TAG, "%s: 设置匹配设备 UUID 失败", __func__);
+    return ESP_FAIL;
+}
+```
+
+###### 2.2.1.2 添加本地 Appkey
+
+配网器初始化后没有 Appkey。因此，必须通过调用`esp_ble_mesh_provisioner_add_local_app_key`为配网器添加本地 Appkey。
+
+```c
+err = esp_ble_mesh_provisioner_add_local_app_key(prov_info.app_key, prov_info.net_idx, prov_info.app_idx);
+if (err != ESP_OK) {
+    ESP_LOGE(TAG, "%s: 添加本地应用密钥失败", __func__);
+    return ESP_FAIL;
+}
+```
+
+请检查 API 调用的返回值以及`ESP_BLE_MESH_PROVISIONER_ADD_LOCAL_APP_KEY_COMP_EVT`的返回值，确保 Appkey 已添加到此配网器。
+
+###### 2.2.1.3 将 Appkey 绑定到本地模型
+
+为了控制服务器模型，客户端模型使用消息来控制服务器模型，这些消息必须通过 Appkey 进行加密。为此，用户必须通过调用`esp_ble_mesh_provisioner_add_local_app_key` api 将配网器的 Appkey 绑定到其本地模型，即**通用开关客户端**模型和**供应商客户端**模型。
+
+```c
+prov_info.app_idx = param->provisioner_add_app_key_comp.app_idx;
+err = esp_ble_mesh_provisioner_bind_app_key_to_local_model(PROV_OWN_ADDR, prov_info.app_idx,
+                                              ESP_BLE_MESH_MODEL_ID_GEN_ONOFF_CLI, ESP_BLE_MESH_CID_NVAL);
+if (err != ESP_OK) {
+    ESP_LOGE(TAG, "%s: 将 AppKey 与开关客户端模型绑定失败", __func__);
+    return;
+}
+err = esp_ble_mesh_provisioner_bind_app_key_to_local_model(PROV_OWN_ADDR, prov_info.app_idx,
+                                            ESP_BLE_MESH_VND_MODEL_ID_FAST_PROV_CLI, CID_ESP);
+if (err != ESP_OK) {
+    ESP_LOGE(TAG, "%s: 将 AppKey 与快速配网客户端模型绑定失败", __func__);
+    return;
+}
+```
+
+请检查 API 调用的返回值以及`ESP_BLE_MESH_PROVISIONER_ADD_LOCAL_APP_KEY_COMP_EVT`事件的返回值，确保 Appkey 已绑定到本地模型。
+
+##### 2.2.2 设备配网
+
+未配网设备持续发送**未配网设备**信标，其中包含其 UUID 值。
+
+* 如果 UUID 匹配，将触发`ESP_BLE_MESH_PROVISIONER_RECV_UNPROV_ADV_PKT_EVT`事件，该事件会将未配网设备信息添加到待配网设备队列中。
+
+  ```c
+  err = esp_ble_mesh_provisioner_add_unprov_dev(&add_dev, flag);
+  if (err != ESP_OK) {
+      ESP_LOGE(TAG, "%s: 开始设备配网失败", __func__);
+      return;
+  }
+
+  if (!reprov) {
+      if (prov_info.max_node_num) {
+          prov_info.max_node_num--;
+  }
+  }
+  ```
+* 如果不匹配，则忽略该设备。
+
+之后，队列中的所有设备将自动进行配网。
+
+##### 2.2.3 发送缓存数据
+
+Appkey 是该节点成为配网器所需的缓存之一。
+
+配网完成后，将触发`ESP_BLE_MESH_PROVISIONER_PROV_COMPLETE_EVT`事件，该事件通过调用`esp_ble_mesh_config_client_set_state` API 将 Appkey 添加到节点的**配置服务器**模型：
+
+```c
+common.opcode       = ESP_BLE_MESH_MODEL_OP_APP_KEY_ADD;
+common.model        = model;
+common.ctx.net_idx  = info->net_idx;
+common.ctx.app_idx  = 0x0000; /* 配置消息不使用 */
+common.ctx.addr     = info->dst;
+common.ctx.send_ttl = 0;
+common.msg_timeout  = info->timeout;
+
+return esp_ble_mesh_config_client_set_state(&common, &set);
+```
+
+* 如果 API 调用成功，将触发`ESP_BLE_MESH_CFG_CLIENT_SET_STATE_EVT`事件，该事件通过调用`example_send_fast_prov_info_set`函数向节点的**供应商服务器**模型发送其他缓存信息（`example_fast_prov_info_set_t`）；
+  * 如果（`example_send_fast_prov_info_set`）API 调用成功，将发送一个操作码为`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET`的消息，其确认消息（操作码为`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_STATUS`）将进一步触发`ESP_BLE_MESH_MODEL_OPERATION_EVT`事件
+    ```c
+    err = example_send_fast_prov_info_set(fast_prov_client.model, &info, &set);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "%s: 设置快速配网信息设置消息失败", __func__);
+      return;
+    }
+    ```
+  * 如果（`example_send_fast_prov_info_set`）API 调用超时，将触发`ESP_BLE_MESH_CLIENT_MODEL_SEND_TIMEOUT_EVT`事件。
+* 如果 API 调用超时，将触发`ESP_BLE_MESH_CFG_CLIENT_TIMEOUT_EVT`事件。
+
+之后，该节点具备作为配网器对其他节点进行配网的能力，并能进一步控制其他节点。
+
+**注：操作码为`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_INFO_SET`的消息包含所有节点的组地址。当节点收到此消息时，它将自动订阅该地址的开关服务器模型。**
+
+##### 2.2.4 控制节点
+
+当`ESP_BLE_MESH_MODEL_OPERATION_EVT`事件触发时，配网器启动一个计时器。
+
+```c
+        ESP_LOG_BUFFER_HEX("fast prov info status", data, len);
+#if !defined(CONFIG_BLE_MESH_FAST_PROV)
+        prim_prov_addr = ctx->addr;
+        k_delayed_work_init(&get_all_node_addr_timer, example_get_all_node_addr);
+        k_delayed_work_submit(&get_all_node_addr_timer, GET_ALL_NODE_ADDR_TIMEOUT);
+#endif
+        break;
+```
+
+计时器超时后，配网器通过调用`example_send_fast_prov_all_node_addr_get`函数开始获取 mesh 网络中所有节点的地址，该函数发送一个操作码为`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_GET`的消息。
+
+```c
+err = example_send_fast_prov_all_node_addr_get(model, &info);
+if (err != ESP_OK) {
+    ESP_LOGE(TAG, "%s: 发送快速配网节点地址获取消息失败", __func__);
+    return;
+}
+```
+
+之后，配网器将收到一个确认消息，该消息的操作码为`ESP_BLE_MESH_VND_MODEL_OP_FAST_PROV_NODE_ADDR_STATUS`，它会触发`ESP_BLE_MESH_MODEL_OPERATION_EVT`事件。
+
+然后，配网器能够通过使用组地址调用`example_send_generic_onoff_set`函数来打开所有节点（本演示例中为灯）。
+
+```c
+example_msg_common_info_t info = {
+    .net_idx = node->net_idx,
+    .app_idx = node->app_idx,
+    .dst = node->group_addr,
+    .timeout = 0,
+};
+err = example_send_generic_onoff_set(cli_model, &info, LED_ON, 0x00, false);
+if (err != ESP_OK) {
+    ESP_LOGE(TAG, "%s: 发送通用开关设置无确认消息失败", __func__);
+    return ESP_FAIL;
+}
+```
 ## 蓝牙 Mesh 1.1 
 协议是蓝牙技术领域的重要更新，其新功能亮点包括：引入“定向转发路由”和“远程配网”机制。
 ### 定向转发路由
