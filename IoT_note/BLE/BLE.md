@@ -5,6 +5,7 @@
 [nRF Connect for Desktop详细教程请看](https://wiki.seeedstudio.com/cn/xiao-ble-sidewalk/#%E5%BF%85%E9%9C%80%E8%AE%BE%E5%A4%87)  
 [nrf connect_4.10.0 软件使用指南](https://blog.51cto.com/u_16213575/11321104)  
 [深入分析蓝牙BLE协议【附代码实例】](https://www.eet-china.com/mp/a285112.html)  
+[蓝牙mesh配网](https://www.jianshu.com/p/58e730210c55)
 ## 基本概念
 ### 服务端和客户端
 在蓝牙低功耗中，有两种类型的设备：服务端和客户端。  
@@ -117,15 +118,30 @@ BTHome 是一种功能强大的标准，用于通过 BLE 广播传感器数据�
 [安信可](https://bbs.ai-thinker.com/forum.php?mod=viewthread&tid=46050&_dsign=81e07e29)  
 [蓝牙 Mesh 概述](https://github.com/MarkDing/IoT-Developer-Boot-Camp/wiki/Bluetooth-Mesh-Overview)  
 [微信BLE MESH文档](https://developers.weixin.qq.com/miniprogram/dev/framework/device/ble-mesh.html)  
+[蓝牙mesh配网](https://www.jianshu.com/p/58e730210c55)  
+[蓝牙mesh配网-CSDN](https://blog.csdn.net/LONGSHEN1/article/details/134888493)
 ## BLE Mesh 的核心概念
 BLE Mesh（Bluetooth Low Energy Mesh）是一种基于低功耗蓝牙（Bluetooth Low Energy, BLE）的网状网络通信协议。它允许多个支持 BLE 的设备组成一个分布式网络，通过设备之间的相互中继，实现大范围的、可靠的设备间通信。是一种多对多的网络拓扑结构，网络中的设备节点通过「发布 / 订阅机制」收发消息。  
 ![alt text](image-36.png)
-蓝牙Mesh可以和BLE 4.0及以上版本的蓝牙设备通信. 注意这并不意味着它支持所有BLE最新的特性, 譬如低功耗蓝牙的LE Coded PHY及2M PHY, 在现有的Bluetooth Mesh规范中并不支持。  
+蓝牙Mesh协议建立在BLE的物理层和链路层之上， 也就是说它可以和BLE 4.0及以上版本的蓝牙设备通信。注意这并不意味着它支持所有BLE最新的特性, 譬如低功耗蓝牙的LE Coded PHY及2M PHY, 在现有的Bluetooth Mesh规范中并不支持。  
+### 系统架构
+蓝牙mesh的协议栈是层级结构。
+![alt text](image-70.png)  
+- 最低层就是BLE层， 就像一开始介绍的蓝牙mesh建立在BLE物理层和链路层之上，采用Advertising和Connection两种数据传输方式。  
+- 承载层（bearer）：承载层定义了如何使用底层LE栈堆传输PDU。目前定义了两种承载，Advertising Bearer和GATT Bearer。  
+- 网络层（network）：网络层定义了各种消息地址类型和网络消息格式。中继和代理行为由网络层实现。  
+- 下层传输层（lower transport）：在需要时，下层传输层处理PDU的分段和重组。  
+- 上层传输层（upper transport）：负责传入和传出接入层的应用数据的加密、解密和认证。它还负责处理称为传输控制消息的特殊消息。这些包括与“友谊”关系相关的心跳和消息。  
+- 访问层（access）：负责应用程序数据的格式，定义和控制在上层传输层执行的加密和解密过程，并在将数据向上转发到堆栈之前验证从它接收到的数据用于正确的网络和应用程序。  
+- 基础模型（foundation models）：基础模型层负责实现那些与MESH网络的配置和管理有关的模型。  
+- 模型（models）：模型层关注模型的实现，因此也关注行为、消息、状态等的实现。  
 ### BLE 物理层
-蓝牙Mesh在网络内部节点间的通信只采用了Advertising的方式。（即广播）  
+![alt text](image-73.png)  
+BLE工作在2.4GHz ISM频段2402MHz-2480MHz。BLE定义了40个信道， 每个信道2MHz宽度。 其中有3个广播信道， 图中绿色标示的37， 38， 39信道。 它们被用于设备的发现， 广播等功能。 这三个信道所处的频段正好避开了和同样工作在2.4GHz频段的WiFi最常用的第1，6， 11信道 减少正常通信的干扰。其他37个信道用做BLE建立连接后的双向数据传输，叫做数据信道。在打开蓝牙的自适用跳频功能后，设备将会自动侦测干扰来选择合适的工作信道。这两种信道类型正是对应于BLE的两种主要通讯模式Advertising 和 Connection。蓝牙Mesh在网络内部节点间的通信只采用了Advertising的方式。（即广播）  
 ### BLE 链路层
-Advertising是指蓝牙广播设备在3个广播信道里以特定的时间间隔发送消息, 同时蓝牙扫描设备以特定时间长度的的扫描窗口和间隔, 依次扫描3个广播信道来接收广播设备发送过来的信息. 图中三个不同颜色的柱状图表示37,38,39三个广播信道. 广播设备连续在三个信道里发送消息, 间隔为20ms. 而扫描设备的扫描窗口时间为30ms, 扫描间隔为40ms, 一次扫描一个信道. 蓝牙Mesh设备在网络内部通信时, 以尽可能接近100%的占空比来扫描广播信道. 也就是说扫描窗口时间等于扫描间隔, 以确保信息不会丢失. 蓝牙Mesh设备在发送特定信息的时候并不会像普通BLE广播要等一个广播间隔, 而是延迟一小段随机时间就立即发送出去。  
 ![alt text](image-43.png)  
+Advertising是指蓝牙广播设备在3个广播信道里以特定的时间间隔发送消息, 同时蓝牙扫描设备以特定时间长度的的扫描窗口和间隔, 依次扫描3个广播信道来接收广播设备发送过来的信息. 图中三个不同颜色的柱状图表示37,38,39三个广播信道. 广播设备连续在三个信道里发送消息, 间隔为20ms. 而扫描设备的扫描窗口时间为30ms, 扫描间隔为40ms, 一次扫描一个信道. 蓝牙Mesh设备在网络内部通信时, 以尽可能接近100%的占空比来扫描广播信道. 也就是说扫描窗口时间等于扫描间隔, 以确保信息不会丢失. 蓝牙Mesh设备在发送特定信息的时候并不会像普通BLE广播要等一个广播间隔, 而是延迟一小段随机时间就立即发送出去。  
+
 ### 蓝牙Mesh发布/订阅系统
 引入组(Group)的概念来实现松耦合(independent). 我们把有关联的开关和灯放在同一个组, 并取个易懂的名称, 如厨房和花园. 开关发布消息到组地址, 而灯则订阅来自组地址的消息. 组成发布/订阅系统。  
 ![alt text](image-44.png)  
@@ -302,12 +318,13 @@ Mesh 消息是 BLE Mesh 网络中数据传输的基本单位，由操作码（op
 Mesh Spec 规定的标准配网为 mesh 的 Provision 过程，实际设备从未配网到可以正常通信分为两个步骤：  
 1. Mesh Provision阶段  
 配网节点通过扫描到未配网的 mesh 节点设备，然后通过连接（PB-GATT）或者广播（PB-ADV）与设备通信并发起配网，配网过程会先通过 ECDH 协商生成 Public key，然后基于 Public key 将Mesh网络的密钥 Network key 下发给设备，同时协商生成设备密钥 Device key，到此设备 Provision 阶段完成。
-
+![alt text](image-75.png)
 2. Config Model阶段   
 接下来还需要通过 Network key 与 Device key 的加密将应用密钥 App key 下发给设备，同时对设备的 Model 绑定对应的应用密钥以及更新 Mesh 设备的 Network transmit 参数，到此设备的完成配网完成。后续所有的业务都可以通过这三个密钥加密完成。  
-
-配网者中有两种承载方式（详细可参考 Mesh Profile 1.0.1 中 5.2 章节）：
-
+配网者中有两种承载方式（详细可参考 Mesh Profile 1.0.1 中 5.2 章节）
+![alt text](image-76.png)  
+Config阶段可省略部分数据交互流程以加快配网，如Config Composition Data Get，节点在云端已配置信息，网关可直接从云端获取，避免多余交互。Config Model App Bind也不需网关发起，节点可自行绑定。Config Model Subscription Add可在后续根据节点需求决定是否绑定分组。因此，存在一个快速配网阶段。  
+![alt text](image-77.png)  
 1. PB-ADV
 配网者通过广播直接与未配网的 mesh 节点通信进行配网过程。此种方式一般适用于网关类配网者，此类配网者可以保持一致或者周期性 scan 空中的广播数据以及发送广播数据来做到与网络内节点通信。
 
@@ -317,15 +334,200 @@ Mesh Spec 规定的标准配网为 mesh 的 Provision 过程，实际设备从�
 
 这是蓝牙Mesh网络中**配网（Provisioning）流程**的示意图，描述一个新设备（Un-provisioned Device）如何加入Mesh网络，核心步骤如下：  
 ![alt text](image-59.png)  
- 配网流程步骤分5个阶段，按顺序执行：  
+ 配网流程步骤分6个阶段，按顺序执行：  
 
 | 步骤（右侧蓝色框）          | 作用与细节                                                                 |  
 |-----------------------------|--------------------------------------------------------------------------|  
 | **Beaconing（广播信标）**   | 未配网设备持续发蓝牙广播（含设备信息、UUID），配网者扫描周围“待配网设备”。       |  
+| **Connection（连接）**   | 这个阶段就是BLE常规操作：连接，发现服务、发现特性，打开特性通知。在配网器上，需要对服务和特性做确认，判断连接的设备是否具备mesh中需要用到数据写入写出特性。       |  
 | **Invitation（邀请）**      | 配网者选中标设备，发`Provisioning Invite`，协商安全等级（如是否需要密码/按键确认）。 |  
 | **Exchanging Public Keys（交换公钥）** | 双方生成并交换公钥，基于椭圆曲线加密（ECC）生成共享密钥，为后续加密做准备。        |  
 | **Authentication（认证）**  | 验证设备合法性，可选方式：<br> - 无认证（简单场景）<br> - 按键（设备按提示按物理键）<br> - 输入OOB码（如二维码、数字）。 |  
 | **Distribution of Provisioning data（分发配网数据）** | 配网者加密发送：<br> - **NetKey**（网络密钥，Mesh网络的“通行证”）<br> - **单播地址**（设备在Mesh里的唯一ID）<br> - 其他参数（如TTL、安全配置）。设备存好数据，正式成为Mesh节点！ |  
+### 未配网设备Beacon格式
+mesh规范中定义如下： 
+![alt text](image-71.png)  
+| 字段          | 长度（字节） | 注释                                                 |
+| ------------- | ------------ | ---------------------------------------------------- |
+| Beacon Type   | 1            | 未配网设备 beacon type (0x00)                         |
+| Device UUID   | 16           | 用来识别设备的唯一码 Device UUID                      |
+| OOB Information | 2          | 下表中定义（原文未给出对应表，需结合实际补充 ）        |
+| URI Hash      | 4            | 使用 URI AD 类型广播的关联 URI 的哈希（可选字段）      | 
+
+未配网设备Beacon中OOB字段的含义：
+![alt text](image-72.png)  
+
+取广播数据中服务为1827的ServiceData部分，得到的就是未配网设备Beacon。
+在iOS端收到的数据长度是18字节，系统层已经将数据类型过滤。
+前16个字节就是未配网设备的Device UUID。
+后两个字节就是OOB Information。
+![alt text](image-74.png)
+> 注意：在手机系统中，标识一个蓝牙设备的唯一性，安卓系统使用的MAC地址，在iOS上使用的是UUID。未配网设备的Device UUID来源于广播数据，是在mesh网络中使用，并不是手机系统给分配的标识蓝牙的UUID。
+### 连接阶段
+>配网协议使用的服务是1827。  
+数据写入特性：2ADB。  
+数据写出特性：2ADC。  
+
+这个部分就是配网承载器中的GATT承载器，手机端仅支持GATT承载器这一种。
+### 邀请
+信标阶段的设备连接，和邀请阶段，是一个步骤完成。当连接设备完成，打开特性通知成功时，被视为承载器准备就绪，可以发送邀请数据。上文《配网协议》->《配网PDU》->《配网邀请》对这个指令有详细解释。这个阶段的数据是明文。
+启动配置设备（Provisioner）将以启动配置邀请PDU的形式向要进行配网的设备发送邀请。
+>我司Attention Duration的值默认是5秒。  
+配网器发送配网邀请指令：0x030005  
+设备端返回配网能力给APP端指令：  0x03010100010000000000000000  
+我司目前设备端返回的设备能力，代表的意思如下：  
+```c
+Device Capabilities:
+  Number of elements: 1
+  Algorithms: FIPS P-256 Elliptic Curve
+  Public Key Type: None
+  Static OOB Type: None
+  Output OOB Size: 0
+  Output OOB Actions: None
+  Input OOB Size: 0
+  Input OOB Actions: None received
+```
+### 交换公钥阶段
+在这个阶段开始时，需要判断配网器是否能正常分配单播地址。如果无法再生成地址，则无法进行配网。这个阶段需要生成密钥对和随机数。  
+
+我司有两种配网模式，快速配网和慢速配网。  
+
+快速模式下，配网器在收到设备端的配网能力后，会自动发送配网开始命令。  
+在慢速配网模式下，需要手动点击App界面中配网按钮进行指令发送。  
+注意：我司会已淘汰慢速配网模式，后续客户必须是一键自动配网。  
+
+>配网器发送配网开始到设备端：0x03020000000000   
+配网器发送配置公钥到设备端：0x0303F494396E480FC7F73BC5ACE37CD06406CE1DAE3F4980F818C383968D1766CBD3514CA87C914ACF4ED5B809D3499E6A2D97A5359E1B47DEBF028571CCE1693FEF  
+设备端发送配置公钥到配网端：0x0303F48D07966C9AD7005A81F8DB91C06447FF6CC40A94B58006372AF4805B8C79F710D114C80AAF131A2EA7DDD5281DB2E8F30300F600A41C181C3F52998BE32C2E  
+
+在配网端发送配网开始指令与配置公钥指令间，需要有一定的时间间隔。  
+
+密钥对包含X和Y两部分，分别占32字节。当配网开始(Provision Start)消息中的公钥为OOB公钥时，配置公钥消息不存在，双方通过诸如二维码、NFC等OOB方式交互公钥。  
+
+### 身份认证阶段
+蓝牙mesh规范使用的ECDH算法可以较为显著的对抗被动监听及暴力计算攻击，但无法对抗中间人攻击，所以需要在ECDH计算密钥结束后对配网器和未配网设备进行身份认证，认证的方式是通过两者共享的密钥对某个随机值进行加密计算并生成确认值，然后将这两个值都交给对方设备进行身份认证。  
+
+在蓝牙mesh规范中，身份认证过程包含了对设备端和配网器端的认证，两者均会和对方交互一个Confirmation Value，以及生成此Confirmation Value的Random Value，Confirmation value的计算使用了ECDH秘钥、配网交互数据包及OOB认证信息。当一方接收到完整的Confirmation Value和Random Value后会根据自己的ECDH密钥、配网交互数据包及OOB认证信息，对收到的Random Value重新计算，生成一个Confirmation Value，然后与收到的Confirmation Value对比，如果相同则认证成功，如果失败则退出配网。当两者均完成认证后，整个认证流程结束。  
+
+>配网器发送配网确认指令到设备端：  0x03055E8E0814BAD9C4E5387D183D3A76A36B  
+设备端发送配网确认指令到配网器：  0x03050F172A8372F24686D510DFE5223AC3DD  
+配网器发送配网随机数指令到设备端：  0x0306FE1B83782226C5B3E6BEFA3476FF28AC  
+设备端发送配网随机数指令到配网器：  0x030696EF2DDFB9464EEA24F57A6D95BC2128  
+#### 身份验证的代码逻辑
+在mesh规范中有如下定义
+
+- ConfirmationInputs = ProvisioningInvitePDUValue || ProvisioningCapabilitiesPDUValue || ProvisioningStartPDUValue || PublicKeyProvisioner || PublicKeyDevice
+- ConfirmationSalt = s1(ConfirmationInputs)
+- ConfirmationKey = k1(ECDHSecret, ConfirmationSalt, “prck”)
+
+下面是具体的计算方式
+#### ConfirmationInputs的计算方式
+ConfirmationInputs是由整个配网过程中的交互数据组成，包括Provisioning Invite PDU, Provisioning Capabilities PDU,Provisioning Start PDU, 配网器的 Public Key 和设备的 Public Key.一共1 + 11 + 5 + 64 + 64 = 145字节。
+
+>配网器发送配网邀请指令：0x030005  
+设备端返回配网能力给APP端指令：  0x03010100010000000000000000  
+配网器发送配网开始到设备端：0x03020000000000  
+配网器发送配置公钥到设备端：  0x0303F494396E480FC7F73BC5ACE37CD06406CE1DAE3F4980F818C383968D1766CBD3514CA87C914ACF4ED5B809D3499E6A2D97A5359E1B47DEBF028571CCE1693FEF  
+设备端发送配置公钥到配网端：  0x0303F48D07966C9AD7005A81F8DB91C06447FF6CC40A94B58006372AF4805B8C79F710D114C80AAF131A2EA7DDD5281DB2E8F30300F600A41C181C3F52998BE32C2E  
+
+最终的结果是如下字符串  
+ConfirmationInputs = "05" + "0100010000000000000000" + "0000000000" + "F494396E480FC7F73BC5ACE37CD06406CE1DAE3F4980F818C383968D1766CBD3514CA87C914ACF4ED5B809D3499E6A2D97A5359E1B47DEBF028571CCE1693FEF" + "F48D07966C9AD7005A81F8DB91C06447FF6CC40A94B58006372AF4805B8C79F710D114C80AAF131A2EA7DDD5281DB2E8F30300F600A41C181C3F52998BE32C2E"
+
+#### ConfirmationSalt的计算方式
+所谓加Salt，就是加点“佐料”。当用户首次提供密码时（通常是注册时），由系统自动往这个密码里加一些“Salt值”，这个值是由系统随机生成的，并且只有系统知道。然后再散列。而当用户登录时，系统为用户提供的代码撒上同样的“Salt值”，然后散列，再比较散列值，以确定密码是否正确。
+
+这样，即便两个用户使用了同一个密码，由于系统为它们生成的salt值不同，他们的散列值也是不同的。即便黑客可以通过自己的密码和自己生成的散列值来找具有特定密码的用户，但这个几率太小了（密码和salt值都得和黑客使用的一样才行）。
+
+ConfirmationSalt = s1(ConfirmationInputs)
+
+具体S1计算Salt的方式如下：
+```c
+- (NSData*) calculateSalt: (NSData*) someData {
+    //For S1, the key is constant
+    unsigned char key[16] = {0x00};
+    NSData* keyData = [[NSData alloc] initWithBytes: key length: 16];
+    return [self calculateCMAC: someData andKey: keyData];
+}
+```
+具体计算流程：ConfirmationInputs作为函数唯一输入参数，然后函数内生成16个字节的数组keyData，keyData约定全部赋值为0。计算一次AES-CMAC算法，ConfirmationInputs作为数据段，keyData作为秘钥。
+#### ConfirmationKey的计算方法
+利用生成的共享密钥(ECDHSecret) 和 佐料(ConfirmationSalt)，生成通信用的离散密钥key。
+
+ConfirmationKey = k1(ECDHSecret, ConfirmationSalt, “prck”)
+#### 计算需要发送的Confirmation值
+Calculate the Confirmation Provisioner using CMAC(random + authValue)。计算以AES-128作为块密码功能的基于密文的消息认证码(CMAC)，也称为AES-CMAC。Calculates Cipher-based Message Authentication Code (CMAC) that uses AES-128 as the block cipher function, also known as AES-CMAC.
+
+（1）随机数 0xC1A844F3D34886D79BBD3F9711C018ED
+（2）no OOB的authValue : 16字节的0
+（3）confirmationData = random + authValue
+（4）calculateCMAC (confirmationData， confirmationKey)
+
+得到Sending Provisioner Confirmation (0x5E8E0814BAD9C4E5387D183D3A76A36B)
+
+两端都会这样操作。发送完Confirmation值后，两端相互给对方发送自己的随机数。
+#### 通过Random和authValue验证
+配网器收到来自设备端的随机数后，根据deviceRandom和authValue计算出confirmation：
+salt和Confirmation Key这两步跟上面配网器生成confirmation一样。不同点在于随机数是设备端发来的随机数。confirmationData = deviceRandom + authValue。
+
+与收到的设备端confirmation比较，如果相等就说明验证成功。发送Encrypted Provisioning Data。
+#### 特别说明：OOB方式影响的对象是AuthValue
+AuthValue默认是一个16字节的字符串。我们项目中默认是No OOB模式，那么的它的值就是16个字节⻓度的0。其他三种：静态OOB，输出式OOB，输入式OOB；也是通过影响AuthValue来达到加强安全性的目的。
+
+### 分发配网数据
+>配网器发送配网数据指令到设备端：0x0307F94C0BCC18558B67E750187CE3EF5CD7E3A74DC8631F9018A053CCE72A599690F4  
+设备端发送配网完成指令到配网器：0x0308  
+#### 分发配网数据的详细过程
+
+配网器负责生成并分发配网数据到未配网设备，网络数据包括如：“Network Key（网络密钥）”以及“Unicast Address（设备地址）”等重要数据。  
+
+| 字段                  | 长度 | 备注                                   |
+|-----------------------|------|----------------------------------------|
+| Encrypted Provision Data | 25   | 设备地址、网络密钥等参数               |
+| MIC                   | 8    | AES-CCM算法生成的完整性检查值          |
+
+分发配网数据的加密方式  
+为了更安全地分发配网数据，配网器需要使用AES-CCM算法来加密配网数据，比如算法涉及两个加密密钥参数：Session Key和Session Nonce，他们均由ECDH密钥派生。  
+配网器将加密后的配网数据包发送给未配网设备，未配网设备从数据中获知Unicast Address和Network Key之后，即可加入蓝牙mesh网络，成为网络中的一个节点。  
+
+配网数据生成的细节：
+1.根据已知的三个数据The Confirmation Inputs、16位Provisioner Random 和 16位device Random，生成三个新数据Session Key, Session Nonce 和 the Device Key  
+
+>固件端的DeviceKey是固件端自己生成的。DeviceKey在配网客户端和固件端各自生成。
+>固件端的NetworkKey、NetworkKey Index和UnicastAddress是在第五步“分发配网数据”时由APP指定的。
+>AppKey是在Config阶段通过mesh消息流程由配网客户端给固件端设置
+
+（1）根据confirmationInputs计算confirmationSalt
+let confirmationSalt = helper.calculateSalt(confirmationInputs)!  
+（2）将刚生成的confirmationSalt和之前的两个随机数相加，作为秘钥生成salt值provisioningSalt。
+let provisioningSalt = helper.calculateSalt(confirmationSalt + provisionerRandom! + deviceRandom!)!  
+（3）根据共享密钥sharedSecret、刚生成的provisioningSalt，按AES-CMAC算法传参Salt K1 计算衍生值sessionKey，sessionNonce，deviceKey.
+sessionKey = helper.calculateK1(withN: sharedSecret!,salt: provisioningSalt,andP: "prsk".data(using: .ascii)!)!
+sessionNonce= helper.calculateK1(withN: sharedSecret!,salt: provisioningSalt,andP: "prsn".data(using: .ascii)!)!.dropFirst(3)
+deviceKey = helper.calculateK1(withN: sharedSecret!,salt: provisioningSalt,andP: "prdk".data(using: .ascii)!)!  
+
+>为什么deviceKey的生成是由双方自己生成？  
+>因为deviceKey的生成与4个值有关，confirmationInputs、provisionerRandom、deviceRandom、sharedSecret，这4个参数共同确定deviceKey的结果。confirmationInputs是通信交互中的数据，provisionerRandom，deviceRandom是第四步中的随机数，sharedSecret是计算出来的共享密钥。这个4个参数在两个端都知道，而且是相同的，所以deviceKey的计算各自生成就可以了。  
+
+2.用ivIndex和networkKey计算Flags,然后得到计算出25位的Provision Data  
+let flags = Flags(ivIndex: ivIndex, networkKey: networkKey)  
+let data = networkKey.key + networkKey.index.bigEndian + flags.rawValue + ivIndex.index.bigEndian + unicastAddress.bigEndian
+```c
+networkKey.key：3918C5649E9A1CAB5746B2CF2B2E2397
+networkKey.index:0000
+flags.rawValue:00
+ivIndex.index:00000000
+unicastAddress:0004
+
+data:3918C5649E9A1CAB5746B2CF2B2E2397000000000000000004
+```
+3.用CBC-MAC（CCM）算法计算完整的数据。参数分别是25位Provision Data，sessionKey，sessionNonce，指定MIC长度为8  
+
+RFC3610 defines teh AES Counted with CBC-MAC (CCM).  
+
+helper.calculateCCM(data, withKey: keys.sessionKey, nonce: keys.sessionNonce, andMICSize: 8, withAdditionalData: nil)  
+
+0xF94C0BCC18558B67E750187CE3EF5CD7E3A74DC8631F9018A053CCE72A599690F4  
+
 #### nRF Mesh操作步骤
 ![扫描](image-60.png)  
 ![识别](image-61.png)  
