@@ -95,7 +95,21 @@ ATT 命令正式名称为 ATT PDU（协议数据单元，Protocol Data Unit）�
 ![alt text](image-32.png)
 ![alt text](image-33.png)
 
-
+## nRF Connect APP蓝牙标识
+Appearance 是一个 16 位的整数，用于表示设备的外观。它可以用于在 nRF Connect 等应用程序中显示设备的图标。  
+![alt text](image-78.png)
+iBeacon 是一种蓝牙低功耗（BLE）广播协议，用于在环境中定位和识别设备。它由苹果公司开发，并在 iOS 设备上得到了广泛的支持。  
+![alt text](image-80.png)  
+Mesh Proxy:1827表示未配网   
+![alt text](image-83.png)
+Mesh Proxy:1828表示已配网    
+![alt text](image-84.png)
+![alt text](image-79.png)
+Mesh Beacon ：Mesh配网者发出  
+![alt text](image-82.png)
+BLE图标  
+![alt text](image-81.png)  
+![alt text](ad8892693ba80eba6847be330402fc5f.jpg)
 # BTHome
 ![alt text](image-35.png)  
 BTHome 是一个开放标准，用于通过蓝牙低功耗（BLE）广播传感器数据和按钮按压信息。它设计为节能、高效、灵活且安全。BTHome 被流行的家庭自动化平台（如 Home Assistant）原生支持。  
