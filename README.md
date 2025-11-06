@@ -53,5 +53,8 @@ FreeRTOS，RT-Thread，uCOS-III，lwIP，μITRON，等RTOS的一些笔记。
 # STM32_note
 - [STM32WLE5](STM32_note/蓝桥杯物联网.md)
 - [keysking教程](STM32_note/keysking.md)
+# GD32_note
+- [GD32](GD32_note/GD32.md)  
+- [DMX512](GD32_note/DMX512.md)  
 # 开源许可
 ![alt text](image-1.png)
