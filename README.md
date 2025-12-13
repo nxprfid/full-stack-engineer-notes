@@ -56,5 +56,7 @@ FreeRTOS，RT-Thread，uCOS-III，lwIP，μITRON，等RTOS的一些笔记。
 # GD32_note
 - [GD32](GD32_note/GD32.md)  
 - [DMX512](GD32_note/DMX512.md)  
+# 杰理AC63
+- [AC6951C](JIELI_note/AC6951C.md)  
 # 开源许可
 ![alt text](image-1.png)
