@@ -1,5 +1,5 @@
 # 置顶链接
-https://geekdaxue.co/read/icheima@gd32/prd695920sk3p9sh#bdtkv1
+[GD32移植FreeRTOS](https://geekdaxue.co/read/icheima@gd32/prd695920sk3p9sh#bdtkv1)  
 # 任务间的四种交互方式  
 
 ![alt text](image.png)
@@ -200,3 +200,54 @@ void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
 ```
 
 15. 至此，FreeRTOS移植完成，可以进行编译运行了。
+
+# keysking教程
+[keysking的FreeRTOS教程文档](https://docs.keysking.com/docs/stm32/freertos/cubeConfig)  
+## 第一个任务
+## 任务切换
+## 任务状态
+## 优先级与抢占式调度
+## 队列
+队列是为了解决全局变量中的事件丢失与事件重复。
+![alt text](image-20.png)
+事件丢失：数据处理任务耗时较久，在快速按下按键时，按键任务多次记录多次改变全局变量，但数据处理任务只处理了一次。
+事件重复：数据处理任务耗时较久，在长按按下按键时，全局变量依然是处于按下状态值，导致数据处理任务重复处理。
+队列在没有数据需要处理的时候，消费者无需像全局变量方案一样一遍又一遍检查是否有新数据需要处理。会将自己置于阻塞态，不占用CPU资源，
+先创建队列再创建任务，任务中使用队列接收数据。
+```c
+BtnQueueHandLe = osMessageQueueNew(16, sizeof(uint32_t), &BtnQueue_attributes);
+```
+在生产者任务中，产生要传递的数据后调用osMessageQueuePut,将数据传入队列
+```c
+
+void Task(void *argument){
+    uint32_t btnCount = 0;
+    while(1){
+        btnCount++;
+        osMessageQueuePut(BtnQueueHandLe, &btnCount, 0, osWaitForever);//队列满后永久阻塞灯带，直到队列有空闲位置
+    }
+}
+```
+在消费者任务中，调用osMessageQueueGet从队列中接收数据，取出数据。
+```c
+void Task(void *argument){
+    uint32_t btnCount = 0;
+    while(1){
+        osMessageQueueGet(BtnQueueHandLe, &btnCount, NULL, osWaitForever);//没有数据就阻塞，必须取到数据后才会向下执行。
+       }
+}
+```
+![alt text](image-21.png)
+### 复杂数据、中断发送、多对一通信
+#### 如何在队列中通过指针传递复杂数据
+对于结构体数据往往比较大，往往不直接传递，而是传递结构体指针。
+
+freertos的内存申请函数：`pvPortMalloc`释放函数：`vPortFree`
+>malloc申请到的内存来自程序默认的堆空间，而pvPortMalloc申请的则是来自由FreeRTOS管理的专用堆空间
+>在生产者申请的内存，在消费者一定要释放掉。
+
+- 在中断中发送数据到队列
+![alt text](image-23.png)
+
+- 使用队列作为串口的数据缓冲区
+![alt text](image-22.png)

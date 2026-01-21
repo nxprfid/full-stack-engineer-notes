@@ -21,6 +21,7 @@
 - [Edge AI](IoT_note/Edge%20AI/MicroPython.md)  
 - [ESP-IDF](IoT_note/ESP-IDF/%E4%BB%A3%E7%A0%81.md)  
 - [星闪](IoT_note/NearLink/%E6%98%9F%E9%97%AA%E6%8C%87%E4%BB%A4.md)
+- [LED Strip Driver](IoT_note/LED%20Strip%20Driver/LED%20Strip%20Driver.md)
 # Linux_note
 学习系统编译，驱动开发，内核开发，Linux系统的一些笔记。 
 - [Linux命令](Linux_note/%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0.md)  

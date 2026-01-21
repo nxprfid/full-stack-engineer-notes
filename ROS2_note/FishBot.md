@@ -175,6 +175,21 @@ project(HelloWorld)
 // 添加可执行文件learn_cmake，源文件为hello_world.cpp
 add_executable(learn_cmake hello_world.cpp)
 ```
+在新建.c文件编写代码时候，IDE会自动添加CMakeLists.txt文件中，使用的方式是
+```c
+add_executable(${CMAKE_PROJECT_NAME}
+xxx.c
+APP/hello_world.c
+)
+```
+最好放到target_sources 中，如下：
+```c
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+xxx.c
+APP/hello_world.c
+)
+```
+![重新加载CMake，否则不会生效](image-32.png)
 #### 然后在终端输入命令：cmake生成Makefile文件。再使用make命令编译。
     cmake .
     make

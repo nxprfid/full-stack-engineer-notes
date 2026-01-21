@@ -8,9 +8,9 @@
 ## 四通道：SK6812、P9412
 ## 高辉
 ### TM2918
-![alt text](image-12.png)
-![alt text](image-13.png)
-![alt text](image-14.png)
+![alt text](image-12.png)  
+![alt text](image-13.png)  
+![alt text](image-14.png)  
 ### SM16705PD
 ![alt text](image-10.png)
 ![alt text](image-11.png)
@@ -43,8 +43,8 @@ CLK 上升沿被采样
 颜色顺序BRG
 ![alt text](image-2.png)
 ## LPD6803
-一颗 IC 控一个灯珠 16bit，16bit（起始位 1bit+RGB 各 5bit），起始帧（固定 32 个 "0"）+（16bit× 灯珠总数）+ 补位（每颗灯珠 1 个 "0"，即驱动 N 颗灯珠发 N 个 0，数据线为低时时钟线 N 次上升沿）
-![alt text](image-9.png)
+一颗 IC 控一个灯珠 16bit，16bit（起始位 1bit+RGB 各 5bit），起始帧（固定 32 个 "0"）+（16bit× 灯珠总数）+ 补位（每颗灯珠 1 个 "0"，即驱动 N 颗灯珠发 N 个 0，数据线为低时时钟线 N 次上升沿）  
+![alt text](image-9.png)  
 ## APA102、SK9822、P9413 
 单 LED 数据长度	32bit（含 3bit 起始码固定为111 + 5bit 亮度）
 有 Start Frame（32 个 0）+LED 帧 + End Frame（32 个 1）
@@ -56,8 +56,8 @@ CLK 上升沿被采样
 解释：32bit（2bit 标志位（固定 11）+2bit 校验位（B7’/B6’，蓝色高 2 位反码）+2bit 校验位（G7’/G6’，绿色高 2 位反码）+2bit 校验位（R7’/R6’，红色高 2 位反码）+ 8bit 蓝色灰度 + 8bit 绿色灰度 + 8bit 红色灰度） 
 数据帧格式： 
 Start Frame(32个0) + LED1数据 + LED2数据 + ... + LEDn数据  
-颜色顺序BGR
-![alt text](image-8.png)
+颜色顺序BGR  
+![alt text](image-8.png)  
 
 # DMX512
 250KHz
@@ -66,6 +66,21 @@ Start Frame(32个0) + LED1数据 + LED2数据 + ... + LEDn数据
 16KHz
 PWM效果很少，只有五种：七彩跳变\七彩呼吸\七彩闪烁\七彩心跳\七彩渐变\。其中呼吸\闪烁\心跳可以加第四、第五通道也就是CW、WW。单色呼吸有红色、绿色、蓝色、黄色、青色、紫色、白色。
 # 线材
-线序（自箭头往下）：黑绿红蓝
-![alt text](lQDPJw96hDd7B7PNAyDNAyCw5bY0GJu_lx8JO3VfzrNZAA_800_800.jpg)
-其实是给PWM用的，黑色是共阴，接着是GRB顺序。
+线序（自箭头往下）：黑绿红蓝  
+![alt text](lQDPJw96hDd7B7PNAyDNAyCw5bY0GJu_lx8JO3VfzrNZAA_800_800.jpg)  
+其实是给PWM用的，黑色是共阴，接着是GRB顺序。  
+
+VCC黑 R红 G绿 B蓝 WW黄 W白
+
+# 灯效
+低辉灯带
+
+每个颜色通道：8 bit
+
+RGB：R8 G8 B8（0~255）
+
+高辉灯带
+
+每个颜色通道：16 bit
+
+RGB：R16 G16 B16（0~65535）
