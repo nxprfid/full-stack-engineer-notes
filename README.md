@@ -59,5 +59,10 @@ FreeRTOS，RT-Thread，uCOS-III，lwIP，μITRON，等RTOS的一些笔记。
 - [DMX512](GD32_note/DMX512.md)  
 # 杰理AC63
 - [AC6951C](JIELI_note/AC6951C.md)  
+# AI_note
+学习AI相关知识，包括MCP、Skills以及Claude Code实用教程。
+- [MCP](AI_note/MCP.md)
+- [Skills](AI_note/Skills.md)
+- [Claude Code](AI_note/Claude%20Code.md)
 # 开源许可
 ![alt text](image-1.png)
