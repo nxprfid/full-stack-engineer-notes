@@ -1,5 +1,7 @@
 # 置顶链接
 [OpenAI 官方 Codex 最佳实践系统学习文档](https://developers.openai.com/codex/learn/best-practices)
+[GitHub Copilot 最佳实践](https://docs.github.com/en/copilot/get-started/best-practices)
+
 # AI实用教程
 
 1. 开干前先plan，先确定方向需求后再让agant干活。
