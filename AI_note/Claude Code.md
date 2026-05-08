@@ -1,7 +1,8 @@
 # 置顶链接
 [OpenAI 官方 Codex 最佳实践系统学习文档](https://developers.openai.com/codex/learn/best-practices)
 [GitHub Copilot 最佳实践](https://docs.github.com/en/copilot/get-started/best-practices)
-
+[Claude Code 教程](https://www.runoob.com/claude-code/claude-code-tutorial.html)
+[Claude Code 官方文档](https://code.claude.com/docs/zh-CN/overview)
 # AI实用教程
 
 1. 开干前先plan，先确定方向需求后再让agant干活。
@@ -16,7 +17,7 @@
 - MCP模型上下文协议：让AI能真的动手干
 - 
 # Skills
-Skills是基于高标准的重复工作沉淀的可复用技能包，可以持续稳定的按照你的要求输出高质量的产物
+Skills是基于高标准的重复工作沉淀的可复用技能包，可以持续稳定的按照你的要求输出高质量的产物 
 创建skill.md:名称、描述、指令放进去
 
 # MCP
@@ -45,10 +46,40 @@ context7
 执敏感操作前，务必做好身份验证检查
 
 ## 安装
-
+### 使用官方脚本安装（推荐）
 ```bash
-npm install -g @anthropic-ai/claude-code
+# macOS、Linux、WSL：
+curl -fsSL https://claude.ai/install.sh | bash
+# Windows PowerShell：
+irm https://claude.ai/install.ps1 | iex
+# Windows CMD：
+curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+# 安装完成后，验证是否安装成功：
+claude --version
 ```
+### 使用 npm 安装
+```bash
+# 请先确认已安装 Node.js
+node --version
+
+# 进入命令行界面，安装 Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# 创建您的工作目录，例如 `your-project`，使用 `cd` 命令导航到您的项目
+cd your-project
+
+# 安装完成，运行命令 `claude` 即可进入 Claude Code 交互界面
+claude
+```
+更新 Claude Code
+```bash
+# 二选一
+claude install
+claude update
+```
+
+
+
 qwen code
 ```bash
 npx @qwen-code/qwen-code@latest 
@@ -60,13 +91,21 @@ npx @qwen-code/qwen-code@latest
 # 直接对话
 claude
 
-# 执行单次命令
-claude "解释这段代码"
+项目是做什么的？
 
-# 交互模式
-claude -i
+这个项目使用了哪些技术？
+
+主入口在哪里？
+
+解释一下文件夹结构
+
+审阅我的修改内容并给出优化建议
 ```
+### 使用Git功能
+提交更改（Claude 会自动生成提交信息）：
+`提交我的更改并附上描述性说明信息`
 
+协助解决合并冲突：`帮我解决合并冲突`
 ## 核心功能
 
 ## 命令行指令
