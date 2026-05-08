@@ -3,6 +3,7 @@
 [GitHub Copilot 最佳实践](https://docs.github.com/en/copilot/get-started/best-practices)
 [Claude Code 教程](https://www.runoob.com/claude-code/claude-code-tutorial.html)
 [Claude Code 官方文档](https://code.claude.com/docs/zh-CN/overview)
+
 # AI实用教程
 
 1. 开干前先plan，先确定方向需求后再让agant干活。
@@ -20,7 +21,76 @@
 Skills是基于高标准的重复工作沉淀的可复用技能包，可以持续稳定的按照你的要求输出高质量的产物 
 创建skill.md:名称、描述、指令放进去
 
-# MCP
+## Skill类型
+
+### 内置Skill
+- 文件搜索、代码搜索
+- 任务规划与管理
+- 项目诊断
+
+### 自定义Skill
+- 领域特定知识库
+- 专用工具集成
+- 工作流程自动化
+## 使用场景
+
+1. **代码开发**: 代码生成、调试、重构
+2. **文档处理**: 文档创建、格式化、转换
+3. **数据分析**: 数据清洗、可视化建议
+4. **项目管理**: 任务分解、进度跟踪
+
+## 创建自定义Skill
+
+```json
+{
+  "name": "custom-skill",
+  "description": "描述技能用途",
+  "tools": ["tool1", "tool2"],
+  "knowledge_base": "path/to/knowledge"
+}
+```
+
+## 最佳实践
+
+- 单一职责: 每个Skill专注一个领域
+- 清晰命名: 便于AI理解和调用
+- 文档完善: 说明输入输出格式
+- 版本控制: 追踪Skill演进
+
+
+# MCP (Model Context Protocol)
+
+MCP是一种用于AI模型与外部数据源和工具连接的协议标准。
+## 核心概念
+
+- **Host**: 发起连接的AI应用（如Claude Desktop）
+- **Client**: 嵌入在Host中的客户端组件
+- **Server**: 提供特定能力的服务端（如文件系统、Git、数据库等）
+
+## 常用Server类型
+
+- **文件系统Server**: 读写本地文件
+- **Git Server**: 执行Git操作
+- **数据库Server**: 连接SQL/NoSQL数据库
+- **HTTP Server**: 调用外部API
+
+## 配置示例
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/dir"]
+    },
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-git"]
+    }
+  }
+}
+```
+常用MCP：
 Filesystem
 markitdown
 Excel
@@ -45,8 +115,8 @@ context7
 所有配置机密都通过环境变量来设置
 执敏感操作前，务必做好身份验证检查
 
-## 安装
-### 使用官方脚本安装（推荐）
+# 安装
+## 使用官方脚本安装（推荐）
 ```bash
 # macOS、Linux、WSL：
 curl -fsSL https://claude.ai/install.sh | bash
@@ -57,7 +127,7 @@ curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del in
 # 安装完成后，验证是否安装成功：
 claude --version
 ```
-### 使用 npm 安装
+## 使用 npm 安装
 ```bash
 # 请先确认已安装 Node.js
 node --version
@@ -71,7 +141,13 @@ cd your-project
 # 安装完成，运行命令 `claude` 即可进入 Claude Code 交互界面
 claude
 ```
-更新 Claude Code
+
+### 安装qwen code
+```bash
+npx @qwen-code/qwen-code@latest 
+```
+
+## 更新 Claude Code
 ```bash
 # 二选一
 claude install
@@ -80,10 +156,7 @@ claude update
 
 
 
-qwen code
-```bash
-npx @qwen-code/qwen-code@latest 
-```
+
 
 ## 基础用法
 
@@ -106,6 +179,20 @@ claude
 `提交我的更改并附上描述性说明信息`
 
 协助解决合并冲突：`帮我解决合并冲突`
+
+
+上下文窗口（Claude 的记忆容量）
+Claude 有上下文容量限制。当快满时：
+
+它会自动压缩旧内容
+你可以输入 /compact 手动压缩
+输入 /context 查看当前占用情况
+省空间秘诀：
+
+重要规则写进 CLAUDE.md
+用 skills 和 subagents 减少不必要的上下文占用
+
+
 ## 核心功能
 
 ## 命令行指令
@@ -113,52 +200,52 @@ claude
 ### 1. 系统指令
 ```bash
 # 初始化Claude Code
-claude /init
+/init
 
 # 查看状态
-claude /status
+/status
 
 # 重置会话
-claude /reset
+/reset
 
 # 退出
-claude /exit
+/exit
 ```
 
 ### 2. 配置指令
 ```bash
 # 查看配置
-claude /config
+/config
 
 # 修改配置
-claude /config set key=value
+/config set key=value
 
 # 重置配置
-claude /config reset
+/config reset
 ```
 
 ### 3. 上下文指令
 ```bash
 # 清除上下文
-claude /clear
+/clear
 
 # 保存上下文
-claude /save <name>
+/save <name>
 
 # 加载上下文
-claude /load <name>
+/load <name>
 ```
 
 ### 4. 工具指令
 ```bash
 # 列出可用工具
-claude /tools
+/tools
 
 # 启用工具
-claude /tool enable <tool>
+/tool enable <tool>
 
 # 禁用工具
-claude /tool disable <tool>
+/tool disable <tool>
 ```
 
 ## 功能操作
@@ -166,40 +253,40 @@ claude /tool disable <tool>
 ### 1. 文件操作
 ```bash
 # 读取文件
-claude "读取src/index.js并分析"
+"读取src/index.js并分析"
 
 # 编辑文件
-claude "在index.html添加导航栏"
+"在index.html添加导航栏"
 
 # 创建项目
-claude "创建一个React TypeScript项目"
+"创建一个React TypeScript项目"
 ```
 
 ### 2. Git操作
 ```bash
 # 提交代码
-claude "提交这次修改，commit message要清晰"
+"提交这次修改，commit message要清晰"
 
 # 代码审查
-claude "审查main分支的最新提交"
+"审查main分支的最新提交"
 ```
 
 ### 3. 任务执行
 ```bash
 # 运行测试
-claude "运行单元测试并修复失败的用例"
+"运行单元测试并修复失败的用例"
 
 # 构建项目
-claude "构建生产版本"
+"构建生产版本"
 ```
 
 ### 4. 问题排查
 ```bash
 # 调试错误
-claude "这个报错是什么意思: Error: Cannot find module"
+"这个报错是什么意思: Error: Cannot find module"
 
 # 性能分析
-claude "分析这个函数的性能瓶颈"
+"分析这个函数的性能瓶颈"
 ```
 
 ## 工作模式
@@ -243,22 +330,3 @@ claude "分析这个函数的性能瓶颈"
 - **Q: 如何查看所有可用指令?**
   A: 使用 `claude /help` 或 `claude --help`
 
-### 操作相关
-- **Q: 如何停止正在执行的任务?**
-  A: 按`Ctrl+C`
-
-- **Q: 如何查看历史对话?**
-  A: 使用方向键上下翻页
-
-- **Q: 如何配置代理?**
-  A: 设置环境变量`HTTP_PROXY`和`HTTPS_PROXY`
-
-- **Q: 如何使用自定义工具?**
-  A: 在`.claude/tools`目录中创建工具定义文件
-
-### 故障排除
-- **Q: 指令执行失败怎么办?**
-  A: 检查网络连接，确认Claude API密钥配置正确
-
-- **Q: 如何重置Claude Code?**
-  A: 运行 `claude /reset` 或删除`.claude`目录
