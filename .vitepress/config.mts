@@ -103,15 +103,6 @@ export default defineConfig({
           drop_console: true,
           drop_debugger: true
         }
-      },
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('node_modules')) {
-              return 'vendor'; // 将第三方依赖提取到独立 chunk
-            }
-          }
-        }
       }
     }
   }
