@@ -69,9 +69,19 @@ watch(() => route.path, () => {
   error.value = ''
 })
 
-const verifyPassword = () => {
-  // 这里设置文档统一的访问密码，例如 123456
-  if (password.value === '123456') {
+const verifyPassword = async () => {
+  if (!password.value) {
+    error.value = '请输入密码'
+    return
+  }
+  
+  // 将用户输入的密码转换为 SHA-256 摘要进行比对，避免在代码中明文硬编码密码
+  const msgBuffer = new TextEncoder().encode(password.value)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+
+  if (hashHex === 'c89fe5b7a007332d70f5e983d19b73c176c33eb478cff948466163aeff9e3016') {
     const currentPath = decodeURIComponent(route.path)
     sessionStorage.setItem('unlocked_' + currentPath, 'true')
     isLocked.value = false
@@ -89,7 +99,7 @@ const verifyPassword = () => {
     <template #doc-before>
       <div v-if="isLocked" class="password-mask">
         <h2>🔒 该文档需要密码访问</h2>
-        <p>请输入密码以查看内容 (默认密码: 123456)</p>
+        <p>请输入密码以查看内容</p>
         <div class="input-group">
           <input 
             type="password" 
