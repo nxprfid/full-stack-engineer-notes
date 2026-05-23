@@ -96,6 +96,14 @@ export default defineConfig({
     assetsInclude: ['**/*.JPG', '**/*.JPEG', '**/*.PNG'],
     build: {
       chunkSizeWarningLimit: 1500, // 提高警告阈值
+      target: 'esnext', // 提升编译速度
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      },
       rollupOptions: {
         output: {
           manualChunks(id) {
