@@ -74,6 +74,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
+      { text: '关于我', link: '/resume' },
       { text: 'GitHub', link: 'https://github.com/nxprfid/full-stack-engineer-notes' }
     ],
     sidebar: getSidebar(),
