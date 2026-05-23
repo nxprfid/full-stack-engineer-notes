@@ -11,7 +11,7 @@ hero:
       link: /C_note/C
     - theme: alt
       text: 查看 GitHub
-      link: https://github.com/yourusername/full-stack-engineer-notes
+      link: https://github.com/nxprfid/full-stack-engineer-notes
 
 features:
   - title: 结构化整理

@@ -64,20 +64,21 @@ function getFiles(dirPath: string, basePath: string) {
 }
 
 export default defineConfig({
+  base: '/full-stack-engineer-notes/',
   title: "嵌入式开发笔记",
   description: "个人嵌入式与全栈开发学习笔记",
   ignoreDeadLinks: true, // 忽略Markdown中的死链接
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
-      { text: 'GitHub', link: 'https://github.com/yourusername/full-stack-engineer-notes' }
+      { text: 'GitHub', link: 'https://github.com/nxprfid/full-stack-engineer-notes' }
     ],
     sidebar: getSidebar(),
     search: {
       provider: 'local' // 启用本地全文搜索
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/yourusername/full-stack-engineer-notes' }
+      { icon: 'github', link: 'https://github.com/nxprfid/full-stack-engineer-notes' }
     ],
     outline: {
       level: [2, 3],
