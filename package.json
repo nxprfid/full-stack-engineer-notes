@@ -1,0 +1,26 @@
+{
+  "name": "full-stack-engineer-notes",
+  "version": "1.0.0",
+  "description": "个人嵌入式开发学习笔记",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/full-stack-engineer-notes.git"
+  },
+  "keywords": [
+    "vitepress",
+    "notes",
+    "embedded"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.34"
+  }
+}

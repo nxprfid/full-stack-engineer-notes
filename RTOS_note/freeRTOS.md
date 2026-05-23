@@ -2,41 +2,41 @@
 [GD32移植FreeRTOS](https://geekdaxue.co/read/icheima@gd32/prd695920sk3p9sh#bdtkv1)  
 # 任务间的四种交互方式  
 
-![alt text](image.png)
+![alt text](./image.png)
 
 消息队列  
-![alt text](image-1.png)  
+![alt text](./image-1.png)  
 
-![alt text](image-2.png)
+![alt text](./image-2.png)
 
 # 移植FreeRTOS
 ## GD32C231C移植
 1. 下载FreeRTOS源码包并解压。下载地址为: https://github.com/FreeRTOS/FreeRTOS/releases  
 2. 找个可以编译通过的你需要的例程。  
 确保以下配置信息的正确性：  
-![alt text](image-3.png)  
-![alt text](image-4.png)  
-![alt text](image-5.png)  
+![alt text](./image-3.png)  
+![alt text](./image-4.png)  
+![alt text](./image-5.png)  
 3. 进入FreeRTOS/Source目录。此目录就是我们要移植的源码。  
-![alt text](image-6.png)![alt text](image-7.png)  
+![alt text](./image-6.png)![alt text](./image-7.png)  
 4. 在你工程目录下，新建一个文件夹FreeRTOS,将以上源码拷贝到这个文件夹中。  
-![alt text](image-8.png)  
+![alt text](./image-8.png)  
 5. 打开portable目录并删除其他不必要的文件。只保留GCC和MemManag目录  
-![alt text](image-9.png)  
+![alt text](./image-9.png)  
 6. 新建两个Group：FreeRTOS_Core和FreeRTOS_Port  
-![alt text](image-10.png)  
+![alt text](./image-10.png)  
 
 7. FreeRTOS_Core添加源码。源码为FreeRTOS根目录下的c文件  
-![alt text](image-11.png)  
-![alt text](image-12.png)
+![alt text](./image-11.png)  
+![alt text](./image-12.png)
 8. FreeRTOS_Port添加源码。源码为FreeRTOS/portable/MemMang下的heap_4.c。源码为FreeRTOS/portable/GCC/ARM_CM4F下的port.c以及portasm.c  
-![alt text](image-13.png)![alt text](image-14.png)  
-![alt text](image-16.png)  
+![alt text](./image-13.png)![alt text](./image-14.png)  
+![alt text](./image-16.png)  
 10. 添加头文件支持。将FreeRTOS/include和FreeRTOS/portable/GCC/ARM_CM4F添加到头文件依赖中。  
-![alt text](image-17.png)  
+![alt text](./image-17.png)  
 11. 来到FreeRTOS源码目录中，找到FreeRTOSv202411.00\FreeRTOS\Demo\CORTEX_MPU_M23_Nuvoton_NuMaker_PFM_M2351_IAR_GCC\Projects_NTZ\Keil\Config目录中的FreeRTOSConfig.h文件，进行拷贝。将FreeRTOSConfig.h文件拷贝到项目目录中的FreeRTOS目录下  
-![alt text](image-15.png)  
-![alt text](image-18.png)  
+![alt text](./image-15.png)  
+![alt text](./image-18.png)  
 12. 添加SYS_SUPPORT_OS宏定义  
 ```c
 #ifndef SYS_SUPPORT_OS
@@ -78,7 +78,7 @@ void SysTick_Handler(void)
 }
 #endif
 ```
-![alt text](image-19.png)  
+![alt text](./image-19.png)  
 13.  Systick硬件delay,修改systick.c源码，修改如下  
 ```c
 #ifndef SYS_SUPPORT_OS
@@ -209,7 +209,7 @@ void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
 ## 优先级与抢占式调度
 ## 队列
 队列是为了解决全局变量中的事件丢失与事件重复。
-![alt text](image-20.png)
+![alt text](./image-20.png)
 事件丢失：数据处理任务耗时较久，在快速按下按键时，按键任务多次记录多次改变全局变量，但数据处理任务只处理了一次。
 事件重复：数据处理任务耗时较久，在长按按下按键时，全局变量依然是处于按下状态值，导致数据处理任务重复处理。
 队列在没有数据需要处理的时候，消费者无需像全局变量方案一样一遍又一遍检查是否有新数据需要处理。会将自己置于阻塞态，不占用CPU资源，
@@ -237,7 +237,7 @@ void Task(void *argument){
        }
 }
 ```
-![alt text](image-21.png)
+![alt text](./image-21.png)
 ### 复杂数据、中断发送、多对一通信
 #### 如何在队列中通过指针传递复杂数据
 对于结构体数据往往比较大，往往不直接传递，而是传递结构体指针。
@@ -247,7 +247,7 @@ freertos的内存申请函数：`pvPortMalloc`释放函数：`vPortFree`
 >在生产者申请的内存，在消费者一定要释放掉。
 
 - 在中断中发送数据到队列
-![alt text](image-23.png)
+![alt text](./image-23.png)
 
 - 使用队列作为串口的数据缓冲区
-![alt text](image-22.png)
+![alt text](./image-22.png)

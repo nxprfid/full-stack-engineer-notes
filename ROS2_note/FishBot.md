@@ -1,24 +1,24 @@
 # MicroROSCar快速入门
 1. 将开发板插入TypeC线  
 2. 找到固件，右击选择复制文件地址   
-![alt text](image-1.png)  
+![alt text](./image-1.png)  
 3. 打开烧录工具MicroROSCar ConfigTool.v1.0.0.alpha.win.exe，刷新端口并粘贴到固件地址栏，点击烧录  
-![alt text](image-5.png)  
+![alt text](./image-5.png)  
 出现烧录成功提示后配置设备,点击重新扫描配置  
 4. 配置网络，我们需要配置wifi_ssid和wifi_pswd ，即wifi的名字和密码。  
-![alt text](image-23.png)  
+![alt text](./image-23.png)  
 wifi名称为PUMPU，所以填写PUMPU，接着点击一键配置即可，配置成功下方会有提示。  
-![alt text](image-24.png)  
-![alt text](image-25.png)  
+![alt text](./image-24.png)  
+![alt text](./image-25.png)  
 5. 打开配套的虚拟机Ubuntu_22.04_LTS(ROS2)，密码：123456  
-![alt text](image.png)  
+![alt text](./image.png)  
 6. 打开终端，输入`ip -4 a | grep inet`  
-![alt text](image-22.png)
+![alt text](./image-22.png)
    >一般可以看到多个网卡的，此时可以忽略172(docker)和127(本地)开头的ip地址，剩下的一般就是我们要的ip地址，比如这里的就是192.168.2.105    
 7. 接着配置主机IP，选择udpserver_ip，填写刚刚获取到的ip地址，点击一键配置即可，配置成功下方会有提示。  
-![alt text](image-26.png)    
+![alt text](./image-26.png)    
 8. 按下复位键，屏幕显示设备IP，此时说明已经连接成功   
-![alt text](image-27.png)  
+![alt text](./image-27.png)  
 >确保安装了ROS以及Docker,下面是一键安装指令  
 >wget http://fishros.com/install -O fishros && . fishros
 
@@ -29,7 +29,7 @@ wifi名称为PUMPU，所以填写PUMPU，接着点击一键配置即可，配置
     如因为网路问题无法启动可以尝试国内代理指令：  
 
         docker run -it --rm -v /dev:/dev -v /dev/shm:/dev/shm --privileged --net=host fishros.org/microros/micro-ros-agent:$ROS_DISTRO udp4 --port 8888 -v6  
-    ![alt text](image-28.png)  
+    ![alt text](./image-28.png)  
     正常你将看到终端不断有数据提示，表示正常通信上了
 10. 测试键盘控制,前面终端不要关闭，再打开一个终端，输入以下命令  
 `ros2 run teleop_twist_keyboard teleop_twist_keyboard`  
@@ -39,30 +39,30 @@ wifi名称为PUMPU，所以填写PUMPU，接着点击一键配置即可，配置
     接着尝试点击j按钮，机器人将逆时针转动,点击k或者空格，机器人将停在原地。  
 
     根据键盘提示，你可以尝试前进后退，左转右转等命令。  
-![alt text](image-29.png)  
-![alt text](2cfd5acf577e3ee9c1fc5c656f132a8.jpg)  
+![alt text](./image-29.png)  
+![alt text](./2cfd5acf577e3ee9c1fc5c656f132a8.jpg)  
 11. 我们的小车是带编码器的，可以实时输出里程计数据，使用指令  
    `ros2 topic echo /odom`就可以看到实时的机器人位置信息。  
-![alt text](image-30.png)
+![alt text](./image-30.png)
 
 # ROS2
-![alt text](image-9.png)  
+![alt text](./image-9.png)  
 核心是通讯（稳定、安全、实时的通讯能力）
 ROS2文档：
 http://docs.ros.org/en/humble/Releases.html
 
-![alt text](image-10.png)
+![alt text](./image-10.png)
 ## 右手法则
-![alt text](image-11.png)
+![alt text](./image-11.png)
 >我们开发板的Z轴朝上，X轴朝前，此时Y轴应该朝左。接着摊开右手手掌，用大拇指朝向轴的方向，比如朝向X轴，然后握起手掌，那么你握的方向就是正方向。
 # ROS2-MicroROS
 通讯协议依赖于Agent  
 
-![alt text](image-12.png)
+![alt text](./image-12.png)
 >所谓Agen其实就是一个代理，微控制器可以通过串口，蓝牙、以太网、Wifi等多种协议将数据传递给Agent，Agent再将其转换成ROS2的话题等数据，以此完成通信。  
 
 
-![alt text](image-13.png)  
+![alt text](./image-13.png)  
 
 通过RCLC-API调用MicroROS
 
@@ -73,8 +73,8 @@ UDP启动Agent服务
 
     sudo docker run -it --rm -v /dev:/dev -v /dev/shm:/dev/shm --privileged --net=host microros/micro-ros-agent:$ROS_DISTRO udp4 --port 8888 -v6
 ### 服务通讯
-![alt text](image-17.png)  
-![alt text](image-18.png)
+![alt text](./image-17.png)  
+![alt text](./image-18.png)
 ## 使用FishBotROS2OS随身系统  
 开机时按下F8键（F11）进入BootMenu启动设备选择界面  
 选择ubuntu开头的ROS2GO盘回车即可进入系统
@@ -91,16 +91,16 @@ UDP启动Agent服务
     wget http://fishros.com/install -O fishros && bash fishros 
 
 ## 使用platformio
-![alt text](image-3.png)
+![alt text](./image-3.png)
 
-![alt text](image-2.png)
+![alt text](./image-2.png)
 四步新建工程  
 1. 输入工程名 example01_helloworld  
 2. 选择开发板，这里选择Adafruit ESP32 Feather  
 3. 选择开发框架，这里我们用Arduino，PIO还支持IDF（IoT Development FrameWork） 
 4.  开发位置可以选择默认的位置，也可以自定义位置  
    
-![alt text](image-4.png)
+![alt text](./image-4.png)
 
 ### platformio.ini文件设置
 将单片机的主频提高到240MHZ的主频。  
@@ -128,18 +128,18 @@ lib_deps =
 ## 加载库的三种方法：
 1. 在PlatformIO左侧的项目管理器中点击Libraries，搜索你想要的库，点击Add to Project加入到你的工程中。
 2. 通过GIT地址安装。直接在platformio.ini文件中添加lib_deps参数，指定库的GIT地址。  
-![alt text](image-7.png)  
+![alt text](./image-7.png)  
 3. 手动克隆到lib目录  
-![alt text](image-8.png)  
+![alt text](./image-8.png)  
 ## 运行第一个机器人
 需要三个终端分别运行  
 
     ros2 run turtlesim turtlesim_node  
     ros2 run turtlesim turtle_teleop_key  
     rqt  
-![alt text](image-14.png)  
+![alt text](./image-14.png)  
 节点关系：  
-![alt text](image-15.png)
+![alt text](./image-15.png)
 
 
 
@@ -147,7 +147,7 @@ lib_deps =
 
 
 ## 其他知识
-![alt text](image-6.png)  
+![alt text](./image-6.png)  
 
 使用`Serial.readString()`方法读取数据时，串口接收是有个超时时间的,使用`Serial.readStringUntil()`检测到\n立刻返回数据。
 ```
@@ -189,7 +189,7 @@ xxx.c
 APP/hello_world.c
 )
 ```
-![重新加载CMake，否则不会生效](image-32.png)
+![重新加载CMake，否则不会生效](./image-32.png)
 #### 然后在终端输入命令：cmake生成Makefile文件。再使用make命令编译。
     cmake .
     make
@@ -238,7 +238,7 @@ APP/hello_world.c
 ```
 export RCUTILS_CONSOLE_OUTPUT_FORMAT=[{function_name}:{line_number}]:{message}
 ```
-![alt text](image-16.png)
+![alt text](./image-16.png)
 
 查看节点  
 `ros2 node list`  
@@ -258,8 +258,8 @@ export RCUTILS_CONSOLE_OUTPUT_FORMAT=[{function_name}:{line_number}]:{message}
     #给当前用户添加永久权限，重启生效
     sudo usermod -aG dialout `whoami`
     sudo usermod -aG plugdev `whoami`
-![alt text](image-21.png)  
-![alt text](image-20.png)
+![alt text](./image-21.png)  
+![alt text](./image-20.png)
 
 ### Ubuntu22.04 CH340系列串口芯片无法识别终极问题解决方案
 1. 禁用占用项

@@ -6,7 +6,7 @@ Profile我理解为“子规划”，专门针对某种应用场景定义的。�
 Service就是“服务”，主要目的是定义我能做哪些功能。
 
 Characteristic就是“特征”，其实就是真正的数据，我能做哪些功能，最终就是要靠这些数据来体现。
-![alt text](image-17.png)  
+![alt text](./image-17.png)  
 例如：针对“Find Me”这个应用场景，“Find Me” Profile 会描述主机设备和从机设备的角色和行为，如何广播，如何扫描，如何连接，等。并定义了从机必须要实现的服务，和可选实现的服务。主机需要实现的功能等。
 
 Service 的目前是方便主机查找从机包含了哪些服务，或者快速指定使用哪个服务。因此Service 的 UUID就是用于这些目的的。另外，Service里面包含了可以读/写的数据，称为“Characteristic”。每个“Characteristic”也有自己的UUID，因为一个服务会包含多个特征，因此需要通过UUID区分。
@@ -14,7 +14,7 @@ Service 的目前是方便主机查找从机包含了哪些服务，或者快速
 Service 和 Characteristic 使用的数据结构，都是 “Attribute”。看来他们都是一个东西，只是赋予了不同的解释。
 
 一条“Characteristic”不是对应一条“Attribute”，而是多条组成。  
-![alt text](image-18.png)  
+![alt text](./image-18.png)  
 当特征有 notify 或者 indicate 功能时，蓝牙规范必须为其添加 CCCD attribute。
 
 每个服务和特征都有一个UUID。
@@ -30,7 +30,7 @@ Service 和 Characteristic 使用的数据结构，都是 “Attribute”。看�
 
 因此，开发 BLE 应用，就是开发 Service 和 Characteristic，通过API添加自己需要的服务和特征。
 
-![alt text](image-19.png)  
+![alt text](./image-19.png)  
 在这个图片上，有个情况，就是手机在给ble从设备发第一个空包的时候，ble从设备如果没有收到第一个packet（M->S），则会以1.25 ms + transmit window offset为起点，等待connInterval之后，再次尝试接收，直到接收到为止，或者六次尝试都失败断开连接为止。ble从设备接收到packet之后，则以收到该packet的时间点为起始点（anchor point），以connInterval为周期，接着接收后续的packet（M->S），以及发送packet给手机（S->M）。
 
 连接成功后，在其它时间里，设备也可以主动通知对方断开连接。断开连接的数据包如下：
@@ -84,7 +84,7 @@ ble从设备因为也在计算好的时间里进行了侦听，因此能收到�
      当一个BLE设备的特征接收GATT通知时，它意味着它订阅了一个特征的通知，并且当该特征的值发生变化时，它会接收到通知。这种通知机制可以用于实时监测特征值的变化，例如温度传感器的实时温度数据。
 
      GATT服务、特征、属性的关系大致如下：
-![alt text](image-20.png)
+![alt text](./image-20.png)
 ### 安信可SDK
   apps_ble_start：入口函数，开启BLE使能
   ble_slave_init：开启从机初始化
@@ -97,41 +97,41 @@ ble从设备因为也在计算好的时间里进行了侦听，因此能收到�
 # 鹏老师课程
 https://www.bilibili.com/opus/697239519074713670
 ## 蓝牙广播
-![alt text](image-21.png)
+![alt text](./image-21.png)
 频率范围从2402Mhz到2480Mhz  
 每2Mhz一个信道
 37 38 39是广播信道，剩余的是数据信道
-![alt text](image-22.png)  
+![alt text](./image-22.png)  
 一个广播数据包最长37个字节，6个字节用作蓝牙MAC地址。长度=类型+内容=1+n
-![alt text](image-23.png)  
-![alt text](image-25.png)  
+![alt text](./image-23.png)  
+![alt text](./image-25.png)  
 设备名称：1234,；发射功率：8dBm；厂商自定义数据。  
 一个汉字UTF-8编码占用3个字节
 ## 扫描响应
-![alt text](image-26.png)  
-![alt text](image-27.png)  
-![alt text](image-29.png)
+![alt text](./image-26.png)  
+![alt text](./image-27.png)  
+![alt text](./image-29.png)
 扫描响应的格式和蓝牙广播的数据格式是完全一样的。
-![alt text](image-28.png)
+![alt text](./image-28.png)
 
 ## 状态切换
-![alt text](image-30.png)
+![alt text](./image-30.png)
 如果第一次连接后，并断开连接。回到就绪态，不是广播态所以会扫描不到。要编写程序代码，当设备从连接态进入就绪态后使其再次进入广播态。可以通过中断函数来处理蓝牙状态的变化
 ## 服务与特征  
-![alt text](image-31.png)  
+![alt text](./image-31.png)  
 UUID是蓝牙组织定义的，用于区分各个服务和特性的标识符。总长度是128bit。蓝牙组织联盟定义了一个UUID的基地址，允许用户使用16bit的UUID和32bit的UUID与该基地址拼接形成128bit的UUID  
-![alt text](image-32.png)
+![alt text](./image-32.png)
 ## 数据收发
 BLE是基于一个个特性实现的，每一个特性可以被看作一个数据点。数据的收发都要依托于这些数据点。
-![alt text](image-36.png)  
+![alt text](./image-36.png)  
 write With No Response写完之后不需要从设备回应  
 write需要回应  
 Notify操作是设备里面的数据发生变化之后通知手机来取数据。需要在手机端订阅相应的通知才有效。不需要主设备回应从设备  
 Indicate需要回应（回应从设备）  
-![alt text](image-33.png)
+![alt text](./image-33.png)
 ## SPP协议
-![alt text](image-34.png)  
-![alt text](image-35.png)
+![alt text](./image-34.png)  
+![alt text](./image-35.png)
 
 # ArduinoBLE
    1. 创建一个 BLE Server
@@ -149,9 +149,9 @@ https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/cli/bluetooth/ble
 http://gitlab.bekencorp.com/wifi/armino/-/tree/main/components/demos/bluetooth/ble_boarding  
 http://gitlab.bekencorp.com/wifi/armino/-/tree/main/include/modules/ble.h  
 
-![alt text](image.png)  
+![alt text](./image.png)  
 根据SPEC上面的说明  
-![alt text](image-1.png)
+![alt text](./image-1.png)
 
 `bk_ble_init`()函数初始化蓝牙模块，并使能蓝牙功能。  
 
@@ -254,21 +254,21 @@ bk_ble_set_adv_data(actv_idx, adv_data, sizeof(adv_data), ble_at_cmd_cb);
 `bk_ble_start_advretising()`函数启动广播，使蓝牙设备可以被搜索到。  
 必须在bk_ble_create_advertising后使用
 
-![alt text](image-2.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
+![alt text](./image-2.png)
+![alt text](./image-3.png)
+![alt text](./image-4.png)
+![alt text](./image-5.png)
+![alt text](./image-6.png)
 
 ## WIFI连接过程
-![alt text](image-7.png)
-![alt text](image-8.png)
-![alt text](image-9.png)
-![alt text](image-10.png)
-![alt text](image-11.png)
-![alt text](image-12.png)
-![alt text](image-16.png)
+![alt text](./image-7.png)
+![alt text](./image-8.png)
+![alt text](./image-9.png)
+![alt text](./image-10.png)
+![alt text](./image-11.png)
+![alt text](./image-12.png)
+![alt text](./image-16.png)
 ## BLE MESH  
-![alt text](image-13.png)
-![alt text](image-14.png)
-![alt text](image-15.png)
+![alt text](./image-13.png)
+![alt text](./image-14.png)
+![alt text](./image-15.png)

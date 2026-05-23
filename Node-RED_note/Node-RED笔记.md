@@ -1,6 +1,6 @@
 # Node-RED笔记
 # 启动NodeRed
-![alt text](image-70.png)
+![alt text](./image-70.png)
 打开http://localhost:1880即可启用
 
 ```python

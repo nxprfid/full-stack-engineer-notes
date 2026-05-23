@@ -21,8 +21,8 @@ string.byte(0x30)
 -- 转换为十进制
 ```
 lua字符串是可以存0的，不是C中遇到0就停止的
-![alt text](image-7.png)
-![alt text](image-8.png)
+![alt text](./image-7.png)
+![alt text](./image-8.png)
 ## 循环
 while后面加的是do，for也是do，判断if才是then。
 
@@ -37,9 +37,9 @@ print(b > 10 and "yes" or "no")
 16进制，大小写都可以
 运算可以使用除法运算结合求余运算来进行整除运算，确保小数部分都是0
 
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](./image.png)
+![alt text](./image-1.png)
+![alt text](./image-2.png)
 
 ## table数组
 可以存数字，字符串，table，function
@@ -60,16 +60,16 @@ table删减
 
 在表 table 中删除索引为 pos（pos 只能是 number 型）的元素，并返回这个被删除的元素，它后面所有元素的索引值都会减一。pos 的默认值是表的长度，即默认是删除表的最后一个元素。
 ## require多文件调用
-![alt text](image-3.png)
+![alt text](./image-3.png)
 require只是用来引入外部库的。不需要多次调用。如果需要多次调用，可以在被调用的文件里创建table，再往这table中添加函数，在调用文件中使用该函数即可。
 
 ## 迭代器
 迭代器是用来遍历table里面所有的值的
-![alt text](image-4.png)
+![alt text](./image-4.png)
 `ipairs`用来迭代数字下标的，需要连续下标
-![alt text](image-5.png)
+![alt text](./image-5.png)
 `pairs`用来迭代数字以及字符串下标的，不需要连续
-![alt text](image-6.png)
+![alt text](./image-6.png)
 `pairs`是用了`next`函数
 ```lua
 t={}
@@ -79,9 +79,9 @@ next(t)
 # LuaTask框架
 当使用LuaTask框架时，需要在代码中引用`sys`库（`_G.sys=require("sys")`），并且在代码的最后一行，调用`sys.run()`以启动LuaTask框架，框架内的任务代码会在sys.run()中运行。
 
-![alt text](image-9.png)
-![alt text](image-10.png)
-![alt text](image-11.png)
+![alt text](./image-9.png)
+![alt text](./image-10.png)
+![alt text](./image-11.png)
 闭包就是返回了一个携带参数的一个函数
 # LuatOS
 ## 日志
@@ -227,34 +227,34 @@ sys.run()
 ```
 
 ## UART
-![alt text](image-12.png)
+![alt text](./image-12.png)
 ## 二进制数据/c结构体的打包与解析
-![alt text](image-13.png)
+![alt text](./image-13.png)
 字节序分为大端序和小端序
 
 TCP、UDP一般是大端序，而MCU一般是小端序
-![alt text](image-14.png)
-![alt text](image-15.png)
+![alt text](./image-14.png)
+![alt text](./image-15.png)
 解析二进制数据
-![alt text](image-16.png)
-![alt text](image-17.png)
-![alt text](image-18.png)
-![alt text](image-19.png)
-![alt text](image-20.png)
+![alt text](./image-16.png)
+![alt text](./image-17.png)
+![alt text](./image-18.png)
+![alt text](./image-19.png)
+![alt text](./image-20.png)
 
 ## zbuff库
-![alt text](image-21.png)
-![alt text](image-22.png)
-![alt text](image-23.png)
-![alt text](image-24.png)
-![alt text](image-25.png)
-![alt text](image-26.png)
+![alt text](./image-21.png)
+![alt text](./image-22.png)
+![alt text](./image-23.png)
+![alt text](./image-24.png)
+![alt text](./image-25.png)
+![alt text](./image-26.png)
 ## 串口实战-读取485温湿度传感器数据
-![alt text](image-27.png)
-![alt text](image-28.png)
+![alt text](./image-27.png)
+![alt text](./image-28.png)
 ## SPI库的介绍+实战读写FLASH
-![alt text](image-29.png)
-![alt text](image-30.png)
-![alt text](image-31.png)
-![alt text](image-32.png)
-![alt text](image-33.png)
+![alt text](./image-29.png)
+![alt text](./image-30.png)
+![alt text](./image-31.png)
+![alt text](./image-32.png)
+![alt text](./image-33.png)

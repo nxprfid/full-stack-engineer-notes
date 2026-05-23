@@ -2,26 +2,26 @@
 [文档](https://docs.keysking.com/)  
 [串口助手](https://serial.keysking.com)  
 [WS2812上位机](https://ws2812.keysking.com)
-![alt text](IMG_2254.JPG)
+![alt text](./IMG_2254.JPG)
 ## 安装STM32CubeIDE
-![alt text](IMG_2256.JPG)
+![alt text](./IMG_2256.JPG)
 
-![alt text](IMG_2257.JPG)
+![alt text](./IMG_2257.JPG)
 
-![alt text](IMG_2258(1).JPG)
+![alt text](./IMG_2258(1).JPG)
 将 STM32CubeIDE 排除在扫描范围之外以提升性能。（一般来说，添加排除项可能会影响这台计算机的安全级别 ）  
 让 STM32CubeIDE 继续接受微软 Defender 的扫描。  
-![alt text](IMG_2259.JPG)
+![alt text](./IMG_2259.JPG)
 点击同意助力意法半导体改进产品。  
-![alt text](IMG_2260.JPG)
+![alt text](./IMG_2260.JPG)
 打开关联透视图？  
-![启用 “自动构建”，代码改动后，IDE 自动触发编译，不用手动点 “Build”](IMG_2261(1).JPG)
+![启用 “自动构建”，代码改动后，IDE 自动触发编译，不用手动点 “Build”](./IMG_2261(1).JPG)
 勾选不在提示的选项会将记忆的选项保存下来，保存在工作空间里面metadate文件夹  
-![alt text](IMG_2262(2).JPG)
+![alt text](./IMG_2262(2).JPG)
 
-![alt text](IMG_2263(2).JPG)
+![alt text](./IMG_2263(2).JPG)
 
-![alt text](IMG_2264.JPG)
+![alt text](./IMG_2264.JPG)
 
 # GPIO
 浮空输入下的GPIO内部处于高阻态
@@ -29,9 +29,9 @@
 
 GPIOx_BSRR（端口位设置 / 清除寄存器）、GPIOx_BRR（端口位清除寄存器）、GPIOx_ODR（端口输出寄存器）  
 控制单片机就是控制寄存器  
-![alt text](image11.png)  
+![alt text](./image11.png)  
 TTL肖特基触发器（施密特触发器）作用是稳定电平。  
-![alt text](image-7.png)
+![alt text](./image-7.png)
 # 中断
 中断信号是送到处理器，调用代码进行处理。  
 事件信号是送到相应的外设，自行处理。  
@@ -251,7 +251,7 @@ uint8_t CommandBuffer_GetCommand(uint8_t *command) {
 - 丢弃错误数据
 ## DMA直接内存访问
 代替CPU来搬运数据
-![alt text](image-8.png)
+![alt text](./image-8.png)
 在MX建立两条串口DMA通道。把后缀_IT改为_DMA即可。
 如果要接收不定长数据，可以利用串口空闲中断。使用`HAL_UARTEx_ReceiveToIdle_DMA(&huart1, (uint8_t *)aRxBuffer, sizeof(aRxBuffer));`函数。  
 相应的回调函数则改为`HAL_UARTEx_RxEventCallback(&huart1, uartEvent);`
@@ -269,7 +269,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uintl6_t Size)
 }
 ```
 为了避免触发DMA传输过半中断，关闭DMA传输过半中断是`__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);`串口接受开启时也要关闭。
-![alt text](image-9.png)
+![alt text](./image-9.png)
 ### 校验和
 校验和用来校验数据传递过程中是否出错  
 计算方式;将前面的数据依次相加，然后取最后1字节数据。  
@@ -300,14 +300,14 @@ HAL库会处理好最后一位，默认为0就好了
 
 # WS2812 PWM+DMA
 WS2812芯片会发出三路PWM信号来调节三颗灯珠的亮度，我们要做的就是告诉WS2812每颗小灯的亮度即可。  
-![alt text](image-44.png)  
+![alt text](./image-44.png)  
 每个颜色的强度一般从弱到强用0~255表示。也就是16进制的FF。一个字节。混出一个颜色可以用3个字节。  
-![alt text](image-36.png)  
-![alt text](image-37.png)  
+![alt text](./image-36.png)  
+![alt text](./image-37.png)  
 WS2812采用的通信方式称为归零码，也就是每位数据之间电平必须归为零(低)电平。  
-![alt text](image-38.png)  
+![alt text](./image-38.png)  
 由于是单线通信，没有时钟线辅助，WS2812规定了信号要以大概800kHz的频率进行发送。  
-![alt text](image-39.png)  
+![alt text](./image-39.png)  
 >实际时序要求  
 >Tim “cpldcpu” 对实际时序要求进行了研究，发现其宽容度相当高。他的结论如下：
 >- 复位信号的触发时间最早可低至 9 微秒（远低于数据手册中规定的 50 微秒）。  
@@ -315,24 +315,24 @@ WS2812采用的通信方式称为归零码，也就是每位数据之间电平�
 >- “0” 比特可通过短至 62.5 纳秒的高电平脉冲编码【要求 3】，但脉冲长度不应超过 0.50 微秒【要求 4】。  
 >- “1” 比特的高电平脉冲长度几乎可接近整个周期时间，但不应短于 0.625 微秒【要求 5】。  
 
-![alt text](image-45.png)
-![alt text](image-40.png)  
+![alt text](./image-45.png)
+![alt text](./image-40.png)  
 可以一颗一颗发Reset信号也可以最后发送Reset信号。  
 ## 如何实现呢？
 使用PWM+DMA实现。用DMA快速修改PWM占空比（修改输出比较寄存器）。  
 
-![alt text](image-41.png)  
+![alt text](./image-41.png)  
 输出比较PWM1模式下，一个周期中首先输出高电平，当计数器值与输出比较寄存器值相等时，切换为低电平。  
 定时器有一个可以触发DMA的事件。叫做输出比较事件。当计数器的值与输出比较寄存器的值相等时，会触发DMA搬运，将下一个周期的占空比所用到的数据搬运到输出比较寄存器。此时本周期的电平已经切换，不在受影响，也提前为下一个周期准备好了输出比较值。  
 所以提前将数据数组准备好，DMA就可以在每个周期帮我们搬运新的数据到定时器的输出比较寄存器。也就能实现每个周期自动更改占空比了。  
 
 将灯珠DI引脚连接到PB4，将引脚所在TIM设置为内部时钟源。也就是APB1的定时器时钟线72MHz，对应的通道1设置为PWM输出模式。预分频系数设置为0，自动重装载寄存器设置为90-1（周期）。即72MHz的计数速度，每计90个数自动重装载一次。也就是800kHz的频率。  
-![alt text](image-42.png)  
+![alt text](./image-42.png)  
 PWM模式1，先高电平后低电平。  
 所连接灯带的DI口设置为开漏输出，速度高，新建DMA通道（选择输出比较事件），修改为从内存到外设。搬运模式是普通模式，外设地址不自增，内存地址要自增（才能将数组中的数据一个个搬运到寄存器）。输出比较寄存器的大小是16位的，因而每次搬运的数据宽度为半个字Half Word（16位）。   
 >在 32 位系统中，1 个字 = 32 位 = 4 字节；  
 
-![alt text](image-46.png)  
+![alt text](./image-46.png)  
 >TIM3有4种DMA搬运事件。  
 >TRIG是触发事件，计时器启动、停止、初始化或触发计数都是触发事件。  
 >UP是更新事件，也就是计数器重装载时。
@@ -364,13 +364,13 @@ void Ws2812_Update()
 ```
 如果想在while(1)循环中调用此函数，务必要加一个延时，一是因为DMA函数是非阻塞函数，连续调用的话上一次DMA还没把整个数组搬完，下次调用就将其打断，造成数据混乱。二是因为我们在最后将PWM改了了纯低电平，但是还要等待一会才能构成Reset信号。  
 
-![GRB顺序](image-43.png)  
+![GRB顺序](./image-43.png)  
 
 ## 实战！上位机通信+WS2812实现彩灯控制系统
-![alt text](image-47.png)  
+![alt text](./image-47.png)  
 新建两个文件夹`App`以及`Lib`.下面各有Inc，Src。  
 工程右键选择Properties(属性)  
-![alt text](image-48.png)  
+![alt text](./image-48.png)  
 添加App/Inc以及Lib/Inc文件夹。  
 应用并关闭（Apply and Close）  
 ws2812.h中宏定义一下灯珠数量。  
@@ -378,15 +378,15 @@ ws2812.h中宏定义一下灯珠数量。
 #define WS2812_NUM 10
 ```
 ws2812.c中定义一个二维数组，用于存放每个灯珠的颜色。数组的大小首先是LED_COUNT代表有10个小灯，随后是3代表小灯有三个颜色。uint8_t类型代表单个颜色用8位表示。  
-![alt text](image-49.png)  
+![alt text](./image-49.png)  
 *3是因为每个小灯要发送三个颜色数据，*8是因为每个颜色一个字节8位数据，要8个PWM周期，设置8次占空比来发送。随后的+1则是为最后的Reset信号准备的，将占空比设为0，随后面的PWM的占空比就都为0了。时间一长就形成Reset信号。   
 
 然后将所有小灯的颜色值转化为PWM占空比写入到此数组中。  
 转换的算法：  
 先遍历color变量（二维数组，即每个小灯的颜色）。对于其中一个小灯我们取出三个颜色值，对于一个颜色值的8位数据，我们要根据8为数据每一位上是0还是1来决定对应的PWM占空比是0码还是1码。判断每一位上是0还是1的方法：例如我们要获取第7位上是0还是1，就让数据与上第7位为1，其他位都为0的数。也就是0x80。如果不为0则说明此位上为1，我们就将代表这一位的占空比设为1码，如果不是则说明此位为0，我们就将代表这一位的占空比设为0码。其他位上也可以如此操作。来一个for循环，j从0到7，每次让数据与上0x80右移j位。也就能知悉每一位上是0还是1，将0码/1码赋值到第j个占空比。  
-![alt text](image-50.png)
+![alt text](./image-50.png)
 对于第i个小灯，我们则需要再data的数组下标中加上24*i，因为每个小灯会占用3*8=24个字节。（PS：颜色数据是0，但0用0码表示是一个字节（设置ccr输出比较寄存器）） 来存储自己的占空比。  
-![alt text](image-51.png)
+![alt text](./image-51.png)
 利用C语言的三目运算符可以简化为  
 `data[24*i+j] = (g &(0x80 >>j) != 0) ? Codel : Code0;`
 由于C语言中0为假，非0为真的特性。!=0也可以省略掉。  
@@ -394,14 +394,14 @@ ws2812.c中定义一个二维数组，用于存放每个灯珠的颜色。数组
 这样当与运算结果不为0时，就赋值为1码。否则就赋值为0码。  
 同样红色与蓝色通道的颜色值我们也这样转换。  
 区别就是红色通道的占空比数据位置要+8，同理蓝色+16  
-![alt text](image-52.png)  
+![alt text](./image-52.png)  
 经过如此操作后便能将color数组中的颜色数据转化为data数组中的PWM占空比信号。  
 不可避免会出现之前一次DMA还未搬运完，新的控制信号就要重新设置小灯颜色等情况。如果此时计数器的状态不确定的话，肯定会导致第一个PWM周期的占空比不正确，进而导致整个通信错乱。因而我们要再启动PWM信号前先调用`HAL_TIM_PWM_Stop_DMA(&htim3, TIM_CHANNEL_1);`函数，将PWM输出停掉，然后再将计数器设为0：`__HAL_TIM_SetCounter(&htim3, 0);`，保证接下来PWM信号输出时，计数器是从0开始计数的。这样Update函数便能完美地将color变量中的颜色值转换为PWM占空比数据。以归零码的形式发送给WS2812了。  
 
 在在`ws2812.h`中声明`void WS2812_Set(uint8_t index,niuint8_t r, uint8_t g, uint8_t b);`函数(设置第index个小灯的颜色为rgb，设置的是color变量。未转化为归零码)。  
 `void WS2812_SetAll(uint8_t r, uint8_t g, uint8_t b);`函数（设置全部color变量。未转化为归零码）。  
 `void WS2812_Update();`函数。（转化为归零码）  
-![alt text](image-53.png)  
+![alt text](./image-53.png)  
 
 增加一个currentColor变量，用于存放当前小灯的颜色。每次更新了颜色后就将color变量中的数据赋值到currentColor变量中。利用currentColor变量，实现了可以让小灯颜色渐变的函数。在小灯的任务循环函数中，将command设为了static，方便下次循环时还能使用其中的数据。还增加了一个static的type变量。将每次命令的命令类型记录下来，另外还增加了一个static的loopTime变量，loopTime会被获取系统执行毫秒数的HAL_GatTick函数赋值。利用loopTime变量来控制相应逻辑的执行时间，例如闪烁模式下，每500ms将小灯熄灭 或者设为设定的颜色。彩虹模式下，利用loopTime变量计算各小灯的颜色值。而呼吸模式下，利用渐变函数实现小灯的渐亮渐灭。  
 # SPI
@@ -427,14 +427,14 @@ SPI 通信有四根线：
 - CPOL = 0，CPHA = 1 时，SCLK 空闲时为低电平，数据在第二个时钟沿采样（下降沿采样）  
 - CPOL = 1，CPHA = 1 时，SCLK 空闲时为高电平，数据在第二个时钟沿采样（上升沿采样）  
 
-![alt text](image-56.png)  
-![alt text](image-57.png)  
-![alt text](image-58.png)  
+![alt text](./image-56.png)  
+![alt text](./image-57.png)  
+![alt text](./image-58.png)  
 配置 CPOL = 0，CPHA = 0 ，可见 SCLK 空闲时为低电平，数据在第一个时钟沿采样（上升沿采样）  
 
 通信波形文件包含在例程zip包中，可以使用【Saleae Logic 2】软件打开查看  
 
-![alt text](image-55.png)
+![alt text](./image-55.png)
 
 ## 配置
 开启外部晶振，配置时钟频率，分配引脚：将 PA12、PA15、PB3、PB1 分别设置为 GPIO_Output，并分别设置 User label 为 SPI_SCLK、SPI_MOSI、SPI_MISO、SPI_CS。   
@@ -488,7 +488,7 @@ SoftSPI_CS_High(&SoftSPI1);
 ```
 # WS2812 SPI
 HCLK配置为了12MHz，MOSI接到我们的2812  
-![alt text](image-54.png)  
+![alt text](./image-54.png)  
 系统采用单总线协议，通过总线上高低电平的时长来区分逻辑0和1。WS2811工作在800kHz频率下，将SPI设置为6.4MHz一即其工作频率的8倍一**可以确保每个字节（8位）正好对应一个逻辑位**。在这种设置下，‘11111000’（OxF8）代表逻辑1，11000000（0xCO）代表逻辑0。  
 
 >CPHA配置为第二边沿采样；在第一个跳变沿时，MOSI在空闲状态保持高电平，而在第二个跳变沿，它会保持上一次传输的最终电平。由于发送数据的**最后一位总是低电平**，这样配置可以避免WS2812误判。  

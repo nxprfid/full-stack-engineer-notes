@@ -1,15 +1,15 @@
 # VSCode运行C语言代码
 - 安装C/C++扩展
-![alt text](image.png)
+![alt text](./image.png)
 - 安装MinGW
-![alt text](image-1.png)
+![alt text](./image-1.png)
 默认就行，不需要改路径
 - 配置C/C++路径
-![alt text](image-2.png)
+![alt text](./image-2.png)
 复制这行命令
 粘贴到刚刚打开的终端，不断回车需要Y输入Y。
 
-![alt text](image-3.png)
+![alt text](./image-3.png)
 输入验证是否成功安装
 ```bash
 gcc --version
@@ -18,7 +18,7 @@ gdb --version
 ```
 
 - 配置环境变量
-![alt text](image-4.png)
+![alt text](./image-4.png)
 C:\msys64\ucrt64\bin
 
 最后VSCode右击选择RUN CODE就可以正常运行C语言代码了。

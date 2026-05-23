@@ -477,7 +477,7 @@ void loop() {
 使用bmp.readAltitude()方法，粗略计算当前的海拔高度.
 ## 彩色灯珠 WS2812
 由于 WS2812 的时序要求相对严格，我们将使用 SPI 的 MOSI 引脚（PA_7）对其进行驱动。
-![alt text](image.png)
+![alt text](./image.png)
 首先，为了保证 SPI 频率在 8MHz，我们需要将芯片的主频设置为 16M，这样只要设置 SPI 二分频即可实现输出为 8MHz。
 ```c
 #include<SPI.h>
@@ -605,11 +605,11 @@ void loop() {
 
 ```
 温湿度计算公式可以参考官方文档：
-![alt text](image-1.png)
+![alt text](./image-1.png)
 ## 6轴传感器 MPU6050
 MPU6050使用I²C通信接口，内部整合了三轴MEMS陀螺仪、三轴MEMS加速度计和一个内置温度传感器，可以读取三轴角度，三轴加速度以及当前温度。
 连接I2C和电源，剩余的XDA,XCL,ADO,INT引脚不用连接。
-![alt text](image-2.png)
+![alt text](./image-2.png)
 对于陀螺仪：令芯片表面(有文字的一面)朝上，将其表面文字转至正向自己，以芯片内部中心为原点，水平向右的为X轴正方向，水平指向外侧的为Y轴正方向，竖直向上的为Z轴正方向。
 ```c
 #include<Wire.h>
@@ -710,19 +710,19 @@ XIAO ESP32S3
 ● XIAO 扩展板的中文文档：https://wiki.seeedstudio.com/cn/Seeeduino-XIAO-Expansion-Board/  
 
 ## 前言
-![alt text](2e31c4707e1958165df4a51b0f54a9e.jpg)
-![Grove接口](12c51081ff0f7bafd66367df2b4f52a.jpg)
+![alt text](./2e31c4707e1958165df4a51b0f54a9e.jpg)
+![Grove接口](./12c51081ff0f7bafd66367df2b4f52a.jpg)
 ## Blink
 
 
 ## 用按钮开关 LED 
-![三种程序结构](ee380c2f80843aa335a4c6b04a79821.jpg)  
+![三种程序结构](./ee380c2f80843aa335a4c6b04a79821.jpg)  
 ●  XIAO 扩展板按钮控制 LED 亮灭程序：https://create.arduino.cc/editor/mouseart/533ddffc-b61f-43c9-8941-acd55144b348/preview   
 ●  XIAO 扩展板按钮控制 XIAO ESP32C3 外接 LED 程序：https://create.arduino.cc/editor/mouseart/fcf8cdb0-15ce-454e-a848-27ad3686bec9/preview  
 
 ## XIAO 摩尔斯电码发报机
-![alt text](1edb15ea8e5d49ffb2cd9f2e79f2330.jpg)
-![alt text](1bc99333836d8300bf3edd7f9401f7e.jpg)
+![alt text](./1edb15ea8e5d49ffb2cd9f2e79f2330.jpg)
+![alt text](./1bc99333836d8300bf3edd7f9401f7e.jpg)
 ● 摩尔斯电码自动 SOS 发报程序： https://create.arduino.cc/editor/mouseart/8b76db9b-63c4-4f02-8b6c-8c748c2b1cb2/preview  
 ● 摩尔斯电码按钮手动发报程序： https://create.arduino.cc/editor/mouseart/1f5e1e90-83ec-4975-8419-b85af587f8dc/preview  
 ● 蜂鸣器播放生日歌：https://create.arduino.cc/editor/mouseart/35afd569-ba7a-4c2d-b9c6-cde39421b2e9/preview  
@@ -730,7 +730,7 @@ XIAO ESP32S3
 https://docs.arduino.cc/built-in-examples/digital/toneMelody/  
 
 ## 用串口监视器监测旋钮
-![串口绘图仪](image-34.png)  
+![串口绘图仪](./image-34.png)  
 ● 按钮状态串口监视器程序： https://create.arduino.cc/editor/mouseart/71492389-b76c-4c94-b42c-f7c9b41e7c84/preview   
 ● 旋钮数值串口监视器程序： https://create.arduino.cc/editor/mouseart/e593a0fa-be3f-40aa-b769-fbb0581e4b44/preview  
 
@@ -740,9 +740,9 @@ https://docs.arduino.cc/built-in-examples/digital/toneMelody/
 ● 拓展练习程序链接：https://create.arduino.cc/editor/mouseart/5e26edcb-d328-4646-9448-f0dd14e35406/preview  
 
 ## OLED 显示屏上手
-![alt text](bb6ce64839f0919937c8fd76be8e98f.jpg)  
-![alt text](image-35.png)  
-![alt text](db98f4371a4fffe56b5a6ce8356b0df.jpg)
+![alt text](./bb6ce64839f0919937c8fd76be8e98f.jpg)  
+![alt text](./image-35.png)  
+![alt text](./db98f4371a4fffe56b5a6ce8356b0df.jpg)
 
 
 1. OLED 显示屏文档：https://wiki.seeedstudio.com/CN/XIAO_RP2040_OLED_Display/  
@@ -753,21 +753,21 @@ https://docs.arduino.cc/built-in-examples/digital/toneMelody/
 7. 在转换 PNG 到 XBM 格式的在线工具 https://cn.cloud-converter.com/png-to-xbm  
 
 ## 产品原型设计
-![alt text](image-36.png)  
-![alt text](image-37.png)  
-![alt text](image-38.png)  
-![alt text](image-39.png)  
+![alt text](./image-36.png)  
+![alt text](./image-37.png)  
+![alt text](./image-38.png)  
+![alt text](./image-39.png)  
 ## 智能温湿度仪
-![alt text](image-40.png)
-![alt text](image-41.png)  
+![alt text](./image-40.png)
+![alt text](./image-41.png)  
 
 ## 基于光传感器的惊喜礼盒
-![alt text](image-42.png)  
-![alt text](image-45.png)  
+![alt text](./image-42.png)  
+![alt text](./image-45.png)  
 光照强度增加，电阻值减小
-![光电传感器或光电探测器](image-43.png)
+![光电传感器或光电探测器](./image-43.png)
 收到光线会产生电流，光照越强，产生的电流越大。（响应特别快）  
-![alt text](image-44.png)
+![alt text](./image-44.png)
 与光电二极管相比，晶体管具有灵敏度更高和增益，但响应速度相对较慢。  
 ● Grove 光传感器的 Wiki 文档：https://wiki.seeedstudio.com/Grove-Light_Sensor/  
 ● Adafruit_NeoPixel库: https://github.com/adafruit/Adafruit_NeoPixel  
@@ -776,7 +776,7 @@ https://docs.arduino.cc/built-in-examples/digital/toneMelody/
 ● 完整的惊喜礼盒程序: https://create.arduino.cc/editor/mouseart/58e1bf39-d9d5-498d-8995-bd12c8afe17a/preview  
 
 ## 三轴加速度计的律动炫舞
-![alt text](image-46.png)
+![alt text](./image-46.png)
 
 Adafruit_NeoPixel库: https://github.com/adafruit/Adafruit_NeoPixel  
 Seeed_Arduino_LIS3DHTR 库文件地址： https://github.com/Seeed-Studio/Seeed_Arduino_LIS3DHTR  
@@ -803,18 +803,18 @@ PCF8563-Arduino-Library:
 ● 超声波空气琴外壳设计图纸: https://files.seeedstudio.com/wiki/XIAO-Kit/XIAO_Air_Piano.dxf  
 
 ## 用 XIAO ESP32C3 实现 Wi-Fi 连接和应用
-![alt text](image-47.png)
+![alt text](./image-47.png)
 Ping工作在网络层，使用ICMP协议，可以用于检测网络连接状态和发现问题。并不传输数据，只是帮忙确认  
 GET请求：获取数据
-![alt text](image-49.png)
-![alt text](image-50.png)
-![alt text](image-48.png)
-![alt text](image-51.png)
+![alt text](./image-49.png)
+![alt text](./image-50.png)
+![alt text](./image-48.png)
+![alt text](./image-51.png)
 POST请求：发送数据
-![alt text](image-52.png)
+![alt text](./image-52.png)
 
 ## XIAO ESP32C3 用 MQTT 实现遥测与命令
-![alt text](image-53.png)  
+![alt text](./image-53.png)  
 公共MQTT服务器：
 ```
 test.mosquitto.org  
@@ -833,18 +833,18 @@ https://create.arduino.cc/editor/mouseart/751bfd5e-24d8-4ba0-856e-7f9e1e0e8d49/p
 需要精确控制的设备，需要实现一个简单的命令队列，待网络恢复后按顺序执行未完成的命令  
 
 ## 认识边缘人工智能
-![alt text](image-54.png)  
-![alt text](image-55.png)  
+![alt text](./image-54.png)  
+![alt text](./image-55.png)  
 
 ## 用 XIAO 实现异常检测和运动分类
-![alt text](image-56.png)  
-![alt text](image-57.png)  
-![alt text](image-58.png)  
-![alt text](image-59.png)  
+![alt text](./image-56.png)  
+![alt text](./image-57.png)  
+![alt text](./image-58.png)  
+![alt text](./image-59.png)  
 
 B站U主无限理论派的如何快速理解离散傅立叶变换和FFT
 ## 用 XIAO 实现语音关键词识别
-![alt text](image-60.png)
+![alt text](./image-60.png)
 自动划分数据集
 选择Data explorer,如果不同类别的数据点明显分开，意味着模型能够有效的区分这些类别
 
@@ -852,4 +852,4 @@ B站U主无限理论派的如何快速理解离散傅立叶变换和FFT
 https://github.com/Seeed-Studio/Seeed_Arduino_FreeRTOS  
 
 现在，可以将Seeed_Arduino_FreeRTOS库安装到Arduino IDE中。打开Arduino IDE，点击 sketch -> Include Library -> Add .ZIP Library, 选择刚刚下载的 Seeed_Arduino_FreeRTOS 文件。  
-![alt text](image-61.png)  
+![alt text](./image-61.png)  

@@ -8,29 +8,29 @@
 ## 四通道：SK6812、P9412
 ## 高辉
 ### TM2918 三通道
-![alt text](image-12.png)  
-![alt text](image-13.png)  
-![alt text](image-14.png)  
+![alt text](./image-12.png)  
+![alt text](./image-13.png)  
+![alt text](./image-14.png)  
 ### SM16705PD 五通道
-![alt text](image-10.png)
-![alt text](image-11.png)
+![alt text](./image-10.png)
+![alt text](./image-11.png)
 ### SM16803PB 三通道
-![alt text](image-15.png)  
-![alt text](image-16.png)  
+![alt text](./image-15.png)  
+![alt text](./image-16.png)  
 # 归一码
 800kHz → 1bit = 1.25µs
 0码:  T0L ≈ 0.4µs
 1码:  T1L ≈ 0.8µs
 ## 三通道：TM1913
-![alt text](image-7.png)
+![alt text](./image-7.png)
 ## 三通道：TM1914（双线备份，一帧含有48bit头）
-![alt text](image-5.png)
-![alt text](image-6.png)  
+![alt text](./image-5.png)
+![alt text](./image-6.png)  
 ## 四通道：P9414
 无TM1814前面的C1、C2头
 ## 四通道：TM1814
-![alt text](image-4.png)  
-![alt text](image-3.png)  
+![alt text](./image-4.png)  
+![alt text](./image-3.png)  
 # 双线
 800KHz
 CLK 上升沿被采样
@@ -40,21 +40,21 @@ CLK 上升沿被采样
 24bit（仅 RGB 各 8bit）
 仅连续 LED 帧 + 时钟低电平复位（发完所有 LED 后，时钟线保持低电平≥500μs 触发复位）
 颜色顺序RGB
-![alt text](image-1.png)
+![alt text](./image-1.png)
 ## LPD8803/8806
 一颗IC控两个灯珠24bit+24bit
 48bit（固定头1bit RGB 各 7bit）
 起始帧（≥32个"0"）+ （24bit+24bit）+ 补位（每颗芯片1个"0"）如果要驱动1200颗灯珠就是发600个0即数据线为低的情况下时钟线600次上升沿
 颜色顺序BRG
-![alt text](image-2.png)
+![alt text](./image-2.png)
 ## LPD6803
 一颗 IC 控一个灯珠 16bit，16bit（起始位 1bit+RGB 各 5bit），起始帧（固定 32 个 "0"）+（16bit× 灯珠总数）+ 补位（每颗灯珠 1 个 "0"，即驱动 N 颗灯珠发 N 个 0，数据线为低时时钟线 N 次上升沿）  
-![alt text](image-9.png)  
+![alt text](./image-9.png)  
 ## APA102、SK9822、P9413 
 单 LED 数据长度	32bit（含 3bit 起始码固定为111 + 5bit 亮度）
 有 Start Frame（32 个 0）+LED 帧 + End Frame（32 个 1）
 颜色顺序BGR
-![alt text](image.png)
+![alt text](./image.png)
 ## P9813
 单 LED 数据长度	： 
 [2bit标志位(固定11)] + [2bit B7'/B6'] + [2bit G7'/G6'] + [2bit R7'/R6'] + [8bit B] + [8bit G] + [8bit R]    
@@ -62,7 +62,7 @@ CLK 上升沿被采样
 数据帧格式： 
 Start Frame(32个0) + LED1数据 + LED2数据 + ... + LEDn数据  
 颜色顺序BGR  
-![alt text](image-8.png)  
+![alt text](./image-8.png)  
 
 # DMX512
 250KHz
@@ -72,7 +72,7 @@ Start Frame(32个0) + LED1数据 + LED2数据 + ... + LEDn数据
 PWM效果很少，只有五种：七彩跳变\七彩呼吸\七彩闪烁\七彩心跳\七彩渐变\。其中呼吸\闪烁\心跳可以加第四、第五通道也就是CW、WW。单色呼吸有红色、绿色、蓝色、黄色、青色、紫色、白色。
 # 线材
 线序（自箭头往下）：黑绿红蓝  
-![alt text](lQDPJw96hDd7B7PNAyDNAyCw5bY0GJu_lx8JO3VfzrNZAA_800_800.jpg)  
+![alt text](./lQDPJw96hDd7B7PNAyDNAyCw5bY0GJu_lx8JO3VfzrNZAA_800_800.jpg)  
 其实是给PWM用的，黑色是共阴，接着是GRB顺序。  
 
 VCC黑 R红 G绿 B蓝 WW黄 W白
@@ -217,9 +217,9 @@ HI、GS、HM品牌无PI写码
 0x00（起始字段）→ W高电平 → 0xAA、0xF0、0x34、0x55、0xAC、0xC0、0x80、0x40（第1颗IC）→ W高电平 → 0xAA、0xF0、0x34、0x55、0xAC、0xC0、0x80、0x43（第2颗IC）→ W高电平 → ……（后续芯片按格式延续）
 
 ### 样品时序
-![alt text](image-18.png)  
+![alt text](./image-18.png)  
 每隔20ms发了4遍4096个通道的0  
-![alt text](image-17.png)  
+![alt text](./image-17.png)  
 高电平维持520ms后转低电平维持2s  
 发首包，接着发完后高电平维持1s后转低电平维持2s后发次包，发完后一直高电平。  
 
@@ -1910,7 +1910,7 @@ TM512AD写地址（8字节）
 按灯数->保留
 
 基本和上述GS8523/GS8524/GS8526相同，差异点为支持12位地址（4092）以及支持重复写址  
-![alt text](image-19.png)  
+![alt text](./image-19.png)  
 
 | 写地址 |  |     |    |  |      |        |        |        |
 |-------|----|--------|-------|-----|---------|-------|-----------|-----------|
@@ -1992,7 +1992,7 @@ TM512AD写地址（8字节）
 
 按通道->删除
 按灯数->保留
-![alt text](image-20.png)
+![alt text](./image-20.png)
 | 写地址 |  |     |    |  |      |        |        |        |
 |-------|----|--------|-------|-----|---------|-------|-----------|-----------|
 | DATA1 | B07 | B06    | B05   | B04 | B03     | B02       | B01       | B00       |

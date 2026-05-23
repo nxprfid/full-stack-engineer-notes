@@ -65,4 +65,4 @@ FreeRTOS，RT-Thread，uCOS-III，lwIP，μITRON，等RTOS的一些笔记。
 - [Skills](AI_note/Skills.md)
 - [Claude Code](AI_note/Claude%20Code.md)
 # 开源许可
-![alt text](image-1.png)
+![alt text](./image-1.png)

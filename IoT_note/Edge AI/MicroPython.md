@@ -11,19 +11,19 @@
 
 如果连接后出现下图错误提示，那么请检查设备管理器中串口驱动是否安装
 成功以及开发板的串口号是否选对。
-![alt text](image-20.png)  
+![alt text](./image-20.png)  
 驱动正常以及串口号选对的话那么就是pyClock里面有出厂程序代码在跑阻
 塞了IO，这时候可以按一下 运行—中断执行 打断程序。
-![alt text](image-21.png)  
+![alt text](./image-21.png)  
 或者直接断电再上电复位一下开发板（pyClock没有引出复位键），然后按“停
 止/重启后端进程”按钮，即可出现REPL。
-![alt text](image-22.png)
+![alt text](./image-22.png)
 REPL 终端常用键盘按键： 
 Ctrl + C : 打断正在运行的程序（特别是含While True: 的代码）； 
 Ctrl + D : 软件复位开发板。 
 也可以使用thonny菜单栏工具实现打断或软件复位功能： 
-![alt text](image-23.png)
-![alt text](image-24.png)
+![alt text](./image-23.png)
+![alt text](./image-24.png)
 Micropython 上电默认先运行名字为 boot.py 文件，然后在运行 main.py 文
 件，如果没有boot.py那么直接运行main.py。 
 boot.py: 一般用于配置初始化参数（可以不需要）； 
@@ -251,7 +251,7 @@ WIFI_Connect()
 所以，socket的出现只是可以更方便的使用TCP/IP协议栈而已，简单理解就
 是其对TCP/IP进行了抽象，形成了几个最基本的函数接口。比如create，listen，
 accept，connect，read 和write 等等。以下是通讯流程：
-![alt text](image-25.png)
+![alt text](./image-25.png)
 ```python
 #导入相关模块
 import network,usocket,time

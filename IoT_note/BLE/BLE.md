@@ -13,7 +13,7 @@
 
 ### 属性
 属性实际上是一段数据。每个蓝牙设备都用于提供服务，而服务是数据的集合，这个集合可以称为数据库，数据库中的每一条记录就是一个属性（Attribute）。因此，这里可以将属性理解为数据条目。您可以将蓝牙设备想象成一张表格，表格中的每一行就是一个属性。  
-![alt text](image.png)  
+![alt text](./image.png)  
 - Attribute Handle：属性句柄  2 octets：2 个八位组（即 2 字节 ，1 octet = 1 字节 ）    
 - Attribute Type：属性类型  2 or 16 octets：2 或 16 个八位组（2 或 16 字节 ）  
 - Attribute Value：属性值  variable length (0 to 512 octets)：可变长度（0 到 512 个八位组 ，即 0 到 512 字节 ）  
@@ -51,11 +51,11 @@ ATT 命令正式名称为 ATT PDU（协议数据单元，Protocol Data Unit）�
 服务（Service）和特性（Characteristic）是在 GATT 层中定义的。服务端提供服务，服务是数据，而数据是属性。服务和特性是数据的逻辑表示，或者说用户可以看到的数据最终会转化为服务和特性。
 
 让我们从移动端的角度看看服务和特性是什么样子。nRF Connect 是一个应用程序，它可以非常直观地展示每个数据包的样子。
-![alt text](image-2.png)  
+![alt text](./image-2.png)  
 如您所见，在蓝牙规范中，每个特定的蓝牙应用程序由多个服务组成，每个服务由多个特性组成。一个特性由 UUID、属性（Properties）和值（Value）组成。  
-![alt text](image-34.png)  
+![alt text](./image-34.png)  
 属性用于描述对特性进行操作的类型和权限，例如是否支持读取、写入、通知等。这类似于 ATT PDU 中包含的四种类别。
-![alt text](image-1.png)
+![alt text](./image-1.png)
 ### UUID
 每个服务、特性和描述符都有一个 UUID（通用唯一标识符，Universally Unique Identifier）。UUID 是一个唯一的 128 位（16 字节）数字。例如：
 
@@ -63,55 +63,55 @@ ATT 命令正式名称为 ATT PDU（协议数据单元，Protocol Data Unit）�
 
 对于所有类型、服务和由 [SIG（蓝牙特别兴趣小组）](https://www.bluetooth.com/specifications/assigned-numbers/) 指定的配置文件，都有缩短的 UUID。但如果您的应用程序需要自己的 UUID，可以使用此 [UUID 生成器网站](https://www.uuidgenerator.net/) 来生成。
 
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
-![alt text](image-7.png)
-![alt text](image-8.png)
-![alt text](image-9.png)
-![alt text](image-10.png)
-![alt text](image-11.png)
-![alt text](image-12.png)
-![alt text](image-13.png)
-![alt text](image-14.png)
-![alt text](image-15.png)
-![alt text](image-16.png)
-![alt text](image-17.png)
-![alt text](image-18.png)
-![alt text](image-19.png)
-![alt text](image-20.png)
-![alt text](image-21.png)
-![alt text](image-22.png)
-![alt text](image-23.png)
-![alt text](image-24.png)
-![alt text](image-25.png)
-![alt text](image-26.png)
-![alt text](image-27.png)
-![alt text](image-28.png)
-![alt text](image-29.png)
-![alt text](image-30.png)
-![alt text](image-31.png)
-![alt text](image-32.png)
-![alt text](image-33.png)
+![alt text](./image-3.png)
+![alt text](./image-4.png)
+![alt text](./image-5.png)
+![alt text](./image-6.png)
+![alt text](./image-7.png)
+![alt text](./image-8.png)
+![alt text](./image-9.png)
+![alt text](./image-10.png)
+![alt text](./image-11.png)
+![alt text](./image-12.png)
+![alt text](./image-13.png)
+![alt text](./image-14.png)
+![alt text](./image-15.png)
+![alt text](./image-16.png)
+![alt text](./image-17.png)
+![alt text](./image-18.png)
+![alt text](./image-19.png)
+![alt text](./image-20.png)
+![alt text](./image-21.png)
+![alt text](./image-22.png)
+![alt text](./image-23.png)
+![alt text](./image-24.png)
+![alt text](./image-25.png)
+![alt text](./image-26.png)
+![alt text](./image-27.png)
+![alt text](./image-28.png)
+![alt text](./image-29.png)
+![alt text](./image-30.png)
+![alt text](./image-31.png)
+![alt text](./image-32.png)
+![alt text](./image-33.png)
 
 ## nRF Connect APP蓝牙标识
 Appearance 是一个 16 位的整数，用于表示设备的外观。它可以用于在 nRF Connect 等应用程序中显示设备的图标。  
-![alt text](image-78.png)
+![alt text](./image-78.png)
 iBeacon 是一种蓝牙低功耗（BLE）广播协议，用于在环境中定位和识别设备。它由苹果公司开发，并在 iOS 设备上得到了广泛的支持。  
-![alt text](image-80.png)  
+![alt text](./image-80.png)  
 Mesh Proxy:1827表示未配网   
-![alt text](image-83.png)
+![alt text](./image-83.png)
 Mesh Proxy:1828表示已配网    
-![alt text](image-84.png)
-![alt text](image-79.png)
+![alt text](./image-84.png)
+![alt text](./image-79.png)
 Mesh Beacon ：Mesh配网者发出  
-![alt text](image-82.png)
+![alt text](./image-82.png)
 BLE图标  
-![alt text](image-81.png)  
-![alt text](ad8892693ba80eba6847be330402fc5f.jpg)
+![alt text](./image-81.png)  
+![alt text](./ad8892693ba80eba6847be330402fc5f.jpg)
 # BTHome
-![alt text](image-35.png)  
+![alt text](./image-35.png)  
 BTHome 是一个开放标准，用于通过蓝牙低功耗（BLE）广播传感器数据和按钮按压信息。它设计为节能、高效、灵活且安全。BTHome 被流行的家庭自动化平台（如 Home Assistant）原生支持。  
 [官网](https://bthome.io/)  
 
@@ -136,11 +136,11 @@ BTHome 是一种功能强大的标准，用于通过 BLE 广播传感器数据�
 [蓝牙mesh配网-CSDN](https://blog.csdn.net/LONGSHEN1/article/details/134888493)
 ## BLE Mesh 的核心概念
 BLE Mesh（Bluetooth Low Energy Mesh）是一种基于低功耗蓝牙（Bluetooth Low Energy, BLE）的网状网络通信协议。它允许多个支持 BLE 的设备组成一个分布式网络，通过设备之间的相互中继，实现大范围的、可靠的设备间通信。是一种多对多的网络拓扑结构，网络中的设备节点通过「发布 / 订阅机制」收发消息。  
-![alt text](image-36.png)
+![alt text](./image-36.png)
 蓝牙Mesh协议建立在BLE的物理层和链路层之上， 也就是说它可以和BLE 4.0及以上版本的蓝牙设备通信。注意这并不意味着它支持所有BLE最新的特性, 譬如低功耗蓝牙的LE Coded PHY及2M PHY, 在现有的Bluetooth Mesh规范中并不支持。  
 ### 系统架构
 蓝牙mesh的协议栈是层级结构。
-![alt text](image-70.png)  
+![alt text](./image-70.png)  
 - 最低层就是BLE层， 就像一开始介绍的蓝牙mesh建立在BLE物理层和链路层之上，采用Advertising和Connection两种数据传输方式。  
 - 承载层（bearer）：承载层定义了如何使用底层LE栈堆传输PDU。目前定义了两种承载，Advertising Bearer和GATT Bearer。  
 - 网络层（network）：网络层定义了各种消息地址类型和网络消息格式。中继和代理行为由网络层实现。  
@@ -150,15 +150,15 @@ BLE Mesh（Bluetooth Low Energy Mesh）是一种基于低功耗蓝牙（Bluetoot
 - 基础模型（foundation models）：基础模型层负责实现那些与MESH网络的配置和管理有关的模型。  
 - 模型（models）：模型层关注模型的实现，因此也关注行为、消息、状态等的实现。  
 ### BLE 物理层
-![alt text](image-73.png)  
+![alt text](./image-73.png)  
 BLE工作在2.4GHz ISM频段2402MHz-2480MHz。BLE定义了40个信道， 每个信道2MHz宽度。 其中有3个广播信道， 图中绿色标示的37， 38， 39信道。 它们被用于设备的发现， 广播等功能。 这三个信道所处的频段正好避开了和同样工作在2.4GHz频段的WiFi最常用的第1，6， 11信道 减少正常通信的干扰。其他37个信道用做BLE建立连接后的双向数据传输，叫做数据信道。在打开蓝牙的自适用跳频功能后，设备将会自动侦测干扰来选择合适的工作信道。这两种信道类型正是对应于BLE的两种主要通讯模式Advertising 和 Connection。蓝牙Mesh在网络内部节点间的通信只采用了Advertising的方式。（即广播）  
 ### BLE 链路层
-![alt text](image-43.png)  
+![alt text](./image-43.png)  
 Advertising是指蓝牙广播设备在3个广播信道里以特定的时间间隔发送消息, 同时蓝牙扫描设备以特定时间长度的的扫描窗口和间隔, 依次扫描3个广播信道来接收广播设备发送过来的信息. 图中三个不同颜色的柱状图表示37,38,39三个广播信道. 广播设备连续在三个信道里发送消息, 间隔为20ms. 而扫描设备的扫描窗口时间为30ms, 扫描间隔为40ms, 一次扫描一个信道. 蓝牙Mesh设备在网络内部通信时, 以尽可能接近100%的占空比来扫描广播信道. 也就是说扫描窗口时间等于扫描间隔, 以确保信息不会丢失. 蓝牙Mesh设备在发送特定信息的时候并不会像普通BLE广播要等一个广播间隔, 而是延迟一小段随机时间就立即发送出去。  
 
 ### 蓝牙Mesh发布/订阅系统
 引入组(Group)的概念来实现松耦合(independent). 我们把有关联的开关和灯放在同一个组, 并取个易懂的名称, 如厨房和花园. 开关发布消息到组地址, 而灯则订阅来自组地址的消息. 组成发布/订阅系统。  
-![alt text](image-44.png)  
+![alt text](./image-44.png)  
 开关记录它要发布组地址列表, 灯则记录它的订阅组地址列表. 如果要更换灯泡, 只需要重新设置新灯泡里的订阅列表即可, 不用修改开关那边发布列表的设置. 开关只需要发布消息到厨房或花园的组播地址, 无需关心订阅者的情况。  
 ### 管理型网络泛洪
 蓝牙Mesh网络使得设备可以在广阔的区域中安装, 同时每个设备之间保持通信. 消息可以在在无线覆盖范围之内的设备之间直接通信, 也可以通过中继设备和无线覆盖范围之外的设备通信. 消息可以被多次中继, 从而实现非常广阔的消息传输. 蓝牙Mesh采用的是管理型网络泛洪方式来进行网络信息的传输, 即网络中所有具备中继功能的设备都会转发收到的消息. 优点是无需特定的路由设备, 确保消息多路径传输无障碍的到达目的设备 缺点是可能会对网络消息泛滥造成通信延迟. 所以蓝牙Mesh采用以下措施来优化泛洪通信来减少不必要的冗余信息传输  
@@ -199,14 +199,14 @@ iv index 更新过程分为 normal 状态和 active 状态。因为一个网络�
 
 ### 网络拓扑
 图中所示的蓝牙Mesh网络拓扑. 针对使能了不同特性的节点, 分别称呼为低功耗节点, 好友节点, 中继节点。  
-![alt text](image-45.png)  
+![alt text](./image-45.png)  
 节点之间的连线表示无线信号覆盖范围内的直接连接, 对无线信号覆盖范围外的节点之间的通信需要经过中继节点. 如图中的Q,R,S进行消息转发到达目的节点. 图中有3个好友节点, 其中节点P和O分别有3个和2个低功耗节点组合, 好友节点N没有低功耗节点组合. 节点T是BLE设备, 通过GATT Bearer方式和代理中继节点S进行通信, 节点S必须转发所有和节点T的消息传输. 比如BLE节点T要发送消息给低功耗节点L. 首先节点T通过GATT Bearer在数据信道发消息给节点S, 然后节点S通过Advertising Bearer方式在广播信道转发消息. 节点H,R,O,N都在其无线信号覆盖范围并接收到消息, 节点O作为低功耗节点L的好友会储存收到的消息, 在节点L从睡眠中醒来后会查询好友节点O来取得这个发送给它的消息并做相应的处理。  
 ## 基础概念和术语
 ### 设备和节点
 一个蓝牙设备(如插座)在没有加网前被称为Unprovisioned Device。帮助 BLE Mesh 设备完成配网操作的设备叫做「启动配置设备」(Provisioner)通过Provisioning蓝牙设备 完成认证, 创建网络密钥, 蓝牙设备成为未配置的蓝牙节点(Node)。  
-![alt text](image-46.png)  
+![alt text](./image-46.png)  
 未配置好的节点是不能做任何事情的, Provisioner再进行节点配置 绑定应用层和网络层密钥, 设置模型的发布/订阅等. 完成上述动作后蓝牙设备(Device)成为蓝牙Mesh网络里的功能节点(Node)。  
-![alt text](image-47.png)  
+![alt text](./image-47.png)  
 
 ### Mesh密钥
 Mesh Profile 规范定义了两种类型的密钥：应用程序密钥（AppKey）和网络密钥（NetKey）。
@@ -230,7 +230,7 @@ AppKeys 用于上层传输层的通信加密，只有AppKey保持一致，节点
 
 
 ### 2. AppKey（应用密钥，Application Key）
-![alt text](image-56.png)
+![alt text](./image-56.png)
 给应用层其他各种“功能模型”用的，相当于给模型添加"登录密码"，客户端模型和服务端模型的"登录密码"相同了，才能进行连接操作，模型可以有多个密钥，用来区分一些特定的需求。  
 - **作用范围**：应用层，用于特定功能模型（Model）之间的通信。
 - **核心功能**：
@@ -250,12 +250,12 @@ AppKeys 用于上层传输层的通信加密，只有AppKey保持一致，节点
 ### 节点特性 元素和地址
 未配网 BLE Mesh 设备经过配网操作后，就成为了 BLE Mesh 网络中的设备节点。设备节点有一个或多个特性：代理节点、低功耗节点、中继节点、朋友节点、普通节点。  
 一个节点可以包含1个或多个元素(Elements), 比如一个双孔插座板, 每个插孔就是一个元素。  
-![alt text](image-48.png)  
+![alt text](./image-48.png)  
 - 每个元素在加网的过程会被分配唯一的单播地址(Unicast Address), 地址范围是0x0001-0x7FFF。  
 - 还有一个组播地址(Group Address)就是前面讲到的发布/订阅机制里的厨房, 花园等。元素订阅特定的组播地址, 就会收到发布者发送到此地址的消息。分为动态和固定地址，动态的用来做一般的“组播”，固定地址用来做一些协议规定的功能。  
 ● 动态组播地址范围0xC000-0xFEFF。  
 ● 固定地址  
-![alt text](image-57.png)
+![alt text](./image-57.png)
   ○ 保留：0xFF00-0xFFFB  
   ○ 发送到启用代理（proxy）功能的所有节点： 0xFFFC  
   ○ 发送到启用friend功能的所有节点：0xFFFD  
@@ -264,29 +264,29 @@ AppKeys 用于上层传输层的通信加密，只有AppKey保持一致，节点
 - 还有虚拟地址(Virtual Address), 每一个虚拟地址逻辑上对应一个128-bit的Label UUID. 通过对该Label UUID作哈希运算得出虚拟地址的低14位数值. 虚拟地址的范围为0x8000-0xBFFF。  
 
 总结：蓝牙 Mesh 用 16 位二进制 区分地址类型，前 2 位是 “类型标识”：  
-![alt text](image-58.png)  
+![alt text](./image-58.png)  
 00 → 未分配  
 01 → 单播（后 14 位自定义）  
 10 → 虚拟（后 14 位由算法生成）  
 11 → 组播（后 14 位区分不同组）  
 ### 模型
-![alt text](image-51.png)
+![alt text](./image-51.png)
 设备节点由多个元素构成，每个元素包含了多个模型，而每个模型定义了节点的基本功能，比如节点所需要的状态、控制状态的消息以及处理消息所产生的动作等。节点功能的实现是基于模型的，模型可分为 SIG 模型和自定义模型，前者由 SIG 定义，而后者由开发者定义。模型也可基于消息的发送 / 接收方分为客户端模型与服务端模型。  
 模型(Models)顾名思义就是定义了基本功能的最小单位模型, 比如设备的开关 灯光亮度调节等 模型包含了三个部分:  
-![alt text](image-49.png)  
+![alt text](./image-49.png)  
 - 状态(State)表明一个元素的当前状态. 比如灯泡中包含开关和亮度的状态值. 不同状态可以设置为绑定关系(Bound State). 比如灯泡亮度为非零值时, 开关状态应该是开. 而灯泡亮度调整到0的时候, 其开关状态也应该被设置为关闭.  
 - 消息(Message)有SET/GET/STATUS三种类型, 分别用来设置/请求/发送状态值。  
 - 行为(Behavior)定义了模型在接收到消息后所作的动作行为. 比如开关模型定义的行为就是在收到了SET的消息后, On/Off的状态就要变为SET消息里给定的值. 如果收到了GET消息那么就把On/Off的状态通过STATUS消息传给询问方.  
 
 蓝牙Mesh的消息通信是基于服务器/客户端的架构, 对外提供状态访问接口的叫做服务器(server), 而来访问服务器端状态的叫做客户端(client). 模型分为三种:
-![alt text](image-52.png)
+![alt text](./image-52.png)
 - 服务器模型(Server model): 定义了一个包括状态,绑定状态和消息的集合. 比如灯包含有通用开关服务器模型(Generic OnOff Server) 和灯亮度服务器模型(Light Lightness Server).
 - 客户端模型(Client model): 定义了一群消息用来请求改变服务器端的状态. 客户端模型不含有状态(State)。比如开关中含有通用开关客户端模型(Generic OnOff Client)以及灯亮度客户端模型(Light Lightness Client).
 - 控制模型(Control model): 可以包含上述两种模型的功能
 目前SIG定义好的模型包括Generic, Sensors, Time and Scenes, Lighting. 客户产品如果不在列表的话可以定义Vendor Model来实现相应的功能.
 
 为了方便理解, 图中是灯和开关的模型简化示意图  
-![alt text](image-50.png)  
+![alt text](./image-50.png)  
 左边灯的元素中含有通用开关(Generic OnOff)和灯的亮度(Light Lightness)服务器模型, 分别包含通用开关(Generic OnOff)和灯亮度(Light Lightness Actual)状态. 两个状态是绑定状态关系.  
 
 右边开关设备元素中包含了通用开关(Generic OnOff)和灯亮度(Light Lightness)客户端模型. 通过消息来获知设置服务器端元素的状态. 客户端模型不含有状态.
@@ -298,7 +298,7 @@ AppKeys 用于上层传输层的通信加密，只有AppKey保持一致，节点
 例如onoff这种，sig mesh协议里规定了的通用型模型，各个厂家设备之间可以互相通用！
 厂家模型vendor_model
 就是自定义模型，用来补充通用模型的功能的，厂家可以通过这个模型，来建立属于自己的通信方式！例如，透传！  
-![alt text](image-53.png)  
+![alt text](./image-53.png)  
 
 ### Mesh 地址
 BLE Mesh 网络中的设备节点之间想要进行消息通信，就需要为每个节点分配地址用于消息的收发。Mesh 地址主要分为单播地址、组播地址、虚拟地址三种。
@@ -321,24 +321,24 @@ Mesh 消息是 BLE Mesh 网络中数据传输的基本单位，由操作码（op
 如果想要不是 BLE Mesh 设备的其他设备（例如手机）也能成为 BLE Mesh 网络中的一员，可以通过与代理设备节点进行 GATT 连接，借助代理设备实现在 BLE Mesh 网络中收发各种消息。
 ### 单播功能
 单播(unicast)——端对端的发送信息给节点（元素）
-![alt text](image-54.png)
+![alt text](./image-54.png)
 上图，节点A直接通过指定发送地址0x0001，发送开关命令到0x0001的开关模型
 #### 发布，订阅功能（Publish , Subscribe）
 发布(Publish)——往元素"主动"发送信息！发布信息前，需要调用API配置"目标地址"。  
 订阅(Subscribe)——"被动"的处理元素接收到的信息！订阅信息前，需要调用API去指定接收"目标地址"。
-![alt text](image-55.png)  
+![alt text](./image-55.png)  
 上图，节点B的开关模型“订阅”了地址“0xCFFF”的信息响应，当节点A“发布”开关命令到地址“0XCFFF”，节点B即可收到相应的命令，并进行处理。 
 ## 配网
 Mesh Spec 规定的标准配网为 mesh 的 Provision 过程，实际设备从未配网到可以正常通信分为两个步骤：  
 1. Mesh Provision阶段  
 配网节点通过扫描到未配网的 mesh 节点设备，然后通过连接（PB-GATT）或者广播（PB-ADV）与设备通信并发起配网，配网过程会先通过 ECDH 协商生成 Public key，然后基于 Public key 将Mesh网络的密钥 Network key 下发给设备，同时协商生成设备密钥 Device key，到此设备 Provision 阶段完成。
-![alt text](image-75.png)
+![alt text](./image-75.png)
 2. Config Model阶段   
 接下来还需要通过 Network key 与 Device key 的加密将应用密钥 App key 下发给设备，同时对设备的 Model 绑定对应的应用密钥以及更新 Mesh 设备的 Network transmit 参数，到此设备的完成配网完成。后续所有的业务都可以通过这三个密钥加密完成。  
 配网者中有两种承载方式（详细可参考 Mesh Profile 1.0.1 中 5.2 章节）
-![alt text](image-76.png)  
+![alt text](./image-76.png)  
 Config阶段可省略部分数据交互流程以加快配网，如Config Composition Data Get，节点在云端已配置信息，网关可直接从云端获取，避免多余交互。Config Model App Bind也不需网关发起，节点可自行绑定。Config Model Subscription Add可在后续根据节点需求决定是否绑定分组。因此，存在一个快速配网阶段。  
-![alt text](image-77.png)  
+![alt text](./image-77.png)  
 1. PB-ADV
 配网者通过广播直接与未配网的 mesh 节点通信进行配网过程。此种方式一般适用于网关类配网者，此类配网者可以保持一致或者周期性 scan 空中的广播数据以及发送广播数据来做到与网络内节点通信。
 
@@ -347,7 +347,7 @@ Config阶段可省略部分数据交互流程以加快配网，如Config Composi
 
 
 这是蓝牙Mesh网络中**配网（Provisioning）流程**的示意图，描述一个新设备（Un-provisioned Device）如何加入Mesh网络，核心步骤如下：  
-![alt text](image-59.png)  
+![alt text](./image-59.png)  
  配网流程步骤分6个阶段，按顺序执行：  
 
 | 步骤（右侧蓝色框）          | 作用与细节                                                                 |  
@@ -360,7 +360,7 @@ Config阶段可省略部分数据交互流程以加快配网，如Config Composi
 | **Distribution of Provisioning data（分发配网数据）** | 配网者加密发送：<br> - **NetKey**（网络密钥，Mesh网络的“通行证”）<br> - **单播地址**（设备在Mesh里的唯一ID）<br> - 其他参数（如TTL、安全配置）。设备存好数据，正式成为Mesh节点！ |  
 ### 未配网设备Beacon格式
 mesh规范中定义如下： 
-![alt text](image-71.png)  
+![alt text](./image-71.png)  
 | 字段          | 长度（字节） | 注释                                                 |
 | ------------- | ------------ | ---------------------------------------------------- |
 | Beacon Type   | 1            | 未配网设备 beacon type (0x00)                         |
@@ -369,13 +369,13 @@ mesh规范中定义如下：
 | URI Hash      | 4            | 使用 URI AD 类型广播的关联 URI 的哈希（可选字段）      | 
 
 未配网设备Beacon中OOB字段的含义：
-![alt text](image-72.png)  
+![alt text](./image-72.png)  
 
 取广播数据中服务为1827的ServiceData部分，得到的就是未配网设备Beacon。
 在iOS端收到的数据长度是18字节，系统层已经将数据类型过滤。
 前16个字节就是未配网设备的Device UUID。
 后两个字节就是OOB Information。
-![alt text](image-74.png)
+![alt text](./image-74.png)
 > 注意：在手机系统中，标识一个蓝牙设备的唯一性，安卓系统使用的MAC地址，在iOS上使用的是UUID。未配网设备的Device UUID来源于广播数据，是在mesh网络中使用，并不是手机系统给分配的标识蓝牙的UUID。
 ### 连接阶段
 >配网协议使用的服务是1827。  
@@ -543,8 +543,8 @@ helper.calculateCCM(data, withKey: keys.sessionKey, nonce: keys.sessionNonce, an
 0xF94C0BCC18558B67E750187CE3EF5CD7E3A74DC8631F9018A053CCE72A599690F4  
 
 #### nRF Mesh操作步骤
-![扫描](image-60.png)  
-![识别](image-61.png)  
+![扫描](./image-60.png)  
+![识别](./image-61.png)  
 这是蓝牙Mesh配网流程中，**配网者（Provisioner，如手机APP）获取到的待配网设备（ESP32）的关键信息**，用于完成设备入网，逐字段解析：  
 
 | 字段                  | 含义 & 作用                                                                 |  
@@ -575,7 +575,7 @@ helper.calculateCCM(data, withKey: keys.sessionKey, nonce: keys.sessionNonce, an
 
 核心作用：让配网者掌握设备的“身份、网络ID、加密能力”，为安全入网做准备~
 
-![配网](image-62.png)  
+![配网](./image-62.png)  
 
 
 #### 一、配网核心流程（Provision阶段） 
@@ -629,13 +629,13 @@ helper.calculateCCM(data, withKey: keys.sessionKey, nonce: keys.sessionNonce, an
 连接成功并且发现了相应的 ESP-BLE-MESH GATT 服务
 
 获取节点的 Composition Data (获取设备支持的 Mesh 模型 / 元素)并且给该节点添加 AppKey
-![alt text](image-63.png)
+![alt text](./image-63.png)
 
 ### 配置
 当成功配网和初始配置完成后，用户可以配置节点的其余信息，例如将 AppKey 绑定至每个元素 (element) 的每个模型 (model) 中、设置模型的发布信息等。
 
 下图展示了如何将 AppKey 绑定至 Primary Element 中的 Generic OnOff Server Model 上。  
-![alt text](image-64.png)  
+![alt text](./image-64.png)  
 > 用户不需要将 AppKey 绑定至 Configuration Server Model（配置模型），因为该模型使用 DevKey 在 Upper Transport Layer 中对消息进行加密。
 
 ## 快速配网
@@ -657,7 +657,7 @@ helper.calculateCCM(data, withKey: keys.sessionKey, nonce: keys.sessionNonce, an
 > 3. 如果您的开发板没有自带指示灯，建议焊接 LED 指示灯。
 > 4. 请通过运行 `idf.py menuconfig` 检查 `Example BLE Mesh Config` 中启用的板型和 LED 引脚定义  
 
-![开发板](image-65.png)  
+![开发板](./image-65.png)  
 
 ### 烧录和监控
 
@@ -665,10 +665,10 @@ helper.calculateCCM(data, withKey: keys.sessionKey, nonce: keys.sessionNonce, an
 examples/bluetooth/esp_ble_mesh/fast_provisioning/fast_prov_server
 2. 确保 `IDF_PATH` 环境变量已根据您当前的 IDF 路径进行设置
 3. 检查工具链版本。应使用 4.1 或更新版本。  
-![检查环境](image-66.png)  
+![检查环境](./image-66.png)  
 
 4. 运行 `idf.py -p PORT flash` 编译代码并将代码烧录到设备。  
-![编译代码](image-67.png)  
+![编译代码](./image-67.png)  
 
 > 注意：
 >
@@ -681,7 +681,7 @@ examples/bluetooth/esp_ble_mesh/fast_provisioning/fast_prov_server
 
 请启动 `EspBleMesh` 应用程序，并按照以下步骤建立 BLE Mesh 网络并控制任何单个节点或所有节点。  
 
-![应用步骤](image-68.png)  
+![应用步骤](./image-68.png)  
 1. 点击左上角查看更多选项；
 2. 点击**配网**扫描附近未配网的设备；
 3. 从扫描列表中选择任何未配网的设备；
@@ -709,7 +709,7 @@ examples/bluetooth/esp_ble_mesh/fast_provisioning/fast_prov_server
 * 已配网但未转换为配网者角色的设备 - 节点
 
 #### 交互
-![交互](image-69.png)
+![交互](./image-69.png)
 1. 顶级配网者通过 GATT 载体配置第一个设备接入网络。
 2. 顶级配网者发送 `send_config_appkey_add` 消息，为该设备分配 Appkey。
 3. 顶级配网者发送 `send_fast_prov_info_set` 消息，提供必要信息，使该设备能转换为主配网者。
@@ -1331,10 +1331,10 @@ if (err != ESP_OK) {
 ## 蓝牙 Mesh 1.1 
 协议是蓝牙技术领域的重要更新，其新功能亮点包括：引入“定向转发路由”和“远程配网”机制。
 ### 定向转发路由
-![alt text](image-37.png)
-![alt text](image-38.png)
-![alt text](image-39.png)
+![alt text](./image-37.png)
+![alt text](./image-38.png)
+![alt text](./image-39.png)
 ### 远程配网
-![alt text](image-40.png)
-![alt text](image-41.png)
-![alt text](image-42.png)
+![alt text](./image-40.png)
+![alt text](./image-41.png)
+![alt text](./image-42.png)
