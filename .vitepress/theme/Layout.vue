@@ -116,9 +116,9 @@ const verifyPassword = async () => {
     <!-- layout-bottom 插槽位于页面最底部，适合放全局统计信息 -->
     <template #layout-bottom>
       <div class="footer-stats">
-        <span>👀 本站总访问量: <span id="busuanzi_value_site_pv"></span> 次</span>
+        <span>👀 本站总访问量: <span id="busuanzi_value_site_pv">--</span> 次</span>
         <span class="divider">|</span>
-        <span>👤 今日独立访客: <span id="busuanzi_value_site_uv"></span> 人</span>
+        <span>👤 今日独立访客: <span id="busuanzi_value_site_uv">--</span> 人</span>
       </div>
     </template>
   </Layout>
