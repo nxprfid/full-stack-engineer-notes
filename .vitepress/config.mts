@@ -68,6 +68,9 @@ export default defineConfig({
   title: "嵌入式开发笔记",
   description: "个人嵌入式与全栈开发学习笔记",
   ignoreDeadLinks: true, // 忽略Markdown中的死链接
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/full-stack-engineer-notes/favicon.svg' }]
+  ],
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
@@ -90,6 +93,18 @@ export default defineConfig({
     }
   },
   vite: {
-    assetsInclude: ['**/*.JPG', '**/*.JPEG', '**/*.PNG']
+    assetsInclude: ['**/*.JPG', '**/*.JPEG', '**/*.PNG'],
+    build: {
+      chunkSizeWarningLimit: 1500, // 提高警告阈值
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor'; // 将第三方依赖提取到独立 chunk
+            }
+          }
+        }
+      }
+    }
   }
 })

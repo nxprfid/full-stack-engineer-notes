@@ -12,8 +12,12 @@ function checkAndCreate(dir) {
       const originalContent = content;
       // Replace <image.png> with image.png in Markdown
       content = content.replace(/!\[(.*?)\]\(<([^/.]+[^/:]*?)>\)/g, '![$1](./$2)');
-      content = content.replace(/!\[(.*?)\]\(([^/.]+[^/:]*?)\)/g, '![$1](./$2)');
-      content = content.replace(/<img(.*?)src="([^/.]+[^/:]*?)"(.*?)>/g, '<img$1src="./$2"$3>');
+      
+      // Fix: Don't replace if it already starts with ./ or http
+      // Also be careful with parenthesis in filenames like IMG_2261(1).JPG
+      content = content.replace(/!\[(.*?)\]\((?!http|\.\/|\/)(.*?)\)/g, '![$1](./$2)');
+      content = content.replace(/<img(.*?)src="(?!http|\.\/|\/)(.*?)"(.*?)>/g, '<img$1src="./$2"$3>');
+      
       if (content !== originalContent) {
         fs.writeFileSync(fullPath, content);
       }
