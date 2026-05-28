@@ -196,7 +196,10 @@ Claude 有上下文容量限制。当快满时：
 ## 核心功能
 
 ## 命令行指令
-
+ 最大权限（无确认）命令
+ ```
+claude --dangerously-skip-permissions
+ ```
 ### 1. 系统指令
 ```bash
 # 初始化Claude Code
