@@ -1,4 +1,7 @@
-# 置顶知识
+---
+title: LVGL笔记
+---
+## 置顶知识
 LVGL中文开发手册：https://lvgl.100ask.net/master/index.html
 # LVGL移植
 ## 拉取代码
@@ -41,7 +44,7 @@ ESP-IDF中menuconfig设置
 内存区域大小一般是一个屏幕的1/4到1/6之间，建议使用`MALLOC_CAP_DMA`方式申请
 不能超过DMA的传输大小
 ```
-lv_disp_drv_t disp_drv;
+l#v_disp_drv_t disp_drv;
 
 ```
 # 代码分析

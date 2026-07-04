@@ -1,8 +1,12 @@
+---
+title: LuatOS笔记
+---
+# LuatOS笔记
 
 [LuatOS在线模拟器](https://wiki.luatos.com/_static/luatos-emulator/lua.html)
 [Lua在线REPL工具](https://wiki.luatos.com/_static/repl/index.html)
 [Lua正则在线测试工具](https://wiki.luatos.com/_static/string-match/index.html)
-# 基础语法
+## 基础语法
 字符串连接符号：`..`
 字符串前面加`#`，可以获取长度
 用`--`开头，来写一段单行注释
@@ -76,15 +80,15 @@ t={}
 next(t)
 输出nil，快速判断这个table是否为空
 ```
-# LuaTask框架
+## LuaTask框架
 当使用LuaTask框架时，需要在代码中引用`sys`库（`_G.sys=require("sys")`），并且在代码的最后一行，调用`sys.run()`以启动LuaTask框架，框架内的任务代码会在sys.run()中运行。
 
 ![alt text](./image-9.png)
 ![alt text](./image-10.png)
 ![alt text](./image-11.png)
 闭包就是返回了一个携带参数的一个函数
-# LuatOS
-## 日志
+## LuatOS
+### 日志
 ```lua
 --使用print可以打印数据
 print("这是我打印出来的东西")

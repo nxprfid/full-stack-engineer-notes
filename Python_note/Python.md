@@ -1,3 +1,6 @@
+---
+title: Python基础笔记
+---
 # Python基础
 ## 注释
 ```python
@@ -102,7 +105,7 @@ a = 'hello world'
 ```
 
 
-# 条件和循环
+## 条件和循环
 ## 条件语句
 TAB缩进或者4个空格
 ```python
@@ -130,34 +133,4 @@ func()
 a=1
 b=2
 print(a+b)
-
-```
-
-
-```python
-```
-
-```python
-```
-
-
-```python
-```
-
-
-```python
-```
-
-
-```python
-```
-
-
-```python
-```
-
-```python
-```
-
-```python
 ```

@@ -1,4 +1,9 @@
-![alt text](./image.png)  
+---
+title: 边缘AI入门实践
+---
+# 边缘AI入门实践
+
+![alt text](./image.png)
 边缘AI是将人工智能AI算法部署在边缘设备上，使其能够处理数据，进行推理和决策，而无需将数据发送到云端  
 ![alt text](./image-1.png)  
 ![alt text](./image-2.png)  
@@ -39,7 +44,7 @@ continue用于跳过当前循环的剩余部分，直接进入下一次循环
 
 glabal关键字可以在函数内部声明全局变量，使函数内部可以修改全局变量的值
 
-# 两个函数设计原则
+## 两个函数设计原则
 单一职责原则
 ![alt text](./image-17.png)  
 参数验证
@@ -52,7 +57,7 @@ Python搜索路径：
 当前目录->环境变量中指定的路径->Python标准库->第三方包
 
 
-# 列表
+## 列表
 ![alt text](./image-26.png)  
 
 ![alt text](./image-27.png)  
@@ -64,7 +69,7 @@ Python搜索路径：
 ![alt text](./image-31.png)  
 ![alt text](./image-32.png)  
 
-# 元组
+## 元组
 一经创建，不可修改
 ![alt text](./image-33.png)  
 元组有三个关键特点

@@ -1,3 +1,6 @@
+---
+title: BLE蓝牙低功耗笔记
+---
 # BLE
 蓝牙低功耗（简称 BLE）是蓝牙的一种节能变体。BLE 的主要应用是短距离传输少量数据（低带宽）。与始终开启的传统蓝牙不同，BLE 除非建立连接，否则始终处于休眠模式。  
 由于其特性，BLE 非常适合需要定期交换少量数据并运行在纽扣电池上的应用。这使得它的功耗非常低。根据使用场景，BLE 的功耗约为传统蓝牙的 1/100。    
@@ -20,7 +23,7 @@
 - Attribute Permissions：属性权限  implementation specific：特定于实现（由具体实现定义 ，不同蓝牙设备或协议栈实现可能有差异 ）  
 
 
-### 
+### GAP/GATT 层
 http://www.cnblogs.com/iini/p/8972635.html  
 GAP层（通用访问配置文件层）定义设备如何被发现和链接，主要用来广播扫描和发起连接等  
 数据传输部分都是由GATT这个配置文件规定的  
@@ -110,7 +113,7 @@ Mesh Beacon ：Mesh配网者发出
 BLE图标  
 ![alt text](./image-81.png)  
 ![alt text](./ad8892693ba80eba6847be330402fc5f.jpg)
-# BTHome
+## BTHome
 ![alt text](./image-35.png)  
 BTHome 是一个开放标准，用于通过蓝牙低功耗（BLE）广播传感器数据和按钮按压信息。它设计为节能、高效、灵活且安全。BTHome 被流行的家庭自动化平台（如 Home Assistant）原生支持。  
 [官网](https://bthome.io/)  
@@ -126,7 +129,7 @@ BTHome 是一种功能强大的标准，用于通过 BLE 广播传感器数据�
 [详细教程请看](https://wiki.seeedstudio.com/cn/XIAO_BLE_HA/#bthome)
 
 
-# BLE MESH
+## BLE MESH
 [tuya mesh](https://www.tuyaos.com/viewtopic.php?t=523)  
 [ESP-BLE-MESH](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-guides/esp-ble-mesh/ble-mesh-index.html)  
 [安信可](https://bbs.ai-thinker.com/forum.php?mod=viewthread&tid=46050&_dsign=81e07e29)  
@@ -1328,7 +1331,7 @@ if (err != ESP_OK) {
 }
 ```
 
-## 蓝牙 Mesh 1.1 
+## 蓝牙 Mesh 1.1
 协议是蓝牙技术领域的重要更新，其新功能亮点包括：引入“定向转发路由”和“远程配网”机制。
 ### 定向转发路由
 ![alt text](./image-37.png)

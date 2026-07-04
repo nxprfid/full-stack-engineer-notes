@@ -1,3 +1,6 @@
+---
+title: Claude Code使用笔记
+---
 # Claude Code
 
 | Claude指令 | 功能说明 |
@@ -17,7 +20,7 @@
 | `/plugin` | 发现新插件，管理已下载插件，新增插件生态 |
 | `/exit` | 退出 Claude Code |
 | `/status` | 环境状态 |
-| `/reset` | 彻底重置全会话上下文，干净重启|
+| `/reset` | 彻底重置全会话上下文，干净重启 |
 | `/config` | 查看当前配置 |
 | `/save` | 保存当前上下文 |
 | `/load` | 加载上下文 |
@@ -124,7 +127,7 @@ npx @qwen-code/qwen-code@latest
 ## CLAUDE.md 添加 Claude 每个会话都能看到的持久上下文
 
 
-![alt text](fcaff0d6477459880512a0c6d19fc44a.png)
+![alt text](./fcaff0d6477459880512a0c6d19fc44a.png)
 添加：
 
 - 当你需要对前端视觉进行修改的时候，去参考[text](品牌视觉规范)这个文件里的内容
@@ -180,19 +183,6 @@ Skills是基于高标准的重复工作沉淀的可复用技能包，可以持�
 
 MCP是一种用于AI模型与外部数据源和工具连接的协议标准。
 
-### 核心概念
-
-- **Host**: 发起连接的AI应用（如Claude Desktop）
-- **Client**: 嵌入在Host中的客户端组件
-- **Server**: 提供特定能力的服务端（如文件系统、Git、数据库等）
-
-### 常用Server类型
-
-- **文件系统Server**: 读写本地文件
-- **Git Server**: 执行Git操作
-- **数据库Server**: 连接SQL/NoSQL数据库
-- **HTTP Server**: 调用外部API
-
 ### 配置示例
 
 ```json
@@ -215,6 +205,7 @@ Filesystem
 markitdown
 Excel
 context7
+[乐鑫 MCP 服务器](https://mcp.espressif.com/)
 
 ### 智能体
 
@@ -254,13 +245,13 @@ Hook = 钩子：在指定事件触发后，自动执行一段自定义脚本 / �
 
 ## 插件
 
-![alt text](396cd70e79a0775dca5286cf8f25381c.png)
+![alt text](./396cd70e79a0775dca5286cf8f25381c.png)
 
 ## Memory
 
-![alt text](068104a46e2cc98aef90e600dbe80a54.png)
+![alt text](./068104a46e2cc98aef90e600dbe80a54.png)
 
-![alt text](2480408d0b8c974abee5811753bbe265.png)
+![alt text](./2480408d0b8c974abee5811753bbe265.png)
 
 ## 自然语言描述
 

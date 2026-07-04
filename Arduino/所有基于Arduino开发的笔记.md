@@ -1,17 +1,23 @@
+---
+title: Arduino开发笔记
+---
+
+# Arduino开发笔记
+
 [Arduino官方API网址](https://docs.arduino.cc/language-reference/)  
 [合宙Arduino AirMCU网址](https://arduino.luatos.com/)
-# 置顶知识
+## 置顶知识
     Serial.setDebugOutput(true) 设置串口为调试输出模式。
 
-# 开发板管理器地址
+## 开发板管理器地址
 合宙Air001：https://arduino.luatos.com/package_air_cn_index.json  
 博通BK7238：https://dl2.bekencorp.com/arduino/package_bk7238_index.json  
 乐鑫ESP32：https://espressif.github.io/arduino-esp32/package_esp32_index.json  
 乐鑫ESP32：https://dl.espressif.com/dl/package_esp32_index.json
-# 合宙的RP2040 树莓派 Pico
+## 合宙的RP2040 树莓派 Pico
 将开发板的 USB 连接移除，按住开发板上的按键，再重新插入 USB 接口。
 
-# API
+## API
 ## GPIO
 
 ###  attachInterrupt 用于将中断附加到定义的引脚。
@@ -227,7 +233,7 @@ address：要读取的地址，从 0 开始。
 不同时，异或结果为 1。
 和stateLED = !stateLED类似
 
-# 应用示例
+## 应用示例
 ## OLED屏 SSD1306
 >DC连接可以决定I²C从机地址：
 DC连接VCC则I²C从机地址为0x3d
@@ -695,7 +701,7 @@ XIAO nRF52840
 XIAO ESP32C3
 XIAO ESP32C6
 XIAO ESP32S3
-# Arduino小型化与TinyML应用课程
+## Arduino小型化与TinyML应用课程
 
 软件：Edge Impulse(边缘人工智能开发平台)
 
@@ -848,7 +854,7 @@ B站U主无限理论派的如何快速理解离散傅立叶变换和FFT
 自动划分数据集
 选择Data explorer,如果不同类别的数据点明显分开，意味着模型能够有效的区分这些类别
 
-# 在Arduino中快速开始使用FreeRTOS
+## 在Arduino中快速开始使用FreeRTOS
 https://github.com/Seeed-Studio/Seeed_Arduino_FreeRTOS  
 
 现在，可以将Seeed_Arduino_FreeRTOS库安装到Arduino IDE中。打开Arduino IDE，点击 sketch -> Include Library -> Add .ZIP Library, 选择刚刚下载的 Seeed_Arduino_FreeRTOS 文件。  

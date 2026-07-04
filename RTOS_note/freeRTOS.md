@@ -1,4 +1,7 @@
-# 置顶链接
+---
+title: FreeRTOS学习笔记
+---
+## 置顶链接
 [GD32移植FreeRTOS](https://geekdaxue.co/read/icheima@gd32/prd695920sk3p9sh#bdtkv1)  
 # 任务间的四种交互方式  
 
@@ -32,12 +35,12 @@
 8. FreeRTOS_Port添加源码。源码为FreeRTOS/portable/MemMang下的heap_4.c。源码为FreeRTOS/portable/GCC/ARM_CM4F下的port.c以及portasm.c  
 ![alt text](./image-13.png)![alt text](./image-14.png)  
 ![alt text](./image-16.png)  
-10. 添加头文件支持。将FreeRTOS/include和FreeRTOS/portable/GCC/ARM_CM4F添加到头文件依赖中。  
+9. 添加头文件支持。将FreeRTOS/include和FreeRTOS/portable/GCC/ARM_CM4F添加到头文件依赖中。  
 ![alt text](./image-17.png)  
-11. 来到FreeRTOS源码目录中，找到FreeRTOSv202411.00\FreeRTOS\Demo\CORTEX_MPU_M23_Nuvoton_NuMaker_PFM_M2351_IAR_GCC\Projects_NTZ\Keil\Config目录中的FreeRTOSConfig.h文件，进行拷贝。将FreeRTOSConfig.h文件拷贝到项目目录中的FreeRTOS目录下  
+10. 来到FreeRTOS源码目录中，找到FreeRTOSv202411.00\FreeRTOS\Demo\CORTEX_MPU_M23_Nuvoton_NuMaker_PFM_M2351_IAR_GCC\Projects_NTZ\Keil\Config目录中的FreeRTOSConfig.h文件，进行拷贝。将FreeRTOSConfig.h文件拷贝到项目目录中的FreeRTOS目录下  
 ![alt text](./image-15.png)  
 ![alt text](./image-18.png)  
-12. 添加SYS_SUPPORT_OS宏定义  
+11. 添加SYS_SUPPORT_OS宏定义  
 ```c
 #ifndef SYS_SUPPORT_OS
 /*!
@@ -79,7 +82,7 @@ void SysTick_Handler(void)
 #endif
 ```
 ![alt text](./image-19.png)  
-13.  Systick硬件delay,修改systick.c源码，修改如下  
+12.  Systick硬件delay,修改systick.c源码，修改如下  
 ```c
 #ifndef SYS_SUPPORT_OS
 void delay_1ms(uint32_t count)
@@ -143,7 +146,7 @@ void delay_1ms(uint32_t count)
 ```
 
 
-14. 接着在工程main.c中添加如下代码
+13. 接着在工程main.c中添加如下代码
 ```c
 #include "FreeRTOS.h"
 #include "task.h"
@@ -199,9 +202,9 @@ void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
 #endif
 ```
 
-15. 至此，FreeRTOS移植完成，可以进行编译运行了。
+14. 至此，FreeRTOS移植完成，可以进行编译运行了。
 
-# keysking教程
+## keysking教程
 [keysking的FreeRTOS教程文档](https://docs.keysking.com/docs/stm32/freertos/cubeConfig)  
 ## 第一个任务
 ## 任务切换

@@ -1,14 +1,16 @@
 import { defineConfig } from 'vitepress'
+import type { DefaultTheme } from 'vitepress'
 import fs from 'fs'
 import path from 'path'
 
+const ignoreDirs = ['.vitepress', '.git', 'node_modules', '.vscode', 'public', '.github']
+const ignoreFiles = ['README.md', 'index.md']
+
 // 自动生成侧边栏的函数
-function getSidebar() {
+function getSidebar(): DefaultTheme.SidebarItem[] {
   const root = path.resolve(__dirname, '..')
-  const ignoreDirs = ['.vitepress', '.git', 'node_modules', '.vscode', 'public', '.github']
-  const ignoreFiles = ['README.md', 'index.md']
   
-  const sidebar = []
+  const sidebar: DefaultTheme.SidebarItem[] = []
   
   try {
     const dirs = fs.readdirSync(root, { withFileTypes: true })
@@ -28,13 +30,14 @@ function getSidebar() {
     }
   } catch (e) {
     console.error('Error generating sidebar:', e)
+    throw e
   }
   
   return sidebar
 }
 
-function getFiles(dirPath: string, basePath: string) {
-  const items: any[] = []
+function getFiles(dirPath: string, basePath: string): DefaultTheme.SidebarItem[] {
+  const items: DefaultTheme.SidebarItem[] = []
   try {
     const files = fs.readdirSync(dirPath, { withFileTypes: true })
     
@@ -48,7 +51,7 @@ function getFiles(dirPath: string, basePath: string) {
             items: subItems
           })
         }
-      } else if (file.isFile() && file.name.endsWith('.md')) {
+      } else if (file.isFile() && file.name.endsWith('.md') && !ignoreFiles.includes(file.name)) {
         const name = file.name.replace('.md', '')
         // 对路径中的特殊字符进行编码，但VitePress可能需要原生字符串，我们先试试原生
         items.push({
@@ -59,6 +62,7 @@ function getFiles(dirPath: string, basePath: string) {
     }
   } catch (e) {
     console.error('Error reading dir:', dirPath)
+    throw e
   }
   return items
 }

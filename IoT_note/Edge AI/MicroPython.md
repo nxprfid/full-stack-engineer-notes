@@ -1,3 +1,6 @@
+---
+title: MicroPython笔记
+---
 
 [零一科技K230教程](https://wiki.01studio.cc/docs/canmv_k230/intro/canmv_k230)  
 [立创庐山派K230教程](https://wiki.lckfb.com/zh-hans/lushan-pi-k230/)
@@ -31,7 +34,7 @@ main.py：主程序
 也就是我们只需要将代码以main.py文件发送到开发板，那么开发板就可以
 实现上电运行相关程序。
 
-# 时间函数：
+## 时间函数：
 ```python
 import time 
 time.sleep(1)           
@@ -45,7 +48,7 @@ start = time.ticks_ms() # 获取毫秒计时器开始值
 delta = time.ticks_diff(time.ticks_ms(), start) # 计算从上电开始到当前时间
 的差值
 ```
-# 定时器 
+## 定时器
 ```python
 from machine import Pin,Timer 
  
@@ -66,8 +69,8 @@ tim.init(period=1000, mode=Timer.PERIODIC,callback=fun) #周期为1000ms
 ```
 在定义回调函数fun的时候，需要将Pin对象KEY传递进去。
 
-# LCD
-## LCD是1.54寸，驱动是的ST7789，使用SPI
+## LCD
+### LCD是1.54寸，驱动是的ST7789，使用SPI
 ```python
 #导入相关模块
 from tftlcd import LCD15
@@ -115,7 +118,7 @@ time.sleep(3)
 d.Picture(0,0,"/picture/01studio.jpg")
 ```
 
-# RTC
+## RTC
 ```python
 # 导入相关模块
 from machine import Pin, RTC, Timer
@@ -176,7 +179,7 @@ tim = Timer(-1)
 tim.init(period=300, mode=Timer.PERIODIC, callback=RTC_Run) #周期300ms
 ```
 
-# WIFI 
+## WIFI
 ```python
 import network,time
 from machine import Pin
@@ -241,7 +244,7 @@ def WIFI_Connect():
 WIFI_Connect()
 ```
 
-# Socket 通信
+## Socket 通信
 应用层的HTTP通过传输层进行数据通信时，TCP会遇到同时为多个应用程序进程提供并发服务的问题。多个TCP连接或多个应用程序进程可能需要通过同一个 TCP协议端口传输数据。为了区别不同的应用程序进程和连接，许多计算机操作系统为应用程序与 TCP／IP 协议交互提供了套接字(Socket)接口。应用层可以和传输层通过Socket 接口，区分来自不同应用程序进程或网络连接的通信，实现数据传输的并发服务。
 
 套接字（socket）是通信的基石，是支持TCP/IP协议的网络通信的基本操作
@@ -342,7 +345,7 @@ if WIFI_Connect():
     tim.init(period=300, mode=Timer.PERIODIC,callback=Socket_fun)
 
 ```
-# MQTT 通信
+## MQTT 通信
 
 public
 ```python
@@ -534,7 +537,7 @@ if WIFI_Connect():
     tim.init(period=300, mode=Timer.PERIODIC,callback=MQTT_Rev)
 ```
 
-# 通过局域网的方式来调试或者传输文件
+## 通过局域网的方式来调试或者传输文件
 你的电脑和设备是连接到同一个路由器上
 在串口终端输入以下命令： 
 `import webrepl_setup`

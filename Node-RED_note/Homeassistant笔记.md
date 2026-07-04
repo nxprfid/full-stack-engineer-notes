@@ -1,8 +1,13 @@
-# 前言
+---
+title: Home Assistant笔记
+---
+# Home Assistant笔记
+
+## 前言
 简单来说HA，就是一个低功耗的电脑（路由器或者NAS或者Linux单板机）上面专门运行一个Python3的程序。开源自动化控制管理平台。用户可以绑定各个品牌的物联网设备。编写自动化规则和脚本。根据设备状态、时间、传感器数据等触发特定动作。这个程序通过网络连接各个设备云平台，时时刻刻接受云平台传来的数据并可以控制。直接支持小爱同学语音控制比如美的的空调。（小米云端-本地（HA）-美的云端）定制部分：可以创建一系列规则。达到“互联互通”。还可以将所有设备通过桥接连接到HomeKit（云端-本地（HA）-本地（苹果中枢）），使用Siri控制。
 ![alt text](./image-3.png)
 教程连接：https://www.bilibili.com/opus/440062456525682264  
-# NAS
+## NAS
 NAS（Network Attached Storage）网络附加存储，主要用于存储大量数据，如照片、视频、音乐、文档等。NAS通常安装在服务器上，通过网络访问，可以实现文件共享、远程备份、远程访问等功能。NAS的优点是安全、便捷、经济，缺点是成本高、可靠性差、易捷性差。
 
 第一步，按照我说的光纤连入光猫，光猫连接路由器，路由器连接你的设备。
@@ -20,7 +25,7 @@ NAS（Network Attached Storage）网络附加存储，主要用于存储大量�
 第七步，同样设置端口转发，之前的外部端口就是现在的内部端口，转出去，在外网访问的端口就是外部端口，建议设置5位。
 
 所以我们需要智能家居，传感器，NAS等等都在这个二级网络当中，所有的交互都交给Home Assistant，我们只需要把Home assistant的端口转出去就行了（这块在Home Assistant安装教程中会讲）或者桥接模式。
-# Home Assistant安装和基础设置 
+## Home Assistant安装和基础设置
 ## Windows 安装HA
 ![alt text](./image-10.png)
 ![alt text](./image-11.png)
@@ -55,7 +60,7 @@ HACS（Home Assistant Community Store）这就是Home assistant 的应用插件�
 
 HomemeKit Bridge插件连接到苹果生态
 
-# 安装 Docker
+## 安装 Docker
 Docker 官方的提供的安装文档链接如下所示：  
 Debian 系统: https://docs.docker.com/engine/install/debian/  
 Ubuntu 系统: https://docs.docker.com/engine/install/ubuntu/  
@@ -128,7 +133,7 @@ Orange Pi 提供的linux镜像已经预装了Docker，只是Docker服务默认�
 使用docker命令时，如果提示permissiondenied，请将当前用户加入到docker用户组，这样不需要sudo就能运行docker命令了。  
 orangepi@orangepi:~$ `sudo usermod-aG docker $USER`  
 
-# Linux派安装HA
+## Linux派安装HA
 ## 通过 docker 安装HA（Container）
 Ubuntu 或者 Debian 系统中安装 Home Assistant 的方法:
 1. 搜索下 Home Assistant 的 docker 镜像
@@ -333,7 +338,7 @@ reboot
 安装过程需要在github中进行设备激活，按照引导授权激活即可
 安装完成后再Home Assistant侧边栏菜单看到HACS了
 
-# Home Assistant使用
+## Home Assistant使用
 如果无法使用以太网线将树莓派与电脑连接到同一局域网下，可以在 Home Assistant 启动前配置 Wi-Fi（不推荐，建议使用以太网线）。在 SD 卡创建文件夹和文件： CONFG -> network -> my-network。在 my-network 中配置 SSID 和 密码：
 ```
 [connection] 
@@ -375,7 +380,7 @@ http://homeassistant.local:8123/
 xiaomi_lamp/control
 {"input":"Turn On the Lemp","siteId":"esp32"}
 ```
-# Home Assistant插件
+## Home Assistant插件
 ![alt text](./image-5.png)
 ![alt text](./image-6.png)
 
@@ -459,7 +464,7 @@ HACS搜索 `midea_ac_lan`
 正常情况下会发现新设备  
 输⼊ 美的 账号密码，切换对应使⽤的 APP，这⾥是“美的美居”  
 修改 设备名称一路提交即可  
-# HomeAssistant对接蓝⽛⾳箱
+## HomeAssistant对接蓝牙音箱
 将USB蓝⽛适配器接到HA盒⼦的usb⼝  
 IP地址:7681  
 ```bash
@@ -486,10 +491,10 @@ q 退出
 媒体----右下⻆可以选择vlc播放了  
 ![alt text](./image-16.png)  
 
-# 需要使用小爱同学等其他音响
+## 需要使用小爱同学等其他音响
 请看：https://github.com/larry-wong/bemfa  
 
-# ZigBee设备接⼊
+## ZigBee设备接入
 注意Zigbee Home Automation（简称ZHA）与Zibee2mqtt不能同时使⽤，只能开启⼀个！！！  
 注意如果您只有⼀个协调器，Zigbee Home Automation（简称ZHA）与Zibee2mqtt不能同时使⽤⼀个设备，只能开启⼀个！！！  
 ## zigbee2mqtt配置
@@ -543,7 +548,7 @@ port: /dev/ttyUSB0
 设置要添加的设备处于配对状态，即可被发现  
 ![alt text](./image-35.png)  
 
-# Home Assistant的UI设计
+## Home Assistant的UI设计
 在HomeAssistant文件中新建themes文件夹，这是用来存放主题的。然后在www文件夹下新建images文件夹，用来存放图片资源。  
 
 在根文件夹下有三个yaml，分别是：configuration.yaml、customize.yaml、ui-lovelace.yaml。  
@@ -570,7 +575,7 @@ port: /dev/ttyUSB0
 
 frontpage这个文件夹内就是首页展示的内容  
 ![alt text](./image-69.png)
-# Home Assistant备份和升级&导入DIY主题
+## Home Assistant备份和升级&导入DIY主题
 ![备份](./image-48.png)  
 ![alt text](./image-49.png)  
 ![alt text](./image-50.png)  
@@ -581,7 +586,7 @@ www下不要全部复制
 ![alt text](./image-53.png)  
 ![alt text](./image-54.png)  
 
-# DIY设备ESPHome接入HA  
+## DIY设备ESPHome接入HA
 ESPHome：
 官方网址：https://esphome.io/
 
@@ -740,7 +745,7 @@ light:
 
 
 ```
-# 文件管理目录结构
+## 文件管理目录结构
 ![alt text](./image.png)  
 
 1. 文件夹的管理和命名:日期和项目内容来命名，

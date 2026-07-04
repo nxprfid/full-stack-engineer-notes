@@ -1,3 +1,7 @@
+---
+title: Altium Designer笔记
+---
+
 # AD笔记
 ## 绘制原理图库
 ### 元器件符号属性设置
@@ -250,7 +254,7 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 
 ### 探针
 查看网络图
-# 拼版
+## 拼版
 ## 使用拼版阵列
 新建一个PcbDoc，然后选择放置-拼版阵列`pm`
 ![alt text](./image-59.png)  
@@ -275,7 +279,7 @@ PCB走线的时候可以进行线选`sl`后快捷键`um`进行多根拉线
 快捷键`ea`  
 ![alt text](./image-60.png)  
 ![alt text](./image-61.png)
-# 导出
+## 导出
 ## 导出Gerber文件
 ![alt text](./image-57.png)
 

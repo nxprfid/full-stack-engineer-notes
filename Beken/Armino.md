@@ -1,3 +1,7 @@
+---
+title: Beken Armino开发笔记
+---
+
 # BLE蓝牙知识
 三个基本概念：Profile，Service，Characteristic。
 
@@ -94,7 +98,7 @@ ble从设备因为也在计算好的时间里进行了侦听，因此能收到�
   BT_GATT_PRIMARY_SERVICE：定义GATT服务UUID
   BT_GATT_CHARACTERISTIC：定义收发的特征值
   BT_GATT_CCC：定义配置改变时的监听
-# 鹏老师课程
+## 鹏老师课程
 https://www.bilibili.com/opus/697239519074713670
 ## 蓝牙广播
 ![alt text](./image-21.png)
@@ -133,7 +137,7 @@ Indicate需要回应（回应从设备）
 ![alt text](./image-34.png)  
 ![alt text](./image-35.png)
 
-# ArduinoBLE
+## ArduinoBLE
    1. 创建一个 BLE Server
    2. 创建一个 BLE Service
    3. 创建一个 BLE Characteristic
@@ -141,7 +145,7 @@ Indicate需要回应（回应从设备）
    5. 开始服务
    6. 开始广播
 ## 生成UUID网址：https://www.uuidgenerator.net/
-# BK蓝牙配网
+## BK蓝牙配网
 https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/bluetooth/ble_boarding_demo.html  
 https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/api-reference/bluetooth/ble.html
 https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/cli/bluetooth/ble.html  

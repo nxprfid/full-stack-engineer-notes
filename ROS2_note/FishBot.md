@@ -1,4 +1,9 @@
-# MicroROSCar快速入门
+---
+title: ROS2 FishBot教程笔记
+---
+# ROS2 FishBot教程笔记
+
+## MicroROSCar快速入门
 1. 将开发板插入TypeC线  
 2. 找到固件，右击选择复制文件地址   
 ![alt text](./image-1.png)  
@@ -45,8 +50,8 @@ wifi名称为PUMPU，所以填写PUMPU，接着点击一键配置即可，配置
    `ros2 topic echo /odom`就可以看到实时的机器人位置信息。  
 ![alt text](./image-30.png)
 
-# ROS2
-![alt text](./image-9.png)  
+## ROS2
+![alt text](./image-9.png)
 核心是通讯（稳定、安全、实时的通讯能力）
 ROS2文档：
 http://docs.ros.org/en/humble/Releases.html
@@ -55,7 +60,7 @@ http://docs.ros.org/en/humble/Releases.html
 ## 右手法则
 ![alt text](./image-11.png)
 >我们开发板的Z轴朝上，X轴朝前，此时Y轴应该朝左。接着摊开右手手掌，用大拇指朝向轴的方向，比如朝向X轴，然后握起手掌，那么你握的方向就是正方向。
-# ROS2-MicroROS
+## ROS2-MicroROS
 通讯协议依赖于Agent  
 
 ![alt text](./image-12.png)
