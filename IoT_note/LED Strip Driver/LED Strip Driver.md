@@ -39,27 +39,27 @@ WS2805、UCS2905
 
 ### WS2913 三通道
 
-![alt text](image-21.png)
-![alt text](image-22.png)
-![alt text](image-23.png)
+![alt text](./image-21.png)
+![alt text](./image-22.png)
+![alt text](./image-23.png)
 
 ### WS2914 四通道
 
-![alt text](image-24.png)
-![alt text](image-25.png)
+![alt text](./image-24.png)
+![alt text](./image-25.png)
 
 ### WS2915 五通道
 
-![alt text](image-26.png)
-![alt text](image-27.png)
+![alt text](./image-26.png)
+![alt text](./image-27.png)
 
 ### UCS8903 三通道
 
-![alt text](image-28.png)
-![alt text](image-29.png)
-![alt text](image-30.png)
-![alt text](image-31.png)
-![alt text](image-32.png)
+![alt text](./image-28.png)
+![alt text](./image-29.png)
+![alt text](./image-30.png)
+![alt text](./image-31.png)
+![alt text](./image-32.png)
 
 #### 功能说明
 芯片采用单线通讯方式，采用归零码的方式发送信号。芯片在上电复位以后，接受 DIN 端打来的数据，接受够 48bit 后，DO 端口开始转发数据，供下一个芯片提供输入数据。在转发之前，DO 口一直拉低。此时芯片将不接受新的数据，芯片 OUTR、OUTG、OUTB 三个 PWM 输出口根据接受到的 48bit 数据，发出相应的不同占空比的信号，该信号周期约 1ms。如果 DIN 端输入信号为 RESET 信号，芯片将接收到的数据送显示，芯片将在该信号结束后重新接受新的数据，在接受完开始的 48bit 数据后，通过 DO 口转发数据，芯片在没有接受到 RESET 码前，OUTR、OUTG、OUTB 管脚原输出保持不变，当接受到 1.5ms 以上低电平 RESET 码后，芯片将刚才接收到的 48bit PWM 数据脉宽输出到 OUTR、OUTG、OUTB 引脚上。
@@ -109,9 +109,9 @@ D1：MCU发送原始数据；D2、D3：芯片自动整形转发数据
 
 ### UCS8904 四通道
 
-![alt text](image-33.png)
-![alt text](image-34.png)
-![alt text](image-35.png)
+![alt text](./image-33.png)
+![alt text](./image-34.png)
+![alt text](./image-35.png)
 
 #### 功能说明
 芯片采用单线通讯方式，采用归零码的方式发送信号。芯片在上电复位以后，接受 DIN 端打来的数据，接受够 64bit 后，DO 端口开始转发数据，供下一个芯片提供输入数据。在转发之前，DO 口一直拉低。此时芯片将不接受新的数据，芯片 OUTR、OUTG、OUTB、OUTW 四个 PWM 输出口根据接受到的 64bit 数据，发出相应的不同占空比的信号，该信号周期约 1ms。如果 DIN 端输入信号为 RESET 信号，芯片将接收到的数据送显示，芯片将在该信号结束后重新接受新的数据，在接受完开始的 64bit 数据后，通过 DO 口转发数据，芯片在没有接受到 RESET 码前，OUTR、OUTG、OUTB、OUTW 管脚原输出保持不变，当接受到 1ms 以上低电平 RESET 码后，芯片将刚才接收到的 64bit PWM 数据脉宽输出到 OUTR、OUTG、OUTB、OUTW 引脚上。
@@ -143,13 +143,13 @@ D1：MCU发送原始数据；D2、D3：芯片自动整形转发数据
 
 ### UCS8603 三通道
 
-![alt text](image-36.png)
-![alt text](image-37.png)
-![alt text](image-38.png)
-![alt text](image-39.png)
-![alt text](image-40.png)
-![alt text](image-41.png)
-![alt text](image-42.png)
+![alt text](./image-36.png)
+![alt text](./image-37.png)
+![alt text](./image-38.png)
+![alt text](./image-39.png)
+![alt text](./image-40.png)
+![alt text](./image-41.png)
+![alt text](./image-42.png)
 
 #### 一、正常工作，传送画面数据（控制器 DO 输出端口）
 ##### 帧整体时序

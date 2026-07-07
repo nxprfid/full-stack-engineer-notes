@@ -1,0 +1,26 @@
+/* .vitepress/theme/style.css */
+
+:root {
+  /* 减小左侧导航栏的宽度（默认 272px） */
+  --vp-sidebar-width: 240px;
+  
+  /* 减小右侧大纲栏（aside）的宽度（默认 224px） */
+  --vp-aside-width: 200px;
+  
+  /* 增加整个页面的最大宽度限制（默认 1440px） */
+  --vp-layout-max-width: 1600px;
+}
+
+/* 增加带有右侧大纲时，正文内容的宽度（默认 688px） */
+@media (min-width: 960px) {
+  .VPDoc.has-aside .content-container {
+    max-width: 960px !important; 
+  }
+}
+
+/* 增加无右侧大纲时，正文内容的宽度（默认 960px） */
+@media (min-width: 960px) {
+  .VPDoc:not(.has-aside) .content-container {
+    max-width: 1152px !important;
+  }
+}
