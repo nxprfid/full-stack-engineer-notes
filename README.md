@@ -18,6 +18,7 @@
 # IoT_note
 学习一些物联网通信，平台以及协议的笔记。  
 - [BLE](IoT_note/BLE/BLE.md)
+- [DMX512](IoT_note/DMX512/DMX512.md)  
 - [Edge AI](IoT_note/Edge%20AI/MicroPython.md)  
 - [ESP-IDF](IoT_note/ESP-IDF/%E4%BB%A3%E7%A0%81.md)  
 - [星闪](IoT_note/NearLink/%E6%98%9F%E9%97%AA%E6%8C%87%E4%BB%A4.md)
@@ -56,7 +57,6 @@ FreeRTOS，RT-Thread，uCOS-III，lwIP，μITRON，等RTOS的一些笔记。
 - [keysking教程](STM32_note/keysking.md)
 # GD32_note
 - [GD32](GD32_note/GD32.md)  
-- [DMX512](GD32_note/DMX512.md)  
 # 杰理AC63
 - [AC6951C](JIELI_note/AC6951C.md)  
 # AI_note
