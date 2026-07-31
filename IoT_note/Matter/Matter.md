@@ -52,14 +52,106 @@ Fabric 是一组共享同一信任根（Root CA）的节点集合。Matter 支�
 - ESP Matter 手机 App / Google Home / Apple Home：实际生态测试
 
 ### SDK
+
+
 [](https://github.com/Senscomm/wise-sdk/tree/MP-WLT-TL)
+- 准备
+
+1. 确保目标机器上安装了WSL。你可以在PowerShell中运行以下命令来安装WSL（如果尚未安装）
+wsl --install
+wsl -v -l 查看版本信息情况
 
 
+2.开始导入WSL发行版
+使用wsl --import命令导入tar包到目标机器。确保你有正确的路径和文件名：
+
+wsl --import <DistributionName> <InstallLocation> <FileName>.tar
+
+例如：
+wsl --import ubuntu_matter D:\wsl\ wsl_ubuntu_matter.tar
+
+-----------
+	<DistributionName> 是你想要导入的WSL发行版的名称。
+	<InstallLocation> 是你想要安装这个发行版的位置，例如 C:\wsl\<DistributionName>。
+	<FileName>.tar 是你的tar包的文件名和路径。
+-----------
+导入WSL版本后，查看当前版本
+指令 wsl -l 
+
+	适用于 Linux 的 Windows 子系统分发:
+	ubuntu_matter (默认值)   //DistributionName
+
+3.检查电脑.wslconfig配置,xxx为电脑名，可以参考提供的.wslconfig
+路径通常在C:\Users\xxxx\.wslconfig
+
+
+
+4.打开终端cmd， 输入wsl指令 
+接下来就可以放入项目的matter SDK进行编译开发了
+默认matter SDK 目录在 /opt/matter
+
+
+4.1下载scm1612 wise sdk代码
+
+cd /opt/matter/third_party/senscomm/scm1612s/
+
+  在当前环境git clone下载wise-sdk 最新代码，指令如下
+  git clone -b MP-WLT-TL https://github.com/Senscomm/wise-sdk.git
+  
+	下载完后，执行指令git branch 预期会显示
+* MP-WLT-TL
+
+---------------------------------------------------------------------
+编译前  测试google访问情况：指令 curl -I https://www.google.com
+看是否会提示
+HTTP/1.1 200 Connection established
+相关打印
+---------------------------------------------------------------------
+
+
+4.2 cd  /opt/matter/ 
+
+执行 source scripts/activate.sh   ，预期是pass
+--------------------------------------------------------------------------
+  Setting up CIPD package manager...[|]fatal: not a git repository: /opt/connectedhomeip-MP-WLT/third_party/pigweed/repo/../../../.git/modules/pigweed
+[/]
+done (10m31.8s)
+  Setting up Project actions........skipped (0.1s)
+  Setting up Python environment.....done (1m29.9s)
+  Setting up pw packages............skipped (0.1s)
+  Setting up Host tools.............done (0.1s)
+
+Activating environment (setting environment variables):
+
+  Setting environment variables for CIPD package manager...done
+  Setting environment variables for Project actions........skipped
+  Setting environment variables for Python environment.....done
+  Setting environment variables for pw packages............skipped
+  Setting environment variables for Host tools.............done
+
+Checking the environment:
+
+20260408 16:09:19 INF Environment passes all checks!
+
+Environment looks good, you are ready to go!
+--------------------------------------------------------------------------------
+
+
+备注
+因当前/opt/matter已经激活配置好环境了
+如果有需要合入 matter的部分代码， 可以手动比较合入改动的patch文件
+
+4.3编译SDK， 在/opt/matter/out目录下可以找到对应的chip-scm1612s-ayla-app-example.mcuboot.bin
+
+
+scripts/build/build_examples.py --target senscomm-scm1612s-ayla build
+ 
 
 - 激活matter环境
 ```bash
-source scripts/bootstrap.sh
-source scripts/activate.sh
+source scripts/bootstrap.sh //一次性初始化脚本，只执行一次
+
+source scripts/activate.sh //环境加载脚本，新开终端必执行
 ```
 
 - 编译
