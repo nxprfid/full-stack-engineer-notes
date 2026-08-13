@@ -65,7 +65,7 @@ wsl -v -l 查看版本信息情况
 2.开始导入WSL发行版
 使用wsl --import命令导入tar包到目标机器。确保你有正确的路径和文件名：
 
-wsl --import <DistributionName> <InstallLocation> <FileName>.tar
+`wsl --import <DistributionName> <InstallLocation> <FileName>.tar`
 
 例如：
 wsl --import ubuntu_matter D:\wsl\ wsl_ubuntu_matter.tar
