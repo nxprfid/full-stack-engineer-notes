@@ -92,7 +92,7 @@ lv_disp_drv_init 函数用于按默认配置初始化一个显示驱动 disp_drv
 
 esp32-idf提供了gif图片的第三方解码库，我们使用这个库显示图片。大概分为两个步骤，第一个是把图片转换为C语言数组文件，放到源文件中。第二个是编写几行代码调用它。比较简单。 图片转换成C语言数组，我们使用LVGL官方提供的图片转换在线工具进行转换。 LVGL在线图片转换器 https://lvgl.io/tools/imageconverter
 
-![alt text](image-7.png)
+![alt text](./image-7.png)
 使用转换器的步骤是，先点击Browse选择我们要转换的图片，然后填写图片名称，颜色格式，我们选择CF_RAW，输出格式，选择C数组，最后点击Convert转换，转换完成的c代码，会自动从浏览器下载。如上图片显示，就是我转换太空人图片的设置。 下载好的C文件，我放到了工程main目录下，在VSCode中点击打开它。刚下载好的C文件，前面的13行有关于怎么包含lvgl.h头文件的条件编译，我已经全部删除，然后只写一个包含lvgl.h的include。 原来的代码：
 
 ```c
@@ -144,9 +144,9 @@ LVGL显示gif图片的代码，也非常简洁。我们的例程，在开机界�
    LVGL提供的中文字库，只有16像素大小的宋体字。在我们的开发板上看起来很小，费眼睛，而且宋体字也逐步在现在的电子产品中淘汰了。我们这里使用接近于手机显示效果的一种字体，阿里普惠体。这款字体是阿里巴巴提供的一款可以免费商用的字体，可以从下面的网站下载到。 阿里巴巴字体网站：https://www.alibabafonts.com/ 里面针对字体粗细有好几个版本，我下载的是Alibaba PuHuiTi 3.0 - 45 Light。
 
 2. awesome字体： LVGL已经包含了57个awesome图标，如下图所示。
-![alt text](image-8.png)
+![alt text](./image-8.png)
 但是这里面，没有我们需要的可以代表温度和湿度的图标，所以我们需要自己再制作两个温湿度图标。
-![alt text](image-9.png)
+![alt text](./image-9.png)
 awesome字体的下载链接如下。
 
 官方下载链接：https://fontawesome.com/download
@@ -160,7 +160,7 @@ awesome字体的下载链接如下。
 ### 普通字体
 
 把字体转换成C语言数组，可以使用LVGL官方提供的在线转换工具。 lvgl字体制作工具：https://lvgl.io/tools/fontconverter
-![alt text](image-10.png)
+![alt text](./image-10.png)
 上图所示，是阿里普惠字体的转换示例。
 首先定义一个自己的名字，这里我起名为font_alipuhui。
 
@@ -178,7 +178,7 @@ awesome字体的下载链接如下。
 
 ### awesome字体 
 生成awesome字体的配置如下图所示。
-![alt text](image-12.png)
+![alt text](./image-12.png)
 文件名称写为font_myawesome。像素大小设置为20，因为这个图标要和刚才生成的汉字在用一行显示，所以这里的像素也设置为20。Bpp设置为8，Fallback不用填。选择刚才下载的字体文件。在Range一栏里面写入温湿度的Unicode码。因为温湿度的符号用键盘打不出来，所以只能在Range一栏写它的Unicode码。 温湿度符号的Unicode码是多少，可以在awesome官方网站对应符号页面看到。
 温度符号页面链接：(https://fontawesome.com/icons/temperature-three-quarters?f=classic&s=solid)
 
@@ -186,27 +186,27 @@ awesome字体的下载链接如下。
 
 ### 图标字体
 和风天气图标字体制作配置如下图所示：
-![alt text](image-13.png)
+![alt text](./image-13.png)
 文件名称写为font_qweather，像素大小设置为80，Bpp选择8，Fallback不用填。文件选择刚才下载好的qweather字体。然后还是在Range一栏写入我们需要的图标Unicode码。 天气图标的Unicode码查看，需要使用一个字体编辑软件查看，比如Font Creator。
 Font Creator软件下载地址：(https://www.xitongzhijia.net/soft/116980.html)
 
 软件仅供交流学习使用，尊重版权，拒绝盗版，从你我做起。 使用Font Creator软件打开qweather-icon.ttf字体文件，就可以看到每个图标的Unicode码了，如下图所示。
-![alt text](image-14.png)
+![alt text](./image-14.png)
 https://dev.qweather.com/docs/resource/icons/ 上面这个链接可以查到各种天气图标对应的图标代码，如下图所示：
-![alt text](image-15.png)
+![alt text](./image-15.png)
 然后根据图标代码，在下面这个链接可以查看各个图标代码对应的图标形状。 https://icons.qweather.com/icons/#sunny
-![alt text](image-16.png)
+![alt text](./image-16.png)
 然后把所有的图标代码对应的图标样子的Unicode码，在Font Creator软件中找出来，最后的Unicode码就是 0xF101-0xF13B和0xF144-0xF146 所以在Range中填入：0xF101-0xF13B,0xF144-0xF146，就可以生成我们需要的全部天气图标了。
 
 ### 个性化字体 
 LED数码管字体的制作，如下图所示。
-![alt text](image-11.png)
+![alt text](./image-11.png)
 名称写为font_led，像素大小设置为32，Bpp设置为8，Fallback不用填。在Symbols一栏，写入要生成的符号，这里我写的是 0123456789: 注意这里面还有一个冒号，是英文的冒号，不要写成中文的。除了显示时分秒这几个数字以外，显示时钟还需要冒号，例如：12:25:18。
 
 经过上面的一番操作，已经生成了4个字体c文件，接下来看看怎么在工程中使用它们。
 
 把生成的字体c文件，放到了工程中main文件夹下面，如下图所示：
-![alt text](image-17.png)
+![alt text](./image-17.png)
 可以在VSCode软件中，点击打开它。文件源文件最前面关于怎么包含头文件lvgl.h的条件编译已经删除，修改为直接包含lvgl.h文件。 原来的：
 ```c
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
@@ -239,4 +239,4 @@ LV_FONT_DECLARE(font_myawesome);
 
 我们生成字体文件的时候，用的是Unicode码，这里需要的是UTF-8码，所以，需要把Unicode码转换成UTF-8编码才行。转换编码，可以使用下面的在线工具。 UTF-8工具：https://www.cogsci.ed.ac.uk/~richard/utf-8.cgi?input=F146&mode=hex 例如，温度的Unicode是F2C8，转换成UTF-8码后就是EF 8B 88，如下图所示：
 
-![alt text](image-18.png)
+![alt text](./image-18.png)

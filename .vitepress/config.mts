@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 import type { DefaultTheme } from 'vitepress'
 import fs from 'fs'
 import path from 'path'
@@ -67,7 +68,7 @@ function getFiles(dirPath: string, basePath: string): DefaultTheme.SidebarItem[]
   return items
 }
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   base: '/full-stack-engineer-notes/',
   title: "嵌入式开发笔记",
   description: "个人嵌入式与全栈开发学习笔记",
@@ -111,4 +112,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))
