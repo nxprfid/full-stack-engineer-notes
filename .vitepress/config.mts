@@ -46,11 +46,19 @@ function getFiles(dirPath: string, basePath: string): DefaultTheme.SidebarItem[]
       if (file.isDirectory() && !file.name.startsWith('.')) {
         const subItems = getFiles(path.join(dirPath, file.name), `${basePath}/${file.name}`)
         if (subItems.length > 0) {
-          items.push({
-            text: file.name,
-            collapsed: true,
-            items: subItems
-          })
+          // 子目录只有一个笔记时直接提升为链接，避免多余的折叠层级
+          if (subItems.length === 1 && subItems[0].link) {
+            items.push({
+              text: file.name.replace('_note', ''),
+              link: subItems[0].link
+            })
+          } else {
+            items.push({
+              text: file.name.replace('_note', ''),
+              collapsed: true,
+              items: subItems
+            })
+          }
         }
       } else if (file.isFile() && file.name.endsWith('.md') && !ignoreFiles.includes(file.name)) {
         const name = file.name.replace('.md', '')
@@ -71,7 +79,7 @@ function getFiles(dirPath: string, basePath: string): DefaultTheme.SidebarItem[]
 export default withMermaid(defineConfig({
   base: '/full-stack-engineer-notes/',
   title: "嵌入式开发笔记",
-  description: "个人嵌入式与全栈开发学习笔记",
+  description: "全栈嵌入式工程师知识库：多平台芯片开发、物联网协议、RTOS 与嵌入式 Linux 实战笔记",
   ignoreDeadLinks: true, // 忽略Markdown中的死链接
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/full-stack-engineer-notes/favicon.svg' }]
