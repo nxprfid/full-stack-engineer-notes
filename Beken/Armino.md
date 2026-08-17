@@ -145,22 +145,24 @@ Indicate需要回应（回应从设备）
    5. 开始服务
    6. 开始广播
 ## 生成UUID网址：https://www.uuidgenerator.net/
+
 ## BK蓝牙配网
-https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/bluetooth/ble_boarding_demo.html  
-https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/api-reference/bluetooth/ble.html
-https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/cli/bluetooth/ble.html  
+
+[Demo演示文档](https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/bluetooth/ble_boarding_demo.html)  
+[蓝牙API参考说明文档](https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/api-reference/bluetooth/ble.html)  
+[蓝牙常用测试命令说明文档](https://docs.bekencorp.com/armino/bk7256/zh_CN/latest/examples/cli/bluetooth/ble.html)  
 代码：  
-http://gitlab.bekencorp.com/wifi/armino/-/tree/main/components/demos/bluetooth/ble_boarding  
-http://gitlab.bekencorp.com/wifi/armino/-/tree/main/include/modules/ble.h  
+[Demo](http://gitlab.bekencorp.com/wifi/armino/-/tree/main/components/demos/bluetooth/ble_boarding)  
+[API](http://gitlab.bekencorp.com/wifi/armino/-/tree/main/include/modules/ble.h)  
 
 ![alt text](./image.png)  
 根据SPEC上面的说明  
 ![alt text](./image-1.png)
 
-`bk_ble_init`()函数初始化蓝牙模块，并使能蓝牙功能。  
+`bk_ble_init()`函数初始化蓝牙模块，并使能蓝牙功能。  
 
 `bk_ble_set_notice_cb()`函数设置蓝牙通知回调函数，当蓝牙有数据需要通知时，会调用该函数。  
-```
+```c
 示例：//注册 ble 事件通知回调。
    void ble_at_notice_cb(ble_notice_t notice, void *param)
 {
@@ -199,7 +201,7 @@ bk_ble_set_notice_cb(ble_at_notice_cb);
 `bk_ble_create_db()`函数创建蓝牙数据库，用于保存蓝牙设备信息。  
 注册 gatt 服务。
 用户示例：首先，我们必须构建 test_service_db test_service_db 是 att 的数据库，用于 ble 发现。读取、写入和其他操作用于 ATT 数据库。
-```
+```c
 enum {
     TEST_IDX_SVC,
     TEST_IDX_CHAR_DECL,
@@ -230,7 +232,7 @@ ble_attm_desc_t test_service_db[TEST_IDX_NB] = {
 ```
 `bk_ble_start_advertising()`函数创建蓝牙广播，用于让蓝牙设备可以被搜索到。    
 
-```
+```c
 ble_adv_param_t adv_param;
 
 adv_param.own_addr_type = 0;//BLE_STATIC_ADDR
@@ -248,15 +250,13 @@ if (actv_idx != UNKNOW_ACT_IDX) {
 ```
 
 `bk_ble_set_adv_data()`函数设置广播数据，用于设置广播的名称、广播的类型、广播的UUID等。  
-```
 用户示例：
-
+```c
 const uint8_t adv_data[] = {0x02, 0x01, 0x06, 0x0A, 0x09, 0x37 0x32, 0x33, 0x31, 0x4e, 0x5f, 0x42, 0x4c, 0x45};
 bk_ble_set_adv_data(actv_idx, adv_data, sizeof(adv_data), ble_at_cmd_cb);
 ```
 必须在bk_ble_create_advertising后使用
 `bk_ble_start_advretising()`函数启动广播，使蓝牙设备可以被搜索到。  
-必须在bk_ble_create_advertising后使用
 
 ![alt text](./image-2.png)
 ![alt text](./image-3.png)

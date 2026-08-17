@@ -36,11 +36,11 @@ claude --dangerously-skip-permissions
 
 ## 置顶链接
 
-[OpenAI 官方 Codex 最佳实践系统学习文档](https://developers.openai.com/codex/learn/best-practices)
-[GitHub Copilot 最佳实践](https://docs.github.com/en/copilot/get-started/best-practices)
-[Claude Code 教程](https://www.runoob.com/claude-code/claude-code-tutorial.html)
-[Claude Code 官方文档](https://code.claude.com/docs/zh-CN/overview)
-[Claude Code 使用指南](https://github.com/tev6/andrej-karpathy-skills-zhCN)
+[OpenAI 官方 Codex 最佳实践系统学习文档](https://developers.openai.com/codex/learn/best-practices)  
+[GitHub Copilot 最佳实践](https://docs.github.com/en/copilot/get-started/best-practices)  
+[Claude Code 教程](https://www.runoob.com/claude-code/claude-code-tutorial.html)  
+[Claude Code 官方文档](https://code.claude.com/docs/zh-CN/overview)  
+[Claude Code 使用指南](https://github.com/tev6/andrej-karpathy-skills-zhCN)  
 
 ## 安装
 

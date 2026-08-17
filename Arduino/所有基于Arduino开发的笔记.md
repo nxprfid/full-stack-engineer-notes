@@ -7,7 +7,10 @@ title: Arduino开发笔记
 [Arduino官方API网址](https://docs.arduino.cc/language-reference/)  
 [合宙Arduino AirMCU网址](https://arduino.luatos.com/)
 ## 置顶知识
-    Serial.setDebugOutput(true) 设置串口为调试输出模式。
+
+```c
+Serial.setDebugOutput(true) 设置串口为调试输出模式。
+```
 
 ## 开发板管理器地址
 合宙Air001：https://arduino.luatos.com/package_air_cn_index.json  
@@ -22,7 +25,9 @@ title: Arduino开发笔记
 
 ###  attachInterrupt 用于将中断附加到定义的引脚。
 
-    void attachInterrupt(uint32_t pin, callback_function_t callback, uint32_t mode)
+```c
+void attachInterrupt(uint32_t pin, callback_function_t callback, uint32_t mode)
+```
 
 pin：要配置的引脚号。
 callback：中断回调函数。
@@ -37,7 +42,9 @@ HIGH：引脚状态为高电平时触发中断。
 
 ### detachInterrupt 函数来分离 GPIO。从特定引脚分离中断。
 
-    void detachInterrupt(uint32_t channel)
+```c
+void detachInterrupt(uint32_t channel)
+```
 channel：要分离的引脚号。
 
 ### digitalPinToInterrupt(interruptPin) 是 Arduino 提供的一个函数，用于将数字引脚编号转换为中断编号，以便与 attachInterrupt() 配合使用。
@@ -48,16 +55,22 @@ channel：要分离的引脚号。
 用法示例  
 在代码中，使用 attachInterrupt() 时通常会指定以下三个参数：  
 
-    attachInterrupt(digitalPinToInterrupt(interruptPin), blink, CHANGE);
+```c
+attachInterrupt(digitalPinToInterrupt(interruptPin), blink, CHANGE);
+```
 ## UART
 ### write
 此函数用于向串口发送数据。
-    size_t write(uint8_t data)
+```c
+size_t write(uint8_t data)
+```
 返回值：发送的字节数
 data：要发送的字节
 当然，您也可以使用
 
-    size_t write(const uint8_t *buffer, size_t size)
+```c
+size_t write(const uint8_t *buffer, size_t size)
+```
 来发送多个字节。
 
 buffer：要发送的字节缓冲区
@@ -69,16 +82,22 @@ size：要发送的字节数
 ### peek
 此函数用于查看串口接收缓冲区中的下一个字节，但不会将其从缓冲区中删除。
 
-    int peek()
+```c
+int peek()
+```
 返回值：下一个字节，如果没有可读取的字节，则返回-1
 ### 合宙Air001
 
-    //                      RX    TX
-    HardwareSerial Serial2(PA1, PA0);
+```c
+//                      RX    TX
+HardwareSerial Serial2(PA1, PA0);
+```
 
 ## ADC
 ### analogRead 此函数用于获取给定引脚/ADC 通道的 ADC 原始值。
-    uint32_t analogRead(uint32_t pin);
+```c
+uint32_t analogRead(uint32_t pin);
+```
 pin GPIO 引脚或 ADC 通道。  
 ADC的内部通道可以为ATEMP (内部温度传感器)、AVBAT (VBAT电压)、AREF (内部参考电压)。
 ### analogReadResolution(12)：设置模拟输入的分辨率为 12 位。
@@ -91,11 +110,15 @@ ADC的内部通道可以为ATEMP (内部温度传感器)、AVBAT (VBAT电压)、
 
 ### analogReference 配置模拟输入所用的基准电压（即用作输入范围上限的值）。
 
-    void analogReference(eAnalogReference ulMode) ;
+```c
+void analogReference(eAnalogReference ulMode) ;
+```
 
 ## PWM
 ### analogWrite此函数用于设置 PWM 输出的占空比
-    void analogWrite(uint32_t ulPin, uint32_t ulValue)
+```c
+void analogWrite(uint32_t ulPin, uint32_t ulValue)
+```
 ulPin：要设置的 PWM 输出引脚
 ulValue：占空比
 
@@ -108,27 +131,39 @@ ulValue：占空比
 ```
 调用 begin 后，我们可以通过调用 beginTransmission 并传递 I2C 从机地址来开始传输：
 
-    Wire.beginTransmission(address);
+```c
+Wire.beginTransmission(address);
+```
 要将一些字节写入从设备，请使用 write 函数。
 
-    Wire.write(data);
+```c
+Wire.write(data);
+```
 您可以使用 write 函数传递不同的数据类型。
 要结束传输，请使用 endTransmission 函数。
 >write 函数不会直接写入从设备，而是添加到I2C缓冲区。为此，您需要使用 endTransmission 函数将缓冲的字节发送到从设备。
 
-    Wire.endTransmission();
-    uint8_t endTransmission(bool stopBit = true);
+```c
+Wire.endTransmission();
+uint8_t endTransmission(bool stopBit = true);
+```
 stopBit：如果为 true ，则发送停止位。
 请求从从设备读取数据。 requestFrom 将要求通过提供地址和大小来读取所选设备的数据。
 
-    Wire.requestFrom(I2C_DEV_ADDR, SIZE);
+```c
+Wire.requestFrom(I2C_DEV_ADDR, SIZE);
+```
 readBytes 将读取它。
 
-    Wire.readBytes(temp, error);
+```c
+Wire.readBytes(temp, error);
+```
 
 ### requestFrom要从从设备读取，请使用 requestFrom 函数。
 
-    uint8_t requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddress, uint8_t isize, uint8_t sendStop)
+```c
+uint8_t requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddress, uint8_t isize, uint8_t sendStop)
+```
 
 address：从设备地址。
 quantity：要读取的字节数。
@@ -137,12 +172,16 @@ isize：内部地址大小。
 sendStop：如果为 true ，则发送停止位。
 或者，您可以使用
 
-    uint8_t requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop)
+```c
+uint8_t requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop)
+```
 
 此函数将调用 requestFrom ，并将 iaddress 和 isize 设置为 0 。
 或者，您可以使用
 
-    uint8_t requestFrom(uint8_t address, uint8_t quantity)
+```c
+uint8_t requestFrom(uint8_t address, uint8_t quantity)
+```
 
 此函数将调用 requestFrom ，并将 iaddress 和 isize 设置为 0 ，并将 sendStop 设置为 true 。
 ### I2C 从模式
@@ -154,12 +193,16 @@ Wire.onRequest(receiveEvent);//onRequest 函数用于定义要发送到主机的
 onReceive 将根据从属设备读取请求处理来自主设备的请求， onRequest 将处理对主设备的应答。
 现在，我们可以通过使用设备地址调用 begin 函数来开始外设配置。
 
-    Wire.begin(I2C_ADDR);
+```c
+Wire.begin(I2C_ADDR);
+```
 通过使用不带任何参数的 begin ，所有设置都将使用默认值完成。如需自行设置值，请参阅函数说明
 ### 多个I2C
 默认情况下，只有一个 Wire 实例可用，它使用了默认的I2C引脚，具体可以参考开发板的手册。要使用第二个 I2C 端口，应在代码中在 setup() 函数之前声明 TwoWire 对象：  
 
-    TwoWire Wire2(SDA_PIN, SCL_PIN);
+```c
+TwoWire Wire2(SDA_PIN, SCL_PIN);
+```
 
 ## SPI
 ```c
@@ -184,30 +227,42 @@ settings：SPI 设置，包括速率、位顺序和数据模式。
 ## EEPROM
 对于没有内置的 EEPROM，但是可以使用 Flash 模拟 EEPROM。一般来说，我们采用内置 flash 的最后一个 page 扇区（或者是其它可擦写的最小单位）来模拟。
 
-    #include <EEPROM.h>
+```c
+#include <EEPROM.h>
+```
 ### write()将一个字节写入 EEPROM。
-    EEPROM.write(address, value)
+```c
+EEPROM.write(address, value)
+```
 address：要写入的地址，从 0 开始。
 value：要写入的值。
 
 ### update()将一个字节写入 EEPROM，但仅在值不同的情况下才写入。
-    EEPROM.update(address, value)
+```c
+EEPROM.update(address, value)
+```
 
 ### put()将一个值写入 EEPROM。
 
-    EEPROM.put(address, value)
+```c
+EEPROM.put(address, value)
+```
 address：要写入的地址，从 0 开始。
 value要写入的数据，可以是原始类型（例如 float）或自定义结构。
 返回值：对传入数据的引用
 >注意：此函数使用 EEPROM.update() 执行写入，因此如果值没有更改，则不会重写该值。
 
 ### read()从 EEPROM 读取一个字节。
-    EEPROM.read(address)
+```c
+EEPROM.read(address)
+```
 address：要读取的地址，从 0 开始。
 返回值：读取的字节。
 
 ### get()从 EEPROM 读取一个值。
-    EEPROM.get(address, value)
+```c
+EEPROM.get(address, value)
+```
 address：要读取的地址，从 0 开始。
 value要读取的数据，可以是原始类型（例如 float）或自定义结构。
 返回值：对传入数据的引用
@@ -216,7 +271,9 @@ value要读取的数据，可以是原始类型（例如 float）或自定义结
 是一个重载了EEPROM类的operator[]运算符，可以像数组一样使用。
 该运算符允许像数组一样使用标识符。使用这种方法可以直接读写 EEPROM 单元。
 
-    EEPROM[address]
+```c
+EEPROM[address]
+```
 
 address：要读取的地址，从 0 开始。
 返回值：EEPROM 自身的引用
@@ -224,7 +281,9 @@ address：要读取的地址，从 0 开始。
 ### length()
 该函数返回一个无符号整数，其中包含 EEPROM 中的单元数。
 
-    EEPROM.length()
+```c
+EEPROM.length()
+```
 返回值：EEPROM 中的单元数。类型为unsigned int。
 
 
