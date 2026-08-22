@@ -19,16 +19,22 @@ hero:
 features:
   - title: 🧩 多平台芯片开发
     details: 覆盖 STM32、GD32、PY32、PHY6252、杰理 AC6951C、Beken、WISE WS8100 等 7 个系列 MCU，从寄存器、外设到 SDK 的完整实战笔记。
+    link: /Chips/STM32_note/keysking
   - title: 📡 无线与物联网协议
     details: BLE、BLE Mesh、Matter、星闪 NearLink、DMX512、EtherCAT、MQTT 等协议实战，涵盖广播、组网、OTA 与低功耗设计。
+    link: /IoT_note/BLE/BLE
   - title: ⚙️ 实时操作系统
     details: FreeRTOS、RT-Thread、uCOS-III、lwIP 等 RTOS 笔记，任务调度、信号量、消息队列与网络协议栈应用。
+    link: /RTOS_note/freeRTOS
   - title: 🐧 嵌入式 Linux
     details: 系统编译、设备树、内核与驱动开发、多芯片平台移植实战，累计编译 9+ 款芯片、5 种系统。
+    link: /Linux_note/编译系统笔记
   - title: 🔧 硬件设计能力
     details: Altium Designer 24 多层板 PCB 设计、电路设计与芯片选型笔记，PCB 产品投产 15+ 项。
+    link: /AD_note/AD笔记
   - title: 🧠 多语言与生态
     details: C/C++、Python、Lua、MicroPython 多语言开发，覆盖 ESP-IDF、Arduino、Jetson Edge AI 等生态。
+    link: /Languages/C_note/C
 ---
 
 <br>
