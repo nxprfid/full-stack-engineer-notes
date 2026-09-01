@@ -10,12 +10,14 @@ LVGL
 TouchGFX
 QT
 
-## 置顶知识
+## 置顶链接
 
-[LVGL中文开发手册](https://lvgl.100ask.net/master/index.html)
-[官方文档](https://docs.lvgl.io/master/index.html)
-[LVGL字体转换工具](https://lvgl.io/tools/fontconverter)
-[LVGL在线图片转换器](https://lvgl.io/tools/imageconverter)
+[LVGL中文开发手册](https://lvgl.100ask.net/master/index.html)  
+[官方文档](https://docs.lvgl.io/master/index.html)  
+[LVGL字体转换工具](https://lvgl.io/tools/fontconverter)  
+[LVGL在线图片转换器](https://lvgl.io/tools/imageconverter)  
+
+[LVGL开发教程](https://www.yuque.com/icheima/vzsofu)  
 
 ## LVGL移植
 
@@ -90,9 +92,21 @@ lv_disp_drv_init 函数用于按默认配置初始化一个显示驱动 disp_drv
 
 ## gif动画制作
 
-esp32-idf提供了gif图片的第三方解码库，我们使用这个库显示图片。大概分为两个步骤，第一个是把图片转换为C语言数组文件，放到源文件中。第二个是编写几行代码调用它。比较简单。 图片转换成C语言数组，我们使用LVGL官方提供的图片转换在线工具进行转换。 LVGL在线图片转换器 https://lvgl.io/tools/imageconverter
+esp32-idf提供了gif图片的第三方解码库，我们使用这个库显示图片。大概分为两个步骤，第一个是把图片转换为C语言数组文件，放到源文件中。第二个是编写几行代码调用它。比较简单。 图片转换成C语言数组，我们使用LVGL官方提供的图片转换在线工具进行转换。 
 
-![alt text](./image-7.png)
+LVGL在线图片转换器 https://lvgl.io/tools/imageconverter
+gif处理网站：
+https://ezgif.com/
+https://onlinegiftools.com/remove-gif-background
+https://docsmall.com/
+
+![静态图像](image-19.png)
+
+![gif图片](./image-7.png)
+
+>1. 普通 UI 图标、小图片：**选 CF_TRUE_COLOR**，简单直接，不需要解码器。
+>2. 大背景图，想节省 Flash：选 **CF_RAW**，工程必须打开 LVGL 的 PNG/JPG 解码支持，否则图片显示不出来，只会白块。
+
 使用转换器的步骤是，先点击Browse选择我们要转换的图片，然后填写图片名称，颜色格式，我们选择CF_RAW，输出格式，选择C数组，最后点击Convert转换，转换完成的c代码，会自动从浏览器下载。如上图片显示，就是我转换太空人图片的设置。 下载好的C文件，我放到了工程main目录下，在VSCode中点击打开它。刚下载好的C文件，前面的13行有关于怎么包含lvgl.h头文件的条件编译，我已经全部删除，然后只写一个包含lvgl.h的include。 原来的代码：
 
 ```c
@@ -132,6 +146,11 @@ LV_IMG_DECLARE(image_taikong);
 LVGL显示gif图片的代码，也非常简洁。我们的例程，在开机界面和主界面都显示了这个动图，开机界面显示函数lv_gui_start()和主界面显示函数lv_main_page()都位于main下面的lvgl_demo_ui.c文件中，我们现在可以打开lv_gui_start()函数，看一下调用图片的方法。在函数中看到，显示图片只需要3行代码，首先使用lv_gif_create创建一个对象，然后使用lv_gif_set_src给这个对象指定图片名称，最后使用lv_obj_align设置图片的显示位置。
 
 ```c
+    // 显示图片
+    lv_obj_t* obj_img = lv_img_create(root);
+    lv_img_set_src(obj_img, &bilibili);
+    lv_obj_align(obj_img,LV_ALIGN_BOTTOM_LEFT,10,-10);
+
     // 显示太空人GIF图片
     lv_obj_t *gif_start = lv_gif_create(lv_scr_act());
     lv_gif_set_src(gif_start, &image_taikong);
