@@ -10,6 +10,7 @@
 
 [github.com/esp-mosaico](https://github.com/esp-mosaico)
 
+[MCP](ts-mcp.espressif.com)
 ## 硬件资源
 
 ![硬件资源](2026-09-02-08-50-14.png)
@@ -65,3 +66,52 @@
 | 0x55 | BQ27220 | 板载电池电量计 |
 | 0x5A | CST9220 | 板载触摸控制器 |
 | 0x69 | BMI270 | 板载六轴 IMU |
+
+
+## 入门
+
+![alt text](image-176.png)
+
+![框架](image-177.png)
+
+### 命令行烧录
+第一次点击`install.bat`
+后续新开窗口点击 `export.bat`
+
+![alt text](image-178.png)
+
+将出厂默认不同的项给提取出来，写入到`sdkconfig.defaults`中，没有改动的不会写进去。
+项目要支持多种芯片的时候，还可以再放一份带有芯片名的文件`sdkconfig.defaults.esp32c61`.
+构建时读取顺序是先读通用的`sdkconfig.defaults`再读当前芯片的这一份。同一项会以后面的为准，通用的这一份必须存在，哪怕是空文件，否则带后缀的这一份不会加载。进行git一个项目协作提交的话通常只提交`sdkconfig.defaults`和带有芯片后缀的文件，不会把整个`sdkconfig`文件提交上去。
+
+idf.py erase-flash
+当遇到设备行为异常，怀疑是残留数据造成的话。可以先进行一次`idf.py erase-flash`擦除完整的flash再进行烧录。
+
+编译会生成build 文件和一个managed_components文件（组件管理器下载的第三方的组件），执行`fullclean`会删除掉这两个文件夹。
+
+![alt text](image-179.png)
+这个指令在加了新的组件之后可以去使用，会重新生成compile_commands.json（记录每一个源文件使用什么参数编译，代码跳转，函数补全和头文件识别）如果遇到函数无法跳转，头文件被标红。多数情况下不是代码有问题，而是这个文件过期了。
+
+如果`idf.py fullclean`之后依然报奇怪的CMake或者组件错误的时候，可以直接在项目根目录去执行。
+`Remove-Item -Recurse -Force .\build\, .\managed_components\, .\dependencies.lock`
+把这三个文件给同时删除后。是最彻底把我们的项目恢复到初始状态的一条指令。
+
+
+### AI Agent 实战
+1. 分解具体需求
+2. 分别实现功能模块
+3. 看懂构建和配置
+4. 完善最终工程
+
+
+
+![alt text](image-180.png)
+
+![alt text](image-181.png)
+
+![alt text](image-182.png)
+
+![alt text](image-183.png)
+
+![alt text](image-184.png)
+记录实际解析到的组件依赖版本，包括间接的一些依赖。
