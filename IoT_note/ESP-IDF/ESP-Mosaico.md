@@ -115,3 +115,12 @@ idf.py erase-flash
 
 ![alt text](image-184.png)
 记录实际解析到的组件依赖版本，包括间接的一些依赖。
+
+#### 第一步
+
+从这个代码仓库下载代码：https://github.com/esp-mosaico/esp-mosaico-vibe
+配置环境并实现一个贪吃蛇游戏。
+
+10月2日 Meta 开源了 Muse Gadgets 的设备 SDK
+
+Muse 是 Meta 做的个人 AI 助手。Muse Gadgets 开源的只有设备端：一套 ESP32 固件和一套树莓派用的 Linux SDK，Apache 2.0。助手本身不开源，设备要先去 gadgets.muse.ai 领一个 SDK token，再在 Muse App 里打开开发者模式配对。官方支持的板子里，带完整界面的是 Waveshare 1.75 寸圆屏 AMOLED 这一类。
