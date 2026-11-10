@@ -13,7 +13,7 @@
 [MCP](ts-mcp.espressif.com)
 ## 硬件资源
 
-![硬件资源](2026-09-02-08-50-14.png)
+![硬件资源](./2026-09-02-08-50-14.png)
 
 ### MCU 与管脚分配
 
@@ -70,15 +70,15 @@
 
 ## 入门
 
-![alt text](image-176.png)
+![alt text](./image-176.png)
 
-![框架](image-177.png)
+![框架](./image-177.png)
 
 ### 命令行烧录
 第一次点击`install.bat`
 后续新开窗口点击 `export.bat`
 
-![alt text](image-178.png)
+![alt text](./image-178.png)
 
 将出厂默认不同的项给提取出来，写入到`sdkconfig.defaults`中，没有改动的不会写进去。
 项目要支持多种芯片的时候，还可以再放一份带有芯片名的文件`sdkconfig.defaults.esp32c61`.
@@ -89,7 +89,7 @@ idf.py erase-flash
 
 编译会生成build 文件和一个managed_components文件（组件管理器下载的第三方的组件），执行`fullclean`会删除掉这两个文件夹。
 
-![alt text](image-179.png)
+![alt text](./image-179.png)
 这个指令在加了新的组件之后可以去使用，会重新生成compile_commands.json（记录每一个源文件使用什么参数编译，代码跳转，函数补全和头文件识别）如果遇到函数无法跳转，头文件被标红。多数情况下不是代码有问题，而是这个文件过期了。
 
 如果`idf.py fullclean`之后依然报奇怪的CMake或者组件错误的时候，可以直接在项目根目录去执行。
@@ -105,15 +105,15 @@ idf.py erase-flash
 
 
 
-![alt text](image-180.png)
+![alt text](./image-180.png)
 
-![alt text](image-181.png)
+![alt text](./image-181.png)
 
-![alt text](image-182.png)
+![alt text](./image-182.png)
 
-![alt text](image-183.png)
+![alt text](./image-183.png)
 
-![alt text](image-184.png)
+![alt text](./image-184.png)
 记录实际解析到的组件依赖版本，包括间接的一些依赖。
 
 #### 第一步

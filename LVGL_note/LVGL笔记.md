@@ -100,7 +100,7 @@ https://ezgif.com/
 https://onlinegiftools.com/remove-gif-background
 https://docsmall.com/
 
-![静态图像](image-19.png)
+<!-- ![静态图像](./image-19.png) -->
 
 ![gif图片](./image-7.png)
 
