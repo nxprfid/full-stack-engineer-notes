@@ -190,4 +190,56 @@ SDK 商务邮箱申请：zouxk@tuya.com
 
 整理自涂鸦开发者社群公告（2026-11）。
 
+## 环境搭建
 
+在Linux Ubuntu 中下载编译依赖工具
+```bash
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get install net-tools build-essential wget git python3 libc6-i386 -y
+```
+
+ GitHub上获取SDK进行验证
+```bash
+cd /home/share/samba/
+git clone https://github.com/tuya/tuya-iotos-embeded-sdk-wifi-ble-bk7231n.git
+```
+输入下列命令，开始编译 tuya_demo_template：
+```bash
+cd tuya-iotos-embeded-sdk-wifi-ble-bk7231n/
+sh build_app.sh apps/tuya_demo_template/ tuya_demo_template 1.0.0 
+```
+涂鸦IoT平台下载SDK进行验证
+![alt text](image-3.png)
+
+`sh build_app.sh apps/tuya_demo_template tuya_demo_template 1.0.0 #输入该命令将会在所需相关资源下载完成后开始编译`
+## 固件编译
+
+文件名	功能
+bk7231n_light1_io_xx_QIO_1.0.0.bin	生产区固件：boot+用户区固件+检测固件。
+bk7231n_light1_io_xx_UA_1.0.0.bin	用户区固件
+bk7231n_light1_io_xx_UG_1.0.0.bin	升级固件 
+
+>自定义开发固件不上传到云平台，直接将UA文件烧录到已授权的模组中，会导致配网一直无法成功。
+
+## 烧录授权
+
+1. PMS账号
+2. CBU Nano开发板或涂鸦WiFi模组+usb转UART串口工具
+3. 云模组烧录授权工具
+4. 原厂烧录工具
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+T1模组烧录工具是什么，如何接线？
+https://support.tuya.com/zh/help/_detail/Kf8k1nr4ggro7
+
+T1系列模块如何擦除授权区域
+https://support.tuya.com/zh/help/_detail/Kfqkub3rayqf8
+
+## 代码解析
+![alt text](image-4.png)
