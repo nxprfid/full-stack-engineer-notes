@@ -317,3 +317,9 @@ Hook = 钩子：在指定事件触发后，自动执行一段自定义脚本 / �
 将原理图导出为网表，导出时需要将器件型号作为导出项
 
 将网表文件和MCU数据手册放入工程目录里。
+
+立创EDA可以使用以下Skills比Run API Gateway好用多了。
+
+[easyeda-eprj3-skill](https://github.com/easyeda/easyeda-eprj3-skill)
+
+[命令行客户端 CLI](https://prodocs.lceda.cn/cn/api/guide/cli.html)
