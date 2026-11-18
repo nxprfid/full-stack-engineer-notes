@@ -4,8 +4,6 @@ title: 涂鸦智能模组 SDK 开发笔记
 
 # 涂鸦智能模组 SDK 开发
 
-涂鸦智能（Tuya Smart）是全球化的 IoT 云平台，覆盖 3000+ 品类智能设备。本文整理涂鸦面向 AI + IoT 开发者推出的工具链与生态资源：AI Agent 技能（tuya-smart-control skill）、开源 CLI、TuyaOpen 跨芯片开发框架、TuyaOpen IDE、Tuya AI Coding、Cobuilder、Wukong AI SDK，以及模组选择要点与开发者活动。
-
 ## 开发流程概览
 
 ```mermaid
@@ -18,12 +16,6 @@ flowchart LR
     F --> G[联调与 OTA 升级]
     G --> H[量产与订单]
 ```
-
-## 选择模组
-
-- **NANO 主控板（BK7231N）**：基于博通集成 BK7231N（2.4 GHz Wi-Fi + BLE SoC），常见于涂鸦 WB2S/CB2S 类模组生态，可用于涂鸦智能模组 SDK（TuyaOS）开发。
-
-> 待补充：NANO 主控板引脚定义、SDK 工程模板、烧录方式等。
 
 ## 官方资源速查
 
@@ -47,15 +39,14 @@ flowchart LR
 | TuyaOpen 官网 | <https://tuyaopen.ai/zh/> | TuyaOpen 文档与活动入口 |
 | TuyaOpen 主仓库 | <https://github.com/tuya/TuyaOpen> | 跨芯片开源开发框架源码（点 Star 可用于领取活动授权码） |
 | TuyaOpen IDE 下载 | <https://tuyaopen.ai/tuyaopen-ide> | IDE 安装包下载 |
-| tuya-smart-control-cli | <https://github.com/tuya/tuya-smart-control-cli> | 开源命令行工具 |
+| tuya-smart-control-cli | <https://github.com/tuya/tuya-smart-control-cli> | 让 AI Agent（如 OpenClaw「龙虾」）可以直接控制涂鸦生态设备 |
 | TuyaOpen-dev-skills | <https://github.com/tuya/TuyaOpen-dev-skills> | TuyaOpen SDK 专家技能集 |
 | Tuya AI Coding | <https://coding.tuya.ai/> | AI Native 无代码应用开发平台 |
 | Tuya Cobuilder | <https://www.tuya.com/cobuilder> | AI 硬件零代码 Vibe Coding 平台 |
 | DuckyClaw 官网 | <https://tuyaopen.ai/zh/duckyclaw> | DuckyClaw 产品与开发者活动 |
 | TuyaClaw 官网 | <https://claw.tuyasmart.com> | TuyaClaw 产品与开发者活动 |
 
-## AI Agent 接入：tuya-smart-control skill
-
+## AI Agent 接入：Tuya Smart Control CLI
 涂鸦上线的 AI Agent 新技能，让 AI Agent（如 OpenClaw「龙虾」）可以直接控制涂鸦生态设备。
 
 ### 使用步骤（两步）
@@ -66,12 +57,6 @@ flowchart LR
 2. **安装技能并配置**
    - 通过 <https://clawhub.ai/gaosq856/tuya-smart-control> 安装技能
    - 将一键复制的配置信息粘贴到技能配置中即可
-
-## tuya-smart-control-cli（涂鸦 CLI）
-
-涂鸦正式开源的命令行工具，让 AI Agent 一行命令管理 3000+ 品类智能设备。  
-GitHub：<https://github.com/tuya/tuya-smart-control-cli>  
-新特性：在原基础上支持了 IPC 设备的快照和录像功能。
 
 ### Enduser API 与 CLI 的关系
 
@@ -95,23 +80,6 @@ TuyaOpen 是涂鸦的开源跨平台开发框架，支持多芯片/硬件快速�
 
 在 ESP32 开发板上构建、烧录并运行第一个 TuyaOpen 应用。  
 详情：<https://tuyaopen.ai/zh/docs/hardware-specific/espressif/esp32-quick-start>
-
-**准备环境**
-
-- ESP32 开发板（ESP32、ESP32-S3、ESP32-C3 或 ESP32-C6）
-- USB 数据线（USB-C 或 Micro-USB，取决于开发板）
-- 运行 Linux、macOS 或 Windows 的电脑
-- Wi-Fi 网络（2.4 GHz）
-
-**步骤**
-
-1. 克隆 TuyaOpen 并配置环境
-2. 选择要构建的项目
-3. 选择 ESP32 开发板配置
-4. 构建固件
-5. 烧录固件
-6. 查看设备日志
-7. 设备配网
 
 ### TuyaOpen x T5AI
 
@@ -180,15 +148,11 @@ SDK 商务邮箱申请：zouxk@tuya.com
 
 ## 开发者活动与社区
 
-- 官网活动页：<https://tuyaopen.ai/zh/event-registration>
-  - **活动内容**：定期更新涂鸦官方最新的开发者黑客松比赛和活动（桌面搭子开发者比赛、开发者贡献活动、DuckyClaw 开发者比赛）
   - **开发者优秀作品 List**：定期更新开发者作品（基于涂鸦 T5 的智能生肖墨水屏、基于涂鸦 T5AI-Board 的墨水屏阅读器、基于涂鸦 T5AI 的开发板移植游戏）
 - 开发者贡献活动报名：<https://ourojj8n.jsjform.com/f/R2MC4J>
   - 活动内容：体验 tuya-smart-control skill → 发布到社交媒体并提交链接 → 数据优异者月末可获得现金购物卡奖励
 
 ---
-
-整理自涂鸦开发者社群公告（2026-11）。
 
 ## 环境搭建
 
@@ -216,9 +180,9 @@ sh build_app.sh apps/tuya_demo_template/ tuya_demo_template 1.0.0
 ## 固件编译
 
 文件名	功能
-bk7231n_light1_io_xx_QIO_1.0.0.bin	生产区固件：boot+用户区固件+检测固件。
-bk7231n_light1_io_xx_UA_1.0.0.bin	用户区固件
-bk7231n_light1_io_xx_UG_1.0.0.bin	升级固件 
+- bk7231n_light1_io_xx_QIO_1.0.0.bin	生产区固件：boot+用户区固件+检测固件。
+- bk7231n_light1_io_xx_UA_1.0.0.bin	用户区固件
+- bk7231n_light1_io_xx_UG_1.0.0.bin	升级固件 
 
 >自定义开发固件不上传到云平台，直接将UA文件烧录到已授权的模组中，会导致配网一直无法成功。
 
@@ -243,3 +207,13 @@ https://support.tuya.com/zh/help/_detail/Kfqkub3rayqf8
 
 ## 代码解析
 ![alt text](image-4.png)
+
+## 灯控方面
+![alt text](285d4924c960ff0f4d1349af2f19d875.jpg)
+硬件1使用T1-U-HL模组，其驱动5路PWM灯带，GRBCW分别接在P8、P6、P26、P24、P9。重置配网按键连接在P14。实际我外部灯带连接顺序是R G B WW CW对应板载丝印G R B C W。
+![alt text](f496ba5885c50c04501f5b8bd35056ac.jpg)
+硬件2使用T1-U-HL模组，其驱动1路幻彩灯带2路PWM灯带，MOSI接在P16，C接在P6，W接在P8。重置配网按键连接在P22。IR连接在P28
+![alt text](0f9b3c87dd523b28c122252bc465bcf9.jpg)
+硬件3使用T1-U-HL模组，其驱动1路幻彩灯带2路PWM灯带，MOSI接在P16，C接在P8，W接在P6。重置配网按键连接在P22。IR连接在P28。MIC连接在ADC。
+![alt text](f81b7767d1e7c22f116ce2a7a89817cb.jpg)
+硬件4使用CBU模组，其驱动5路PWM灯带，GRBCW分别接在P7、P6、P8、P9、P26。（P9存疑，理论应该是P24，实测P9）重置配网按键连接在P14。实际我外部灯带连接顺序是R G B WW CW对应板载丝印G R B C W。
